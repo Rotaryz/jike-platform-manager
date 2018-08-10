@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-export default {
-  name: 'App'
-}
+  export default {
+    name: 'App'
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -17,6 +17,4 @@ export default {
     -moz-osx-font-smoothing: grayscale
     text-align: center
     color: #2c3e50
-    margin-top: 60px
-
 </style>

@@ -1,7 +1,7 @@
 'use strict'
 
 import axios from 'axios'
-import {baseUrl} from './config'
+import { baseUrl } from './config'
 
 const TIME_OUT = 10000
 const COMMON_HEADER = {}
@@ -10,8 +10,7 @@ const ERR_NO = -404
 
 const http = axios.create({
   baseURL: baseUrl.api,
-  timeout: TIME_OUT,
-  headers: COMMON_HEADER
+  timeout: TIME_OUT
 })
 
 http.interceptors.request.use(config => {
@@ -71,7 +70,8 @@ export default {
     return http({
       method: 'post',
       url,
-      data // post 请求时带的参数
+      data, // post 请求时带的参数
+      headers: COMMON_HEADER
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -82,7 +82,8 @@ export default {
     return http({
       method: 'get',
       url,
-      params // get 请求时带的参数
+      params, // get 请求时带的参数
+      headers: COMMON_HEADER
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -93,7 +94,8 @@ export default {
     return http({
       method: 'put',
       url,
-      data // put 请求时带的参数
+      data, // put 请求时带的参数
+      headers: COMMON_HEADER
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -104,7 +106,8 @@ export default {
     return http({
       method: 'delete',
       url,
-      data // put 请求时带的参数
+      data, // put 请求时带的参数
+      headers: COMMON_HEADER
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
