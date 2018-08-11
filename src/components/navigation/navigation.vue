@@ -21,8 +21,7 @@
               <router-link :to="{path: items.url}" class="nav-tap" :class="item.childrenIndex === idx ? 'nav-big-active' : ''">
                 <span class="nav-icon"><img src=""></span>
                 <div class="nav-title">
-                 <span v-for="(child , index) in items.title" :key="index">{{child}}
-            </span>
+                 <span v-for="(child , index) in items.title" :key="index">{{child}}</span>
                 </div>
               </router-link>
             </li>
@@ -69,46 +68,47 @@
       showHeight: HEIGHT
     }, {
       title: '订单管理',
-      url: 'organizationalStructure',
+      url: 'agent-order',
       icon: require('./icon-order_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理订单',
-        url: 'organizationalStructure',
-        type: 'narmal'
+        url: 'agent-order',
+        type: 'normal'
       }, {
         title: '零售订单',
-        url: 'authorityManagement',
-        type: 'normal'
+        url: 'retail-order',
+        type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
       title: '财务管理',
       icon: require('./icon-money_manage@2x.png'),
-      url: 'authorizationManagement',
+      url: 'platform-income',
       childrenIndex: -1,
       children: [{
         title: '平台收入',
-        url: 'authorizationManagement'
+        url: 'platform-income',
+        type: 'normal'
       }, {
         title: '平台支出',
-        url: 'authorizationManagement'
+        url: 'platform-expend',
+        type: 'ws'
       }, {
         title: '提现管理',
-        url: 'authorizationManagement'
+        url: 'cash-management',
+        type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
       title: '基础设置',
       icon: require('./icon-basic_setting@2x.png'),
-      url: 'accountCenter',
+      url: 'role-management',
       childrenIndex: -1,
       children: [{
         title: '角色设置',
-        url: 'accountCenter'
-      }, {
-        title: '角色设置',
-        url: 'accountCenter'
+        url: 'role-management',
+        type: 'normal'
       }],
       showHeight: HEIGHT
     }]
