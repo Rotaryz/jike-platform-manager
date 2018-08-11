@@ -8,6 +8,12 @@ const Login = () => import('pages/login/login')
 const AgentManagement = () => import('pages/agent-management/agent-management') // 代理商管理列表
 const BusinessManagement = () => import('pages/business-management/business-management') // 企业管理列表
 const CustomerManagement = () => import('pages/customer-management/customer-management') // 客户管理列表
+const AgentOrder = () => import('pages/agent-order/agent-order') // 代理订单
+const RetailOrder = () => import('pages/retail-order/retail-order') // 零售订单
+const PlatformIncome = () => import('pages/platform-income/platform-income') // 平台收入
+const PlatformExpend = () => import('pages/platform-expend/platform-expend') // 平台支出
+const CashManagement = () => import('pages/cash-management/cash-management') // 提现管理
+const RoleManagement = () => import('pages/role-management/role-management') // 角色管理
 
 Vue.use(Router)
 
@@ -33,6 +39,42 @@ const route = new Router({
         component: CustomerManagement,
         meta: {
           title: '商家管理,企业管理'
+        }
+      }, {
+        path: 'agent-order',
+        component: AgentOrder,
+        meta: {
+          title: '订单管理,代理订单'
+        }
+      }, {
+        path: 'retail-order',
+        component: RetailOrder,
+        meta: {
+          title: '订单管理,零售订单'
+        }
+      }, {
+        path: 'platform-income',
+        component: PlatformIncome,
+        meta: {
+          title: '财务管理,平台收入'
+        }
+      }, {
+        path: 'platform-expend',
+        component: PlatformExpend,
+        meta: {
+          title: '财务管理,平台支出'
+        }
+      }, {
+        path: 'cash-management',
+        component: CashManagement,
+        meta: {
+          title: '财务管理,提现管理'
+        }
+      }, {
+        path: 'role-management',
+        component: RoleManagement,
+        meta: {
+          title: '基础设置,角色设置'
         }
       }]
     }, {
