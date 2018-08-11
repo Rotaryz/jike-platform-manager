@@ -17,7 +17,7 @@
           </router-link>
           <ul class="nav-big-child" v-if="item.children"
               v-show="item.children.length > 1">
-            <li class="nav-item" v-for="(items , idx) in item.children" :key="idx" @click.stop="bigChildren(idx)" v-if="index === 0 && idx === 0 || index !== 0">
+            <li class="nav-item" v-for="(items , idx) in item.children" :key="idx" @click.stop="bigChildren(idx)" v-if="items.type === project || items.type === 'normal'">
               <router-link :to="{path: items.url}" class="nav-tap" :class="item.childrenIndex === idx ? 'nav-big-active' : ''">
                 <span class="nav-icon"><img src=""></span>
                 <div class="nav-title">
@@ -34,6 +34,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { mapGetters } from 'vuex'
+
   const HEIGHT = 69
   const NAVLIST = [
     {
@@ -53,13 +55,16 @@
       childrenIndex: -1,
       children: [{
         title: '代理商管理',
-        url: 'agent-management'
+        url: 'agent-management',
+        type: 'normal'
       }, {
         title: '企业管理',
-        url: 'business-management'
+        url: 'business-management',
+        type: 'normal'
       }, {
         title: '客户管理',
-        url: 'product'
+        url: 'product',
+        type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
@@ -69,10 +74,12 @@
       childrenIndex: -1,
       children: [{
         title: '代理订单',
-        url: 'organizationalStructure'
+        url: 'organizationalStructure',
+        type: 'narmal'
       }, {
         title: '零售订单',
-        url: 'authorityManagement'
+        url: 'authorityManagement',
+        type: 'normal'
       }],
       showHeight: HEIGHT
     }, {
@@ -122,6 +129,9 @@
         showAnimation: false,
         sortTimer: null
       }
+    },
+    computed: {
+      ...mapGetters(['project'])
     },
     created() {
       let path = this.$route.matched[1].path
@@ -186,7 +196,6 @@
               let num = index === 0 ? 1 : this.navList[index].children.length
               if (this.navList[index].showHeight === HEIGHT) {
                 let target = (num + 1) * HEIGHT
-                console.log(target, HEIGHT)
                 this.timer = setInterval(() => {
                   if (this.navList[index].showHeight >= target) {
                     this.navList[index].showHeight = target
@@ -215,13 +224,6 @@
         this.navList[this.recodIndex].childrenIndex = index
         let num = this.recodIndex
         this.navList[num].url = this.navList[num].children[this.navList[num].childrenIndex].url
-      }
-    },
-    watch: {
-      '$route'(to, form) {
-        let title = to.meta.title
-        // let item = this.navList.find(item => item.url)
-        sessionStorage.setItem('title', title)
       }
     }
   }
@@ -276,7 +278,7 @@
             width: 100%
             position: relative
             box-sizing: border-box
-            border-left: 8px solid $color-menu-background
+            border-left: 6px solid $color-menu-background
             .nav-icon
               height: 100%
               width: 55px
@@ -308,19 +310,19 @@
               background: $color-menu-select
               transition: all 0.2s
           .nav-tap-active
-            border-left: 8px solid $color-active
+            border-left: 6px solid $color-active
         .nav-big-child
           .nav-item
             border-bottom: none
           .nav-tap
-            border-left: 8px solid $color-menu-background
+            border-left: 6px solid $color-menu-background
             .nav-icon
               width: 46px
           .nav-title
             margin-left: 13px
           .nav-big-active
             background: rgba(255, 255, 255, 0.1) !important
-            border-left: 8px solid $color-active
+            border-left: 6px solid $color-active
     .big-hide
       width: 79px
       transition: all .2s

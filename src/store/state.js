@@ -1,5 +1,7 @@
 const state = {
-  argument: {}
+  argument: {
+    project: 'normal'
+  }
 }
 
 export default state

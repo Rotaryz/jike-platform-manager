@@ -1,1 +1,1 @@
-export const argument = state => state.argument
+export const project = state => state.project

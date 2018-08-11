@@ -1,1 +1,1 @@
-export const TYPE = 'TYPE'
+export const PROJECT = 'PROJECT'

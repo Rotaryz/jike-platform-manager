@@ -225,7 +225,7 @@
           transition: transform 0.3s
         .input-way-active
           transform-origin: 50% 0%
-          transform: rotate(-180deg) translateY(-50%)
+          transform: rotate(180deg) translateY(-50%)
           transition: transform 0.3s
         .shop-list
           margin-top: 5px

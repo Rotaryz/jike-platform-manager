@@ -1,8 +1,8 @@
 import * as TYPES from './mutation-types'
 
 const mutations = {
-  [TYPES.TYPE](state, argument) {
-    state.argument = argument
+  [TYPES.PROJECT](state, project) {
+    state.project = project
   }
 }
 
