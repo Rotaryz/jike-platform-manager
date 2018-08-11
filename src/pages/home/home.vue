@@ -30,6 +30,7 @@
     display: flex
     height: 100vh
     .content
+      overflow: hidden
       flex: 1
       overflow: hidden
 </style>

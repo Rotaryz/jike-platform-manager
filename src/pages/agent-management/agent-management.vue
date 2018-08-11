@@ -20,15 +20,15 @@
         </div>
         <div class="list">
           <div class="list-box" v-for="item in 10">
-            <div class="list-item list-text">fgd</div>
-            <div class="list-item list-text">dfg</div>
-            <div class="list-item list-text">dfg</div>
-            <div class="list-item list-text">fdg</div>
-            <div class="list-item list-text">fdg</div>
-            <div class="list-item list-text">fdg</div>
-            <div class="list-item list-text">fdg</div>
-            <div class="list-item list-text">fdg</div>
-            <div class="list-item list-text">fdg</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+            <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
             <div class="list-item hand" :class="project + '-text-under'">编辑</div>
           </div>
         </div>
@@ -135,12 +135,14 @@
     flex: 1
 
   .list-header, .list-box
+    width: 100%
     display: flex
     align-items: center
     padding-left: 2vw
     box-sizing: border-box
 
   .list-header
+    width: 100%
     height: 9.1%
     white-space: nowrap
     border-bottom: 1px solid $color-line
@@ -159,6 +161,7 @@
         font-size: $font-size-medium14
 
       .list-text
+        no-wrap()
         width: 90%
         color: $color-text-66
     no-wrap()
@@ -186,6 +189,7 @@
     flex: 1
     position: relative
     text-align: left
+    overflow: hidden
     .showDetail
       cursor: pointer
       font-size: $font-size-small
@@ -197,6 +201,8 @@
         color: $color-nomal
     &:nth-child(1)
       flex: 1.5
+    &:last-child
+      flex: 0.7
 
   .list-box-active
     background: $color-background

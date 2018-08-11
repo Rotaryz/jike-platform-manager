@@ -15,6 +15,7 @@ const PlatformExpend = () => import('pages/platform-expend/platform-expend') // 
 const CashManagement = () => import('pages/cash-management/cash-management') // 提现管理
 const RoleManagement = () => import('pages/role-management/role-management') // 角色管理
 const NewAgent = () => import('pages/new-agrnt/new-agrnt') // 代理商管理新增编辑
+// const AgentDetail  = () => import('pages/new-agrnt/new-agrnt') // 代理商管理新增编辑
 
 Vue.use(Router)
 
