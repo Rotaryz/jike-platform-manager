@@ -5,8 +5,24 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { mapActions } from 'vuex'
+  import storage from 'storage-controller'
+
   export default {
-    name: 'App'
+    name: 'App',
+    created() {
+      let project = storage.get('project', 'ws')
+      this.setProject(project)
+    },
+    methods: {
+      ...mapActions(['setProject'])
+    },
+    watch: {
+      '$route'(to) {
+        let title = to.meta.title
+        sessionStorage.setItem('title', title)
+      }
+    }
   }
 </script>
 
