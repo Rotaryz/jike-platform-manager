@@ -68,10 +68,12 @@
       childrenIndex: -1,
       children: [{
         title: '代理订单',
-        url: 'agent-order'
+        url: 'agent-order',
+        type: 'normal'
       }, {
         title: '零售订单',
-        url: 'retail-order'
+        url: 'retail-order',
+        type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
@@ -81,13 +83,16 @@
       childrenIndex: -1,
       children: [{
         title: '平台收入',
-        url: 'platform-income'
+        url: 'platform-income',
+        type: 'normal'
       }, {
         title: '平台支出',
-        url: 'platform-expend'
+        url: 'platform-expend',
+        type: 'ws'
       }, {
         title: '提现管理',
-        url: 'cash-management'
+        url: 'cash-management',
+        type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
@@ -97,7 +102,8 @@
       childrenIndex: -1,
       children: [{
         title: '角色设置',
-        url: 'role-management'
+        url: 'role-management',
+        type: 'normal'
       }],
       showHeight: HEIGHT
     }]
