@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation">
+  <div class="navigation" :class="project + '-big'">
     <div class="big-show" :class="{'big-hide': showAnimation}">
       <div class="herder">
         <img src="" class="icon">
@@ -15,13 +15,12 @@
             </div>
             <i class="nav" :class="{'nav-active': item.showHeight !== 69}" v-show="!showAnimation"></i>
           </router-link>
-          <ul class="nav-big-child" v-if="item.children"
-              v-show="item.children.length > 1">
+          <ul class="nav-big-child" v-if="item.children">
             <li class="nav-item" v-for="(items , idx) in item.children" :key="idx" @click.stop="bigChildren(idx)" v-if="items.type === project || items.type === 'normal'">
               <router-link :to="{path: items.url}" class="nav-tap" :class="item.childrenIndex === idx ? 'nav-big-active' : ''">
                 <span class="nav-icon"><img src=""></span>
                 <div class="nav-title">
-                 <span v-for="(child , index) in items.title" :key="index">{{child}}</span>
+                  <span v-for="(child , index) in items.title" :key="index">{{child}}</span>
                 </div>
               </router-link>
             </li>
@@ -39,12 +38,12 @@
   const NAVLIST = [
     {
       title: '首页',
-      url: '/',
+      url: '/agent-management',
       icon: require('./icon-index@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '首页',
-        url: '/'
+        url: '/agent-management'
       }],
       showHeight: HEIGHT
     }, {
@@ -116,7 +115,7 @@
     data() {
       return {
         smallIndex: 0,
-        title: '商家管理平台',
+        title: '赞播AI名片',
         navList: NAVLIST,
         hoverIndex: -1,
         hoverChildIndex: 0,
@@ -142,79 +141,64 @@
         let rootType = path.split('/')
         let type = rootType[rootType.length - 1]
         this.navList.forEach((item, idx) => {
-          if (item.children.length > 1) {
-            item.children.forEach((items, index) => {
-              if (items.url.includes(type)) {
-                this.showChild(idx)
-                this.bigChildren(index)
-              } else {
-                item.showHeight = HEIGHT
-              }
-            })
-          } else {
-            if (item.url.includes(type)) {
+          item.children.forEach((items, index) => {
+            if (items.url.includes(type)) {
               this.showChild(idx)
+              this.bigChildren(index)
+              sessionStorage.setItem('title', [item.title, items.title])
+            } else {
+              item.showHeight = HEIGHT
             }
-          }
+          })
         })
       },
       showChild(index, status = true) {
         this.smallIndex = index
         clearInterval(this.timer)
-        if (this.navList[index].children.length === 1) {
-          if (this.recodIndex !== -1) {
-            this.timer = setInterval(() => {
-              if (this.navList[this.recodIndex].showHeight <= HEIGHT) {
-                this.navList[this.recodIndex].showHeight = HEIGHT
-                clearInterval(this.timer)
-                return false
+        let childCode = this.navList[index].childrenIndex === -1 ? 0 : this.navList[index].childrenIndex
+        this.recodIndex = index
+        this.navList[this.recodIndex].childrenIndex = childCode
+        this.bigChild = -1
+        clearInterval(this.timer)
+        for (let i = 0; i < this.navList.length; i++) {
+          if (i !== index && this.navList[i].showHeight > HEIGHT) {
+            clearInterval(this.sortTimer)
+            this.sortTimer = setInterval(() => {
+              if (this.navList[i].showHeight <= HEIGHT) {
+                this.navList[i].showHeight = HEIGHT
+                clearInterval(this.sortTimer)
+                return
               }
-              this.navList[this.recodIndex].showHeight -= 20
+              this.navList[i].showHeight -= 20
             }, 30)
-          }
-          this.bigChild = index
-        } else if (this.navList[index].children.length > 1) {
-          clearInterval(this.timer)
-          let childCode = this.navList[index].childrenIndex === -1 ? 0 : this.navList[index].childrenIndex
-          this.recodIndex = index
-          this.navList[this.recodIndex].childrenIndex = childCode
-          this.bigChild = -1
-          clearInterval(this.timer)
-          for (let i = 0; i < this.navList.length; i++) {
-            if (i !== index && this.navList[i].showHeight > HEIGHT) {
-              clearInterval(this.sortTimer)
-              this.sortTimer = setInterval(() => {
-                if (this.navList[i].showHeight <= HEIGHT) {
-                  this.navList[i].showHeight = HEIGHT
-                  clearInterval(this.sortTimer)
+          } else {
+            clearInterval(this.timer)
+            let num = 0
+            this.navList[index].children.forEach((item) => {
+              if (item.type === this.project || item.type === 'normal') {
+                num++
+              }
+            })
+            if (this.navList[index].showHeight === HEIGHT) {
+              let target = (num + 1) * HEIGHT
+              this.timer = setInterval(() => {
+                if (this.navList[index].showHeight >= target) {
+                  this.navList[index].showHeight = target
+                  clearInterval(this.timer)
                   return
                 }
-                this.navList[i].showHeight -= 20
+                this.navList[index].showHeight += 20
               }, 30)
             } else {
-              clearInterval(this.timer)
-              let num = index === 0 ? 1 : this.navList[index].children.length
-              if (this.navList[index].showHeight === HEIGHT) {
-                let target = (num + 1) * HEIGHT
+              if (status) {
                 this.timer = setInterval(() => {
-                  if (this.navList[index].showHeight >= target) {
-                    this.navList[index].showHeight = target
+                  if (this.navList[index].showHeight <= HEIGHT) {
+                    this.navList[index].showHeight = HEIGHT
                     clearInterval(this.timer)
                     return
                   }
-                  this.navList[index].showHeight += 20
+                  this.navList[index].showHeight -= 20
                 }, 30)
-              } else {
-                if (status) {
-                  this.timer = setInterval(() => {
-                    if (this.navList[index].showHeight <= HEIGHT) {
-                      this.navList[index].showHeight = HEIGHT
-                      clearInterval(this.timer)
-                      return
-                    }
-                    this.navList[index].showHeight -= 20
-                  }, 30)
-                }
               }
             }
           }
@@ -233,8 +217,8 @@
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
   .navigation
-    float: left
     background: $color-menu-background
+    float: left
     color: $color-lineCC
     height: 100vh
     position: relative
@@ -246,7 +230,6 @@
         font-size: $font-size-large18
         height: 150px
         overflow: hidden
-        background: $color-menu-select
         position: relative
         display: flex
         flex-direction: column
@@ -266,7 +249,6 @@
           border-radius: 50%
       .nav-big
         .nav-item
-          background: $color-menu-background
           overflow: hidden
           border-bottom: 1px solid #3B3B43
           .nav-tap
@@ -307,10 +289,10 @@
               transform: rotate(90deg) translateY(-50%)
               transition: transform 0.2s
             &:hover
-              background: $color-menu-select
+              background: rgba(255, 255, 255, 0.1)
               transition: all 0.2s
           .nav-tap-active
-            border-left: 6px solid $color-active
+            border-left: 6px solid rgba(255, 255, 255, 0.1)
         .nav-big-child
           .nav-item
             border-bottom: none
@@ -323,7 +305,40 @@
           .nav-big-active
             background: rgba(255, 255, 255, 0.1) !important
             border-left: 6px solid $color-active
-    .big-hide
-      width: 79px
-      transition: all .2s
+      .big-hide
+        width: 79px
+        transition: all .2s
+
+  /*微商*/
+  .ws-big
+    background: $color-menu-background
+    .big-show .nav-big
+      .nav-item
+        background: $color-menu-background
+        border-bottom: 0.5px solid #3B3B43
+        .nav-tap
+          border-left: 6px solid $color-menu-background
+          &:hover
+            background: rgba(255, 255, 255, 0.1)
+            border-left: 6px solid rgba(255, 255, 255, 0.1)
+        .nav-big-active
+          background: rgba(255, 255, 255, 0.1) !important
+          border-left: 6px solid $color-active !important
+
+  //智推
+  .card-big
+    background: $color-43455C
+    .big-show .nav-big
+      .nav-item
+        background: $color-43455C
+        border-bottom: 0.5px solid #3C3E54
+        .nav-tap
+          border-left: 6px solid $color-43455C
+          &:hover
+            background: $color-3F4055
+            border-left: 6px solid $color-3F4055
+        .nav-big-active
+          background: $color-3F4055 !important
+          border-left: 6px solid $color-pink-CA799A !important
+
 </style>

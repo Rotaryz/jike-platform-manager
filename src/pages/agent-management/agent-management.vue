@@ -29,7 +29,7 @@
             <div class="list-item list-text">fdg</div>
             <div class="list-item list-text">fdg</div>
             <div class="list-item list-text">fdg</div>
-            <div class="list-item list-text"><span>编辑</span></div>
+            <div class="list-item ws-text-under hand">编辑</div>
           </li>
         </ul>
       </div>

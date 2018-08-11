@@ -201,7 +201,7 @@
       line-height: 90px
       color: $color-text-little
       text-indent: 25px
-      font-size: $font-size-large16
+      font-size: $font-size-large18
       font-family: $fontFamilyLight
       .title-item
         color: $color-text99

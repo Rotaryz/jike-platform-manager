@@ -47,10 +47,54 @@
 .ws-text-under
   font-size: $font-size-medium14
   font-family: $fontFamilyLight
-  color: $color-active
+  color: $color-active !important
   text-decoration: underline
 
+// card主题
+.card-line
+  font-family: $fontFamilyLight
+  color: $color-text33
+  font-size: $font-size-large18
+  position: relative
+  line-height: 20px
+  text-indent: 42px
+  text-align: left
+  &:after
+    position: absolute
+    top: 0
+    left: 0
+    content: ''
+    width: 6px
+    height: 20px
+    background: $color-pink-CA799A
 
-//  鼠标移入时变手
-.hand
-  cursor: pointer
+.card-btn-blue
+  background: $color-pink-CA799A
+  color: $color-white
+
+.card-btn-white
+  background: $color-white
+  color: $color-pink-CA799A
+  border: 1px solid $color-pink-CA799A
+
+.card-btn-line
+  color: $color-pink-CA799A
+  position: relative
+  &:after
+    content: ''
+    background: $color-pink-CA799A
+    height: 3px
+    width: 40px
+    row-center()
+    bottom: 0
+
+.card-text
+  ont-size: $font-size-medium14
+  font-family: $fontFamilyLight
+  color: $color-pink-CA799A
+
+.card-text-under
+  font-size: $font-size-medium14
+  font-family: $fontFamilyLight
+  color: $color-pink-CA799A !important
+  text-decoration: underline
