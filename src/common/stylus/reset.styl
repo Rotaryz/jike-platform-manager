@@ -73,7 +73,11 @@ button
   display: none
 
 input
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
+  border: none
   outline: none
+  &::-webkit-inner-spin-button
+    -webkit-appearance: none !important
 
 //  鼠标移入时变手
 .hand

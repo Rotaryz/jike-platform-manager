@@ -18,8 +18,8 @@
             {{item}}
           </div>
         </div>
-        <ul class="list">
-          <li class="list-box">
+        <div class="list">
+          <div class="list-box">
             <div class="list-item list-text">fgd</div>
             <div class="list-item list-text">dfg</div>
             <div class="list-item list-text">dfg</div>
@@ -30,8 +30,11 @@
             <div class="list-item list-text">fdg</div>
             <div class="list-item list-text">fdg</div>
             <div class="list-item ws-text-under hand">编辑</div>
-          </li>
-        </ul>
+          </div>
+        </div>
+        <div class="page">
+          <page-detail></page-detail>
+        </div>
       </div>
     </div>
   </base-model>
@@ -41,6 +44,7 @@
   // import { ERR_OK } from 'api/config'
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
+  import PageDetail from 'components/page-detail/page-detail'
 
   const TITLELIST = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
 
@@ -65,7 +69,8 @@
     },
     components: {
       BaseModel,
-      AdminSelect
+      AdminSelect,
+      PageDetail
     }
   }
 </script>
@@ -138,7 +143,7 @@
     background: $color-big-background
 
   .list
-    height: 89.9%
+    height: 81.8%
     display: flex
     flex-direction: column
     .list-box
@@ -191,5 +196,8 @@
 
   .list-box-active
     background: $color-background
+
+  .page
+    height: 9.1%
 
 </style>
