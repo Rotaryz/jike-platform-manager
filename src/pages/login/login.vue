@@ -8,22 +8,35 @@
     <div class="login-box">
       <p class="login-title">智慧改变销售</p>
       <div class="login-content">
-        <div class="user input-box" :class="{'input-height': focusPhone}">
+        <div class="user input-box">
           <span class="input-icon"></span>
           <input class="inputs" value="asd" type="text"
                  placeholder="请输入用户名" v-model="user" />
         </div>
-        <div class="passward input-box" :class="{'input-height': focusPass}">
+        <div class="passward input-box">
           <span class="input-icon"></span>
           <input class="inputs" type="password"
                  placeholder="请输入密码" v-model="password" />
+        </div>
+        <div class="input-box shop hand" @click="_showMore">
+          <span class="input-icon"></span>
+          <div class="inputs">赞播AI微店</div>
+          <span class="input-way" :class="{'input-way-active': isShowMore}"></span>
+          <transition name="fade">
+            <ul class="shop-list" v-if="isShowMore" @click.stop>
+              <li class="shop-item" v-for="(item, index) in shopArr" :key="index">
+                {{item}}
+                <span class="shop-icon"></span>
+              </li>
+            </ul>
+          </transition>
         </div>
       </div>
       <!--<div class="remenber hand" @click="remenberPassWord">-->
       <!--<i class="check" :class="{'check-yes' : remenber}"></i>-->
       <!--<span class="tip">记住密码</span>-->
       <!--</div>-->
-      <div class="submit-no hand" :class="{'submit-disable': !isLogin}" @click="login">
+      <div class="submit-no hand ws-btn-blue" :class="{'submit-disable': !isLogin}" @click="login">
         登录
       </div>
     </div>
@@ -42,7 +55,9 @@
         focusPhone: false,
         user: '',
         password: '',
-        remenber: true
+        remenber: true,
+        isShowMore: false,
+        shopArr: ['赞播AI微店', '赞播AI智推']
       }
     },
     created() {
@@ -62,6 +77,9 @@
       }
     },
     methods: {
+      _showMore() {
+        this.isShowMore = !this.isShowMore
+      },
       hideFocus() {
         this.focusPhone = false
         this.focusPass = false
@@ -102,6 +120,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
+  @import '~common/stylus/theme'
   .login
     height: 100vh
     width: 100vw
@@ -132,9 +151,7 @@
         margin-left: 10px
         font-size: 36px
     .login-box
-      text-align: center
       .login-title
-        text-align: center
         font-size: 32px
         font-family: $fontFamilyLight
         color: $color-white
@@ -151,12 +168,14 @@
         &:after
           right: -54px
       .login-content
-        background: $color-white
+        position: relative
+        z-index: 200
         width: 468px
-        box-shadow: 0 0 10px 0 rgba(12, 6, 14, 0.10);
+        box-shadow: 0 0 10px 0 rgba(12, 6, 14, 0.10)
+        background: $color-white
         border-radius: 3px
-        overflow: hidden
         margin: 62px 0 30px
+        height: 240px
       .input-box
         width: 100%
         height: 80px
@@ -177,13 +196,58 @@
         .input-icon
           height: 20px
           width: @height
-          icon-image('icon-user')
+          icon-image('icon-tel')
           col-center()
           left: 35px
           z-index: 100
       .passward
         .input-icon
-          icon-image('icon-password')
+          icon-image('icon-shape')
+      .user
+        border-top-right-radius: 3px
+        border-top-left-radius: 3px
+        overflow: hidden
+      .shop
+        position: relative
+        .inputs
+          text-align: left
+          line-height: 80px
+        .input-icon
+          icon-image('icon-option_login')
+        .input-way
+          height: 8px
+          width: 13px
+          col-center()
+          right: 35px
+          icon-image('icon-triangle_gray')
+          transform-origin: 50% 0%
+          transform: rotate(0deg) translateY(-50%)
+          transition: transform 0.3s
+        .input-way-active
+          transform-origin: 50% 0%
+          transform: rotate(-180deg) translateY(-50%)
+          transition: transform 0.3s
+        .shop-list
+          margin-top: 5px
+          text-align: left
+          background: $color-white
+          width: 100%
+          text-indent: 35px
+          position: absolute
+          color: $color-text33
+          font-family: $fontFamilyLight
+          font-size: $font-size-medium14
+          z-index: 200
+          border-radius: 3px
+          &.fade-enter, &.fade-leave-to
+            opacity: 0
+          &.fade-enter-to, &.fade-leave-to
+            transition: all .3s ease-in-out
+          .shop-item
+            height: 80px
+            line-height: 80px
+            &:last-child
+              border-top: 1px solid #EFEFEF
       .remenber
         display: flex
         justify-content: right
@@ -212,8 +276,6 @@
           color: #9B9B9B
 
   .submit-no
-    background: $color-nomal
-    color: $color-white
     display: flex
     height: 50px
     width: 468px
@@ -226,5 +288,5 @@
     font-family: $fontFamilyLight
 
   .submit-disable
-    background: $color-disable
+    background: $color-active
 </style>

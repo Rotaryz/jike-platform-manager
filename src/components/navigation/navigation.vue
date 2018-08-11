@@ -13,7 +13,7 @@
             <div class="nav-title" v-show="!showAnimation">
               <span>{{item.title}}</span>
             </div>
-            <i class="nav" :class="{'nav-active': item.showHeight !== 60}" v-show="!showAnimation"></i>
+            <i class="nav" :class="{'nav-active': item.showHeight !== 69}" v-show="!showAnimation"></i>
           </router-link>
           <ul class="nav-big-child" v-if="item.children"
               v-show="item.children.length > 1">
@@ -39,7 +39,7 @@
     {
       title: '首页',
       url: '/',
-      icon: require('./icon-homepage@2x.png'),
+      icon: require('./icon-index@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '首页',
@@ -49,7 +49,7 @@
     }, {
       title: '商家管理',
       url: 'agent-management',
-      icon: require('./icon-applet_selected@2x.png'),
+      icon: require('./icon-business_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理商管理',
@@ -65,7 +65,7 @@
     }, {
       title: '订单管理',
       url: 'organizationalStructure',
-      icon: require('./icon-staff@2x.png'),
+      icon: require('./icon-order_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理订单',
@@ -77,7 +77,7 @@
       showHeight: HEIGHT
     }, {
       title: '财务管理',
-      icon: require('./icon-authorization@2x.png'),
+      icon: require('./icon-money_manage@2x.png'),
       url: 'authorizationManagement',
       childrenIndex: -1,
       children: [{
@@ -93,7 +93,7 @@
       showHeight: HEIGHT
     }, {
       title: '基础设置',
-      icon: require('./icon-account@2x.png'),
+      icon: require('./icon-basic_setting@2x.png'),
       url: 'accountCenter',
       childrenIndex: -1,
       children: [{
@@ -256,7 +256,7 @@
         font-family: $fontFamilyRegular
         border-bottom: 1px solid #3B3B43
         .icon
-          overflow :hidden
+          overflow: hidden
           background: $color-white
           height: 50px
           width: 50px
@@ -293,10 +293,10 @@
               justify-content: space-between
             .nav
               col-center()
-              height: 9px
-              width: 4px
+              height: 10px
+              width: 10px
               right: 23px
-              icon-image('icon-right')
+              icon-image('icon-arrow_right')
               transform-origin: 50% 0%
               transform: rotate(0deg) translateY(-50%)
               transition: transform 0.2s
@@ -310,6 +310,8 @@
           .nav-tap-active
             border-left: 8px solid $color-active
         .nav-big-child
+          .nav-item
+            border-bottom: none
           .nav-tap
             border-left: 8px solid $color-menu-background
             .nav-icon
