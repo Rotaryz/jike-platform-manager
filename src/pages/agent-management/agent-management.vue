@@ -72,7 +72,6 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
-  @import '~common/stylus/theme'
   .content-box
     height: 100%
     width: 100%
@@ -133,13 +132,13 @@
     box-sizing :border-box
 
   .list-header
-    height: 10%
+    height: 9.1%
     white-space: nowrap
     border-bottom: 1px solid $color-line
     background: $color-big-background
 
   .list
-    height: 90%
+    height: 89.9%
     display: flex
     flex-direction: column
     .list-box
