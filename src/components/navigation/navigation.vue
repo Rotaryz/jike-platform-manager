@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation" @mouseover="hideHover">
+  <div class="navigation">
     <div class="big-show" :class="{'big-hide': showAnimation}">
       <div class="herder">
         <img src="" class="icon">
@@ -34,7 +34,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  const HEIGHT = 60
+  const HEIGHT = 69
   const NAVLIST = [
     {
       title: '首页',
@@ -48,15 +48,15 @@
       showHeight: HEIGHT
     }, {
       title: '商家管理',
-      url: 'officialNetwork',
+      url: 'agent-management',
       icon: require('./icon-applet_selected@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理商管理',
-        url: 'officialNetwork'
+        url: 'agent-management'
       }, {
         title: '企业管理',
-        url: 'product'
+        url: 'business-management'
       }, {
         title: '客户管理',
         url: 'product'
@@ -97,7 +97,7 @@
       url: 'accountCenter',
       childrenIndex: -1,
       children: [{
-        title: '基础设置',
+        title: '角色设置',
         url: 'accountCenter'
       }, {
         title: '角色设置',
@@ -105,10 +105,6 @@
       }],
       showHeight: HEIGHT
     }]
-  // {
-  //        title: '订单列表',
-  //        url: '#/container/order'
-  //      }
   export default {
     data() {
       return {
@@ -133,17 +129,6 @@
     },
     methods: {
       info(path) {
-        //     待处理
-        switch (path) {
-          case '/container/productManagement':
-            this.showChild(2)
-            this.bigChildren(1)
-            break
-          case '/container/addEmployees':
-            this.showChild(2)
-            this.bigChildren(0)
-            break
-        }
         let rootType = path.split('/')
         let type = rootType[rootType.length - 1]
         this.navList.forEach((item, idx) => {
@@ -201,6 +186,7 @@
               let num = index === 0 ? 1 : this.navList[index].children.length
               if (this.navList[index].showHeight === HEIGHT) {
                 let target = (num + 1) * HEIGHT
+                console.log(target, HEIGHT)
                 this.timer = setInterval(() => {
                   if (this.navList[index].showHeight >= target) {
                     this.navList[index].showHeight = target
