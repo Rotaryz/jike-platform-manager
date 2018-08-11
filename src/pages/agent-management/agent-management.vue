@@ -1,7 +1,7 @@
 <template>
   <base-model>
     <div slot="content" class="content-box">
-      <ul class="tab">
+      <ul class="tab" v-if="project !== 'card'">
         <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index">{{item}}</li>
       </ul>
       <div class="check-box">
@@ -9,7 +9,7 @@
         <admin-select :select="account" ref="account"></admin-select>
         <div class="search">
           <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-          <span class="search-btn ws-btn-blue">搜 索</span>
+          <span class="search-btn" :class="project + '-btn-blue'">搜 索</span>
         </div>
       </div>
       <div class="form-list">
@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="list">
-          <div class="list-box">
+          <div class="list-box" v-for="item in 10">
             <div class="list-item list-text">fgd</div>
             <div class="list-item list-text">dfg</div>
             <div class="list-item list-text">dfg</div>
@@ -29,7 +29,7 @@
             <div class="list-item list-text">fdg</div>
             <div class="list-item list-text">fdg</div>
             <div class="list-item list-text">fdg</div>
-            <div class="list-item ws-text-under hand">编辑</div>
+            <div class="list-item hand" :class="project + '-text-under'">编辑</div>
           </div>
         </div>
         <div class="page">
@@ -45,6 +45,7 @@
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
   import PageDetail from 'components/page-detail/page-detail'
+  import { mapGetters } from 'vuex'
 
   const TITLELIST = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
 
@@ -66,6 +67,9 @@
           children: [{content: '账户状态', data: []}]
         }]
       }
+    },
+    computed: {
+      ...mapGetters(['project'])
     },
     components: {
       BaseModel,
@@ -126,7 +130,7 @@
         border-radius: 4px
 
   .form-list
-    font-family :$fontFamilyRegular
+    font-family: $fontFamilyRegular
     padding: 0 1.5vw 10px
     flex: 1
 
@@ -134,7 +138,7 @@
     display: flex
     align-items: center
     padding-left: 2vw
-    box-sizing :border-box
+    box-sizing: border-box
 
   .list-header
     height: 9.1%
@@ -156,7 +160,7 @@
 
       .list-text
         width: 90%
-        color :$color-text-66
+        color: $color-text-66
     no-wrap()
 
   .list-item-img
@@ -181,7 +185,7 @@
     color: $color-text
     flex: 1
     position: relative
-    text-align :left
+    text-align: left
     .showDetail
       cursor: pointer
       font-size: $font-size-small
