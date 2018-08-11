@@ -256,6 +256,7 @@
         font-family: $fontFamilyRegular
         border-bottom: 1px solid #3B3B43
         .icon
+          overflow :hidden
           background: $color-white
           height: 50px
           width: 50px
