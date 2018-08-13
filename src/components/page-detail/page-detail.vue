@@ -35,8 +35,6 @@
 </template>
 
 <script>
-  // import { ERR_OK } from 'api/config'
-
   export default {
     name: 'page-detail',
     props: {

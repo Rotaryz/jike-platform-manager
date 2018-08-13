@@ -31,11 +31,13 @@
     <div class="content-base">
       <slot name="content"></slot>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script>
   // import { ERR_OK } from 'api/config'
+  import Toast from 'components/toast/toast'
 
   export default {
     name: 'base-model',
@@ -86,7 +88,14 @@
       },
       hideHeight() {
         this.showOut = false
+      },
+      showContent(content, time) {
+        const showTime = time || 1000
+        this.$refs.toast.show(content, showTime)
       }
+    },
+    components: {
+      Toast
     }
   }
 </script>
