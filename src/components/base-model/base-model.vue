@@ -31,12 +31,14 @@
     <div class="content-base">
       <slot name="content"></slot>
     </div>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script>
   // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
+  import Toast from 'components/toast/toast'
 
   export default {
     name: 'base-model',
@@ -78,10 +80,17 @@
       },
       hideHeight() {
         this.showOut = false
+      },
+      showContent(content, time) {
+        const showTime = time || 1000
+        this.$refs.toast.show(content, showTime)
       }
     },
     computed: {
       ...mapGetters(['titleArr'])
+    },
+    components: {
+      Toast
     }
   }
 </script>
@@ -99,7 +108,7 @@
     width: 100%
     background: $color-white
     display: flex
-    height: 80px
+    min-height: 80px
     box-sizing: border-box
     align-items: center
     justify-content: flex-end
@@ -123,7 +132,7 @@
       transition: all 0.5s
     .user
       cursor: pointer
-      height: 100%
+      height: 80px
       display: flex
       align-items: center
       padding: 0 41px 0 33px
@@ -189,7 +198,7 @@
   .tag
     display: flex
     background: $color-white
-    height: 90px
+    min-height: 90px
     align-items: center
     position: relative
     .tag-title
@@ -384,6 +393,7 @@
       width: 534px
 
   .content-base
+    overflow-y: auto
     padding: 1.3vw
     flex: 1
     box-sizing: border-box

@@ -6,8 +6,7 @@
         {{title}}
       </div>
       <ul class="nav-big">
-        <li class="nav-item" v-for="(item , index) in navList" :key="index"
-            @click="showChild(index)" :style="{'height':item.showHeight+'px'}">
+        <li class="nav-item" v-for="(item , index) in navList" :key="index" @click="showChild(index)" :style="{'height':item.showHeight+'px'}">
           <router-link :to="{path: item.url}" class="nav-tap" :class="{'nav-tap-active':bigChild === index,'nav-item-no-border':item.children.length > 1}">
             <span class="nav-icon"><img :src="item.icon" class="nav-pic"></span>
             <div class="nav-title" v-show="!showAnimation">
@@ -48,16 +47,16 @@
       showHeight: HEIGHT
     }, {
       title: '商家管理',
-      url: '/agent-management',
+      url: '/agent-management/agent-list',
       icon: require('./icon-business_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理商管理',
-        url: '/agent-management',
+        url: '/agent-management/agent-list',
         type: 'normal'
       }, {
         title: '企业管理',
-        url: '/business-management',
+        url: '/agent-management/new-agent',
         type: 'normal'
       }, {
         title: '客户管理',
@@ -133,13 +132,12 @@
       ...mapGetters(['project'])
     },
     created() {
-      let path = this.$route.matched[1].path
+      let path = this.$route.fullPath
       this.info(path)
     },
     methods: {
       info(path) {
-        let rootType = path.split('/')
-        let type = rootType[rootType.length - 1]
+        let type = path
         this.navList.forEach((item, idx) => {
           item.children.forEach((items, index) => {
             if (items.url.includes(type)) {
@@ -311,33 +309,36 @@
   /*微商*/
   .ws-big
     background: $color-menu-background
+    transition: all 0.5s
     .big-show .nav-big
       .nav-item
-        background: $color-menu-background
         border-bottom: 0.5px solid #3B3B43
         .nav-tap
           border-left: 6px solid $color-menu-background
           &:hover
             background: rgba(255, 255, 255, 0.1)
-            border-left: 6px solid rgba(255, 255, 255, 0.1)
+            border-left: 6px solid transparent
         .nav-big-active
-          background: rgba(255, 255, 255, 0.1) !important
+          background: rgba(255, 255, 255, 0.1)
           border-left: 6px solid $color-active !important
+          transition: all 0.5s
+
 
   //智推
   .card-big
     background: $color-43455C
+    transition: all 0.5s
     .big-show .nav-big
       .nav-item
-        background: $color-43455C
         border-bottom: 0.5px solid #3C3E54
         .nav-tap
           border-left: 6px solid $color-43455C
           &:hover
             background: $color-3F4055
-            border-left: 6px solid $color-3F4055
+            border-left: 6px solid transparent
         .nav-big-active
-          background: $color-3F4055 !important
+          transition: all 0.5s
+          background: $color-3F4055
           border-left: 6px solid $color-pink-CA799A !important
 
 </style>
