@@ -17,7 +17,7 @@
     </div>
     <div class="tag">
       <div class="tag-title">
-        <span class="title-item" v-for="(item,index) in navTitle" :key="index">{{index > 0 ? '/' : ''}} {{item}}</span>
+        <span class="title-item" v-for="(item,index) in titleArr" :key="index">{{index > 0 ? '/' : ''}} {{item}}</span>
       </div>
       <slot name="tap"></slot>
     </div>
@@ -36,6 +36,7 @@
 
 <script>
   // import { ERR_OK } from 'api/config'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'base-model',
@@ -46,12 +47,8 @@
         logout: false,
         showOut: false,
         dataStatus: '',
-        navTitle: [],
         isShade: false
       }
-    },
-    created() {
-      this.setNavTitle()
     },
     methods: {
       showShade() {
@@ -59,11 +56,6 @@
       },
       hideShade() {
         this.isShade = false
-      },
-      setNavTitle() {
-        setTimeout(() => {
-          this.navTitle = sessionStorage.getItem('title') ? sessionStorage.getItem('title').split(',') : this.navTitle
-        }, 30)
       },
       showlogout() {
         this.logout = true
@@ -87,6 +79,9 @@
       hideHeight() {
         this.showOut = false
       }
+    },
+    computed: {
+      ...mapGetters(['titleArr'])
     }
   }
 </script>

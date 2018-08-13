@@ -1,7 +1,6 @@
 const state = {
-  argument: {
-    project: 'normal'
-  }
+  project: 'normal',
+  titleArr: ''
 }
 
 export default state

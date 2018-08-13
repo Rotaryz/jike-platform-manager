@@ -15,12 +15,13 @@
       this.setProject(project)
     },
     methods: {
-      ...mapActions(['setProject'])
+      ...mapActions(['setProject', 'setTitleArr'])
     },
     watch: {
       '$route'(to) {
         let title = to.meta.title
-        sessionStorage.setItem('title', title)
+        let titleArr = title.split(',')
+        this.setTitleArr(titleArr)
       }
     }
   }

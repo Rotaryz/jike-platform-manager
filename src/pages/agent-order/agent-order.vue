@@ -1,31 +1,30 @@
 <template>
-  <base-model>
-    <div slot="content" class="content-box">
-      <ul class="tab">
-        <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index">{{item}}</li>
-      </ul>
-      <div class="container-box">
-        <div class="top-box">
-          <search></search>
-          <div class="top-right">
-            <div class="add-btn hand" :class="project + '-btn-blue'">+ 新增订单</div>
-            <div class="excel-btn hand" :class="project + '-btn-white'">导出Excel</div>
-          </div>
-        </div>
-        <div class="list-head">
-          <div class="list-item" v-for="(item, index) in headList" :key="index">{{item}}</div>
-        </div>
-        <div class="list-box">
-          <div class="list-content" v-for="(item, index) in orderList" :key="index">
-            <div class="list-item" v-for="(item1, index1) in headList" :key="index1">564544545454545645445</div>
-          </div>
-        </div>
-        <div class="page-box">
-          <page-detail></page-detail>
+  <div class="content-box">
+    <ul class="tab">
+      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index" @click="checkTab(index)">{{item}}</li>
+    </ul>
+    <div class="container-box">
+      <div class="top-box">
+        <search @search="search"></search>
+        <div class="top-right">
+          <div class="add-btn hand" :class="project + '-btn-blue'" @click="addOrderMsg">+ 新增订单</div>
+          <div class="excel-btn hand" :class="project + '-btn-white'">导出Excel</div>
         </div>
       </div>
+      <div class="list-head">
+        <div class="list-item" v-for="(item, index) in headList" :key="index">{{item}}</div>
+      </div>
+      <div class="list-box">
+        <div class="list-content" v-for="(item, index) in orderList" :key="index">
+          <div class="list-item" v-for="(item1, index1) in headList" :key="index1">564544545454545645445</div>
+        </div>
+      </div>
+      <div class="page-box">
+        <page-detail @addPage="addPage"></page-detail>
+      </div>
     </div>
-  </base-model>
+    <toast ref="toast"></toast>
+  </div>
 </template>
 
 <script>
@@ -34,6 +33,7 @@
   import Search from 'components/search/search'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
+  import Toast from 'components/toast/toast'
 
   const HEADLIST = ['支付时间', '订单编号', '发货方', '商品名称', '商品单价', '商品数量', '总金额', '收货方', '订单状态', '操作']
 
@@ -47,10 +47,27 @@
         orderList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
       }
     },
+    methods: {
+      addPage(page) {
+        console.log(page)
+      },
+      checkTab(idx) {
+        if (idx * 1 === 1) {
+          this.$refs.toast.show('研发中， 待上线')
+        }
+      },
+      search(txt) {
+        console.log(txt)
+      },
+      addOrderMsg() {
+        this.$router.push({ path: `/order-management/add-order` })
+      }
+    },
     components: {
       BaseModel,
       Search,
-      PageDetail
+      PageDetail,
+      Toast
     },
     computed: {
       ...mapGetters(['project'])
