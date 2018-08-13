@@ -17,7 +17,7 @@
     </div>
     <div class="tag">
       <div class="tag-title">
-        <span class="title-item" v-for="(item,index) in navTitle" :key="index">{{index > 0 ? '/' : ''}} {{item}}</span>
+        <span class="title-item" v-for="(item,index) in titleArr" :key="index">{{index > 0 ? '/' : ''}} {{item}}</span>
       </div>
       <slot name="tap"></slot>
     </div>
@@ -37,6 +37,7 @@
 
 <script>
   // import { ERR_OK } from 'api/config'
+  import { mapGetters } from 'vuex'
   import Toast from 'components/toast/toast'
 
   export default {
@@ -48,12 +49,8 @@
         logout: false,
         showOut: false,
         dataStatus: '',
-        navTitle: [],
         isShade: false
       }
-    },
-    created() {
-      this.setNavTitle()
     },
     methods: {
       showShade() {
@@ -61,11 +58,6 @@
       },
       hideShade() {
         this.isShade = false
-      },
-      setNavTitle() {
-        setTimeout(() => {
-          this.navTitle = sessionStorage.getItem('title') ? sessionStorage.getItem('title').split(',') : this.navTitle
-        }, 30)
       },
       showlogout() {
         this.logout = true
@@ -93,6 +85,9 @@
         const showTime = time || 1000
         this.$refs.toast.show(content, showTime)
       }
+    },
+    computed: {
+      ...mapGetters(['titleArr'])
     },
     components: {
       Toast

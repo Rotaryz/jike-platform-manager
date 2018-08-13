@@ -16,6 +16,8 @@ const CashManagement = () => import('pages/cash-management/cash-management') // 
 const RoleManagement = () => import('pages/role-management/role-management') // 角色管理
 const NewAgent = () => import('pages/new-agrnt/new-agrnt') // 代理商管理新增编辑
 const AgentDetail = () => import('pages/agent-detail/agent-detail') // 代理商管理查看
+const AddOrder = () => import('pages/add-order/add-order') // 代理商管理查看
+const OrderManagement = () => import('pages/order-management/order-management') // 订单管理
 
 Vue.use(Router)
 
@@ -43,17 +45,30 @@ const route = new Router({
           title: '商家管理,企业管理'
         }
       }, {
-        path: 'agent-order',
-        component: AgentOrder,
-        meta: {
-          title: '订单管理,代理订单'
-        }
-      }, {
-        path: 'retail-order',
-        component: RetailOrder,
-        meta: {
-          title: '订单管理,零售订单'
-        }
+        path: 'order-management',
+        component: OrderManagement,
+        redirect: 'order-management/agent-order',
+        children: [
+          {
+            path: 'agent-order',
+            component: AgentOrder,
+            meta: {
+              title: '订单管理,代理订单'
+            }
+          }, {
+            path: 'retail-order',
+            component: RetailOrder,
+            meta: {
+              title: '订单管理,零售订单'
+            }
+          }, {
+            path: 'add-order',
+            component: AddOrder,
+            meta: {
+              title: '订单管理,代理订单,新增订单'
+            }
+          }
+        ]
       }, {
         path: 'platform-income',
         component: PlatformIncome,

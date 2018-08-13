@@ -112,7 +112,6 @@
         this.focus = false
       },
       goPage() {
-        console.log(this.pageInput * 1)
         if (this.pageInput !== '') {
           this.pageInput = Math.floor(this.pageInput * 1)
           if (this.pageInput > this.pageDtail.total_page) {

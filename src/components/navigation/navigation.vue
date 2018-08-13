@@ -48,65 +48,65 @@
       showHeight: HEIGHT
     }, {
       title: '商家管理',
-      url: 'agent-management',
+      url: '/agent-management',
       icon: require('./icon-business_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理商管理',
-        url: 'agent-management',
+        url: '/agent-management',
         type: 'normal'
       }, {
         title: '企业管理',
-        url: 'business-management',
+        url: '/business-management',
         type: 'normal'
       }, {
         title: '客户管理',
-        url: 'product',
+        url: '/product',
         type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
       title: '订单管理',
-      url: 'agent-order',
+      url: '/order-management/agent-order',
       icon: require('./icon-order_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理订单',
-        url: 'agent-order',
+        url: '/order-management/agent-order',
         type: 'normal'
       }, {
         title: '零售订单',
-        url: 'retail-order',
+        url: '/order-management/retail-order',
         type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
       title: '财务管理',
       icon: require('./icon-money_manage@2x.png'),
-      url: 'platform-income',
+      url: '/platform-income',
       childrenIndex: -1,
       children: [{
         title: '平台收入',
-        url: 'platform-income',
+        url: '/platform-income',
         type: 'normal'
       }, {
         title: '平台支出',
-        url: 'platform-expend',
+        url: '/platform-expend',
         type: 'ws'
       }, {
         title: '提现管理',
-        url: 'cash-management',
+        url: '/cash-management',
         type: 'ws'
       }],
       showHeight: HEIGHT
     }, {
       title: '基础设置',
       icon: require('./icon-basic_setting@2x.png'),
-      url: 'role-management',
+      url: '/role-management',
       childrenIndex: -1,
       children: [{
         title: '角色设置',
-        url: 'role-management',
+        url: '/role-management',
         type: 'normal'
       }],
       showHeight: HEIGHT
@@ -145,7 +145,6 @@
             if (items.url.includes(type)) {
               this.showChild(idx)
               this.bigChildren(index)
-              sessionStorage.setItem('title', [item.title, items.title])
             } else {
               item.showHeight = HEIGHT
             }
