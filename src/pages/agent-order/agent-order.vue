@@ -20,6 +20,9 @@
             <div class="list-item" v-for="(item1, index1) in headList" :key="index1">564544545454545645445</div>
           </div>
         </div>
+        <div class="page-box">
+          <page-detail></page-detail>
+        </div>
       </div>
     </div>
   </base-model>
@@ -29,6 +32,7 @@
   // import { ERR_OK } from 'api/config'
   import BaseModel from 'components/base-model/base-model'
   import Search from 'components/search/search'
+  import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
 
   const HEADLIST = ['支付时间', '订单编号', '发货方', '商品名称', '商品单价', '商品数量', '总金额', '收货方', '订单状态', '操作']
@@ -45,7 +49,8 @@
     },
     components: {
       BaseModel,
-      Search
+      Search,
+      PageDetail
     },
     computed: {
       ...mapGetters(['project'])
@@ -146,4 +151,8 @@
         border-bottom: 1px solid $color-line
         display: flex
         align-items: center
+    .page-box
+      width: 100%
+      height: 59px
+      margin-bottom: 10px
 </style>

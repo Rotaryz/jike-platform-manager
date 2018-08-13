@@ -1,26 +1,26 @@
 <template>
   <div class="total" :class="{'totle-more':tagTop}">
-    <div>每页{{pageDtail[0].per_page}}条，共{{pageDtail[0].total}}条数据</div>
+    <div>每页{{pageDtail.per_page}}条，共{{pageDtail.total}}条数据</div>
     <div class="page">
       <div class="page-icon" @click="subtract" :style="{'cursor': isHand.handLeft}" @mouseenter="notAllowed">
       </div>
-      <div class="pade-detail">{{page}}/{{pageDtail[0].total_page}}</div>
+      <div class="pade-detail">{{page}}/{{pageDtail.total_page}}</div>
       <div class="page-icon page-icon-two" @click="addPage" @mouseenter="notAllowed" :style="{'cursor': isHand.handRight}">
       </div>
       <div class="page-box" :class="{'input-height': pageDetail}">
         <div class="border-page page-total input-height-item" @click.stop="showPageDetail">
-          {{page}}/{{pageDtail[0].total_page}}
+          {{page}}/{{pageDtail.total_page}}
           <span class="page-tap">
                 <i class="page-top" :class="{'page-bottom':pageDetail}"></i>
               </span>
           <transition name="fade">
             <ul class="page-list" v-show="pageDetail">
               <li class="page-item"
-                  v-for="item in pageDtail[0].total_page"
+                  v-for="item in pageDtail.total_page"
                   :key="item"
                   :class="{'page-item-active': pageIndex === item}"
                   @click.stop="detailPage(item)">
-                {{item}}/{{pageDtail[0].total_page}}
+                {{item}}/{{pageDtail.total_page}}
               </li>
             </ul>
           </transition>
@@ -45,8 +45,10 @@
         default: false
       },
       pageDtail: {
-        type: Array,
-        default: () => [{total: 1, per_page: 10, total_page: 0}]
+        type: Object,
+        default: function() {
+          return {total: 1, per_page: 10, total_page: 0}
+        }
       }
     },
     data() {
@@ -62,8 +64,8 @@
       window.onkeydown = (e) => {
         if (e.keyCode === 13) {
           if (this.pageInput !== '') {
-            if (this.pageInput > this.pageDtail[0].total_page) {
-              this.pageInput = this.pageDtail[0].total_page
+            if (this.pageInput > this.pageDtail.total_page) {
+              this.pageInput = this.pageDtail.total_page
             } else if (this.pageInput * 1 < 0) {
               this.pageInput = 1
             }
@@ -87,11 +89,11 @@
       },
       notAllowed() {
         this.page === 1 ? this.isHand.handLeft = 'not-allowed' : this.isHand.handLeft = 'pointer'
-        this.page === this.pageDtail[0].total_page ? this.isHand.handRight = 'not-allowed' : this.isHand.handRight = 'pointer'
+        this.page === this.pageDtail.total_page ? this.isHand.handRight = 'not-allowed' : this.isHand.handRight = 'pointer'
         this.pageInput === '' ? this.isHand.handGo = 'not-allowed' : this.isHand.handGo = 'pointer'
       },
       addPage() {
-        if (this.page < this.pageDtail[0].total_page) {
+        if (this.page < this.pageDtail.total_page) {
           this.page++
           this.$emit('addPage', this.page)
         }
@@ -115,8 +117,8 @@
         console.log(this.pageInput * 1)
         if (this.pageInput !== '') {
           this.pageInput = Math.floor(this.pageInput * 1)
-          if (this.pageInput > this.pageDtail[0].total_page) {
-            this.pageInput = this.pageDtail[0].total_page
+          if (this.pageInput > this.pageDtail.total_page) {
+            this.pageInput = this.pageDtail.total_page
           } else if (this.pageInput * 1 <= 0) {
             this.pageInput = 1
           }
