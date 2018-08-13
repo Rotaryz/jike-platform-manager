@@ -59,7 +59,7 @@
         <div class="agent-item"><span class="agent-title">推荐代理商成员(人)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查看列表</span></div>
       </div>
     </div>
-    <div class="agent-btn hand" :class="project + '-btn-blue'">返回</div>
+    <div class="agent-btn hand" :class="project + '-btn-blue'" @click="_back">返回</div>
   </div>
 </template>
 
@@ -72,6 +72,11 @@
     name: 'agent-detail',
     computed: {
       ...mapGetters(['project'])
+    },
+    methods: {
+      _back() {
+        this.$router.back()
+      }
     },
     components: {
       BaseModel

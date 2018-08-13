@@ -7,25 +7,16 @@
           <div class="agent-item"><span class="agent-title">商家名称：</span>XXX代理商</div>
           <div class="agent-item"><span class="agent-title">商家账号：</span>XXX代理商</div>
           <div class="agent-item"><span class="agent-title">角色名称：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">所在地区：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">所属行业：</span>XXX代理商</div>
-        </div>
-        <div class="agent-box">
+          <div class="agent-item"><span class="agent-title">职位：</span>XXX代理商</div>
+          <div class="agent-item"><span class="agent-title">所属企业：</span>XXX代理商</div>
+          <div class="agent-item"><span class="agent-title">所属企业账号：</span>XXX代理商</div>
           <div class="agent-item"><span class="agent-title">所属代理商：</span>XXX代理商</div>
           <div class="agent-item"><span class="agent-title">所属代理商账号：</span>XXX代理商</div>
           <div class="agent-item"><span class="agent-title">推荐人名称：</span>XXX代理商</div>
           <div class="agent-item"><span class="agent-title">推荐人账号：</span>XXX代理商</div>
           <div class="agent-item"><span class="agent-title">使用期限：</span>XXX代理商</div>
+          <div class="agent-item"><span class="agent-title">开通方式：</span>XXX代理商</div>
         </div>
-      </div>
-    </div>
-    <div class="agent-detail-box">
-      <div :class="project + '-line'" class="agent-text">商品信息</div>
-      <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">商品名称：</span>XXX代理商</div>
-        <div class="agent-item"><span class="agent-title">商品数量(总进货)：</span>XXX代理商</div>
-        <div class="agent-item"><span class="agent-title">当前进货单价(元)：</span>XXX代理商</div>
-        <div class="agent-item"><span class="agent-title">商品数量(总销售)：</span>XXX代理商</div>
       </div>
     </div>
     <div class="agent-detail-box">
@@ -34,21 +25,13 @@
         <div class="agent-item"><span class="agent-title">总收入(元)：</span>XXX代理商</div>
       </div>
       <div class="agent-box ">
-        <div class="agent-item"><span class="agent-title">销货收入(元)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查询明细</span></div>
-      </div>
-      <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">总支出(元)：88888.00：</span>XXX代理商</div>
-      </div>
-      <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">商品进货支出(元)：18888.00：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">收款凭证</span></div>
-        <div class="agent-item"><span class="agent-title">年费支出(元)：</span>XXX代理商</div>
+        <div class="agent-item"><span class="agent-title">推荐奖励收入(元)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查询明细</span></div>
       </div>
     </div>
     <div class="agent-detail-box">
       <div :class="project + '-line'" class="agent-text">团队信息</div>
       <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">自有成员(人)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查看列表</span></div>
-        <div class="agent-item"><span class="agent-title">分销成员(人)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查看列表</span></div>
+        <div class="agent-item"><span class="agent-title">直接推荐(人)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查看列表</span></div>
       </div>
     </div>
     <div class="agent-btn hand" :class="project + '-btn-blue'" @click="_back">返回</div>
@@ -61,7 +44,7 @@
   import BaseModel from 'components/base-model/base-model'
 
   export default {
-    name: 'business-detail',
+    name: 'member-detail',
     computed: {
       ...mapGetters(['project'])
     },

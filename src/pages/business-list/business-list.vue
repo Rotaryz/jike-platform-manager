@@ -132,6 +132,7 @@
       font-size: $font-size-small12
 
   .form-list
+    font-size: $font-size-medium14
     font-family: $fontFamilyRegular
     padding: 0 1.5vw 10px
     flex: 1
