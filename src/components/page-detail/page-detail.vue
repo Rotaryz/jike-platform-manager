@@ -64,8 +64,8 @@
       window.onkeydown = (e) => {
         if (e.keyCode === 13) {
           if (this.pageInput !== '') {
-            if (this.pageInput > this.pageDtail[0].total_page) {
-              this.pageInput = this.pageDtail[0].total_page
+            if (this.pageInput > this.pageDtail.total_page) {
+              this.pageInput = this.pageDtail.total_page
             } else if (this.pageInput * 1 < 0) {
               this.pageInput = 1
             }
@@ -89,11 +89,11 @@
       },
       notAllowed() {
         this.page === 1 ? this.isHand.handLeft = 'not-allowed' : this.isHand.handLeft = 'pointer'
-        this.page === this.pageDtail[0].total_page ? this.isHand.handRight = 'not-allowed' : this.isHand.handRight = 'pointer'
+        this.page === this.pageDtail.total_page ? this.isHand.handRight = 'not-allowed' : this.isHand.handRight = 'pointer'
         this.pageInput === '' ? this.isHand.handGo = 'not-allowed' : this.isHand.handGo = 'pointer'
       },
       addPage() {
-        if (this.page < this.pageDtail[0].total_page) {
+        if (this.page < this.pageDtail.total_page) {
           this.page++
           this.$emit('addPage', this.page)
         }
@@ -117,8 +117,8 @@
         console.log(this.pageInput * 1)
         if (this.pageInput !== '') {
           this.pageInput = Math.floor(this.pageInput * 1)
-          if (this.pageInput > this.pageDtail[0].total_page) {
-            this.pageInput = this.pageDtail[0].total_page
+          if (this.pageInput > this.pageDtail.total_page) {
+            this.pageInput = this.pageDtail.total_page
           } else if (this.pageInput * 1 <= 0) {
             this.pageInput = 1
           }
