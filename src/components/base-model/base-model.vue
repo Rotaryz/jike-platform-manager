@@ -81,12 +81,6 @@
       hidelogout() {
         this.logout = false
       },
-      checkStatus() {
-        let res = this.$refs.nav.isShowBig()
-        this.width = res
-        this.offsetWhidt = document.body.clientWidth - this.width
-        this.navStatus = !this.navStatus
-      },
       isLogout() {
         localStorage.clear()
         this.$router.push({path: '/'})
