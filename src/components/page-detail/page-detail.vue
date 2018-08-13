@@ -242,7 +242,4 @@
         border: 2px solid $color-white
         height: 29px
         margin-right: 10px
-
-  .totle-more
-    height: 4.8%
 </style>
