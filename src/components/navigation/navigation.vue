@@ -56,11 +56,11 @@
         type: 'normal'
       }, {
         title: '企业管理',
-        url: '/agent-management/new-agent',
+        url: '/business-management/business-list',
         type: 'normal'
       }, {
         title: '客户管理',
-        url: '/member-management',
+        url: '/member-management/member-list',
         type: 'ws'
       }],
       showHeight: HEIGHT
@@ -98,18 +98,19 @@
         type: 'ws'
       }],
       showHeight: HEIGHT
-    }, {
-      title: '基础设置',
-      icon: require('./icon-basic_setting@2x.png'),
-      url: '/role-management',
-      childrenIndex: -1,
-      children: [{
-        title: '角色设置',
-        url: '/role-management',
-        type: 'normal'
-      }],
-      showHeight: HEIGHT
     }]
+  //   , {
+  //   title: '基础设置',
+  //   icon: require('./icon-basic_setting@2x.png'),
+  //   url: '/role-management/role-list',
+  //   childrenIndex: -1,
+  //   children: [{
+  //   title: '角色设置',
+  //   url: '/role-management/role-list',
+  //   type: 'normal'
+  // }],
+  //   showHeight: HEIGHT
+  // }
   export default {
     data() {
       return {
@@ -132,7 +133,7 @@
       ...mapGetters(['project'])
     },
     created() {
-      let path = this.$route.fullPath
+      let path = this.$route.matched[1].path
       this.info(path)
     },
     methods: {
