@@ -1,7 +1,7 @@
 <template>
   <div class="content-box">
     <ul class="tab">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index" @click="checkTab(index)">{{item}}</li>
+      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex === index ? (project + '-btn-line') : ''" :key="index" @click="checkTab(index)">{{item}}</li>
     </ul>
     <div class="container-box">
       <div class="top-box">
