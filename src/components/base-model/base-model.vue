@@ -108,7 +108,7 @@
     width: 100%
     background: $color-white
     display: flex
-    height: 80px
+    min-height: 80px
     box-sizing: border-box
     align-items: center
     justify-content: flex-end
@@ -132,7 +132,7 @@
       transition: all 0.5s
     .user
       cursor: pointer
-      height: 100%
+      height: 80px
       display: flex
       align-items: center
       padding: 0 41px 0 33px
@@ -198,7 +198,7 @@
   .tag
     display: flex
     background: $color-white
-    height: 90px
+    min-height: 90px
     align-items: center
     position: relative
     .tag-title
@@ -393,6 +393,7 @@
       width: 534px
 
   .content-base
+    overflow-y: auto
     padding: 1.3vw
     flex: 1
     box-sizing: border-box
