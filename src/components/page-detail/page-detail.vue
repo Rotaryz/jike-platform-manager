@@ -1,26 +1,26 @@
 <template>
-  <div class="total" :class="{'totle-more':tagTop}">
-    <div>每页{{pageDtail[0].per_page}}条，共{{pageDtail[0].total}}条数据</div>
+  <div class="total">
+    <div>每页{{pageDtail.per_page}}条，共{{pageDtail.total}}条数据</div>
     <div class="page">
       <div class="page-icon" @click="subtract" :style="{'cursor': isHand.handLeft}" @mouseenter="notAllowed">
       </div>
-      <div class="pade-detail">{{page}}/{{pageDtail[0].total_page}}</div>
+      <div class="pade-detail">{{page}}/{{pageDtail.total_page}}</div>
       <div class="page-icon page-icon-two" @click="addPage" @mouseenter="notAllowed" :style="{'cursor': isHand.handRight}">
       </div>
       <div class="page-box" :class="{'input-height': pageDetail}">
         <div class="border-page page-total input-height-item" @click.stop="showPageDetail">
-          {{page}}/{{pageDtail[0].total_page}}
+          {{page}}/{{pageDtail.total_page}}
           <span class="page-tap">
                 <i class="page-top" :class="{'page-bottom':pageDetail}"></i>
               </span>
           <transition name="fade">
             <ul class="page-list" v-show="pageDetail">
               <li class="page-item"
-                  v-for="item in pageDtail[0].total_page"
+                  v-for="item in pageDtail.total_page"
                   :key="item"
                   :class="{'page-item-active': pageIndex === item}"
                   @click.stop="detailPage(item)">
-                {{item}}/{{pageDtail[0].total_page}}
+                {{item}}/{{pageDtail.total_page}}
               </li>
             </ul>
           </transition>
@@ -40,13 +40,15 @@
   export default {
     name: 'page-detail',
     props: {
-      tagTop: {
-        type: Boolean,
-        default: false
-      },
       pageDtail: {
-        type: Array,
-        default: () => [{total: 1, per_page: 10, total_page: 0}]
+        type: Object,
+        default: () => {
+          return {
+            total: 1,
+            per_page: 10,
+            total_page: 0
+          }
+        }
       }
     },
     data() {
