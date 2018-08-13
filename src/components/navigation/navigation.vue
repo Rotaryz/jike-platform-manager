@@ -60,7 +60,7 @@
         type: 'normal'
       }, {
         title: '客户管理',
-        url: '/product',
+        url: '/member-management',
         type: 'ws'
       }],
       showHeight: HEIGHT

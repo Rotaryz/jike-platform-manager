@@ -21,6 +21,9 @@ const AddOrder = () => import('pages/add-order/add-order') // 代理商管理查
 const OrderManagement = () => import('pages/order-management/order-management') // 订单管理
 const AgentOrderDetail = () => import('pages/agentOrder-detail/agentOrder-detail') // 代理订单详情
 const RetailOrderDetail = () => import('pages/retailOrder-detail/retailOrder-detail') // 代理订单详情
+const MemberManagement = () => import('pages/member-management/member-management') // 成员管理
+const MemberList = () => import('pages/member-list/member-list') // 成员管理列表
+const MemberDetail = () => import('pages/member-detail/member-detail') // 成员管理列表
 
 Vue.use(Router)
 
@@ -124,6 +127,25 @@ const route = new Router({
         meta: {
           title: '基础设置,角色设置'
         }
+      }, {
+        path: 'member-management',
+        component: MemberManagement,
+        meta: {
+          title: '商家管理,成员管理'
+        },
+        children: [{
+          path: 'member-list',
+          component: MemberList,
+          meta: {
+            title: '商家管理,成员管理'
+          }
+        }, {
+          path: 'member-detail',
+          component: MemberDetail,
+          meta: {
+            title: '商家管理,成员管理'
+          }
+        }]
       }]
     }, {
       path: '/login',
@@ -131,7 +153,7 @@ const route = new Router({
     }
   ]
 })
-// const DEFAULT_ROUTE = '/agent-management'
+// const DEFAULT_ROUTE = '/agent-management/agent-list'
 // const OAUTH_ROUTE = '/login'
 // route.beforeEach((to, from, next) => {
 //   if (to.path === '/') {
