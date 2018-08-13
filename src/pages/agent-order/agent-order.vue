@@ -23,7 +23,6 @@
         <page-detail @addPage="addPage"></page-detail>
       </div>
     </div>
-    <toast ref="toast"></toast>
   </div>
 </template>
 
@@ -33,7 +32,6 @@
   import Search from 'components/search/search'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
-  import Toast from 'components/toast/toast'
 
   const HEADLIST = ['支付时间', '订单编号', '发货方', '商品名称', '商品单价', '商品数量', '总金额', '收货方', '订单状态', '操作']
 
@@ -53,7 +51,7 @@
       },
       checkTab(idx) {
         if (idx * 1 === 1) {
-          this.$refs.toast.show('研发中， 待上线')
+          this.$emit('showToast', '研发中, 待上线')
         }
       },
       search(txt) {
@@ -66,8 +64,7 @@
     components: {
       BaseModel,
       Search,
-      PageDetail,
-      Toast
+      PageDetail
     },
     computed: {
       ...mapGetters(['project'])
