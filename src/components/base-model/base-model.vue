@@ -21,11 +21,18 @@
       </div>
       <slot name="tap"></slot>
     </div>
+    <!-- 弹窗-->
     <transition name="fade">
       <div class="shade-win" @click.stop="hideShade" v-show="isShade">
         <div class="shade-detail" @click.stop>
           <slot name="shade-box"></slot>
         </div>
+      </div>
+    </transition>
+    <!--图片预览-->
+    <transition name="fade">
+      <div class="shade-win" @click.stop="hideImage" v-show="isImage">
+        <img :src="shadeImage" class="shade-img">
       </div>
     </transition>
     <div class="content-base">
@@ -49,10 +56,19 @@
         logout: false,
         showOut: false,
         dataStatus: '',
-        isShade: false
+        isShade: false,
+        isImage: false,
+        shadeImage: ''
       }
     },
     methods: {
+      hideImage() {
+        this.isImage = false
+      },
+      showImage(img) {
+        this.shadeImage = img || ''
+        this.isImage = true
+      },
       showShade() {
         this.isShade = true
       },
@@ -375,6 +391,7 @@
   .shade-win
     height: 100%
     width: 100%
+    overflow-y: auto
     background: rgba(50, 50, 58, 0.60)
     position: absolute
     top: 0
@@ -398,4 +415,10 @@
     padding: 1.3vw
     flex: 1
     box-sizing: border-box
+
+  .shade-img
+    width: 500px
+    height: auto
+    overflow-y: hidden
+    all-center()
 </style>

@@ -69,8 +69,8 @@
     computed: {
       ...mapGetters(['project'])
     },
-    created() {
-      console.log(this.$parent)
+    mounted() {
+      // this.$emit('showShade')
     },
     methods: {},
     components: {
