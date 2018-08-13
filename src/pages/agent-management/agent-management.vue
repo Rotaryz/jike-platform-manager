@@ -37,7 +37,11 @@
     computed: {
       ...mapGetters(['project'])
     },
-    methods: {},
+    methods: {
+      dododo() {
+        console.log('sss')
+      }
+    },
     components: {
       BaseModel,
       AdminSelect,

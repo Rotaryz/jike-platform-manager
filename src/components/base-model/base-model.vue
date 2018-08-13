@@ -98,6 +98,7 @@
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
   .base-model
+    position: relative
     height: 100vh
     display: flex
     flex-direction: column

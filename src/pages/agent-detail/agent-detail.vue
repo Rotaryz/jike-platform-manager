@@ -117,7 +117,7 @@
   .agent-btn
     border-radius: 3px
     font-family: $fontFamilyLight
-    margin: 3.7vh auto 0
+    margin: 3.7vh auto 3.7vh
     line-height: 40px
     width: 96px
     height: 40px

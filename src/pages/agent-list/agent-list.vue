@@ -8,7 +8,7 @@
       <admin-select :select="account" ref="account"></admin-select>
       <div class="search">
         <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-        <span class="search-btn" :class="project + '-btn-blue'">搜 索{{project}}</span>
+        <span class="search-btn" :class="project + '-btn-blue'">搜 索</span>
       </div>
     </div>
     <div class="form-list">
@@ -28,7 +28,7 @@
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item hand" :class="project + '-text-under'">编辑</div>
+          <div class="list-item hand list-item-tap"><router-link tag="span" :to="'/agent-management/new-agent'" :class="project + '-text-under'">编辑</router-link> | <router-link tag="span" :to="'/agent-management/agent-detail'" :class="project + '-text-under'">查看</router-link></div>
         </div>
       </div>
       <div class="page">
@@ -69,6 +69,9 @@
     computed: {
       ...mapGetters(['project'])
     },
+    created() {
+      console.log(this.$parent)
+    },
     methods: {},
     components: {
       BaseModel,
@@ -81,8 +84,8 @@
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
   .agent-list
-    display :flex
-    flex-direction :column
+    display: flex
+    flex-direction: column
     height: 100%
     box-shadow: 0 1px 6px 0 rgba(0, 8, 39, 0.10)
     background: $color-white
@@ -157,7 +160,9 @@
         line-height: 16px
         color: $color-text33
         font-size: $font-size-medium14
-
+      .list-item-tap
+        font-size: $font-size-small12
+        color: rgba(0, 0, 0, .1)
       .list-text
         no-wrap()
         width: 90%
@@ -199,8 +204,6 @@
         color: $color-nomal
     &:nth-child(1)
       flex: 1.5
-    &:last-child
-      flex: 0.7
 
   .list-box-active
     background: $color-background
