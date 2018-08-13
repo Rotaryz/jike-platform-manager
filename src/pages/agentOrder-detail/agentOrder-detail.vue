@@ -24,7 +24,7 @@
         <div class="msg-title">支付凭证：</div>
         <div class="msg-right">
           <div class="img-box">
-            <img src="" class="image">
+            <img src="" class="image hand" @click="showImg">
           </div>
           <div class="msg-right-txt">点击查看全图</div>
         </div>
@@ -48,6 +48,9 @@
       },
       backBefore() {
         this.$router.back()
+      },
+      showImg() {
+        this.$emit('showImg', '')
       }
     },
     computed: {

@@ -1,7 +1,7 @@
 <template>
   <base-model ref="baseModel">
     <div slot="content" class="content-box">
-      <router-view @showToast="showToast"></router-view>
+      <router-view @showToast="showToast" @showImg="showImg"></router-view>
     </div>
   </base-model>
 </template>
@@ -19,6 +19,9 @@
     methods: {
       showToast(content, time = 1000) {
         this.$refs.baseModel.showContent(content, time)
+      },
+      showImg(src) {
+        console.log(src)
       }
     },
     components: {
