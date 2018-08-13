@@ -1,5 +1,5 @@
 <template>
-  <div class="total" :class="{'totle-more':tagTop}">
+  <div class="total">
     <div>每页{{pageDtail.per_page}}条，共{{pageDtail.total}}条数据</div>
     <div class="page">
       <div class="page-icon" @click="subtract" :style="{'cursor': isHand.handLeft}" @mouseenter="notAllowed">
@@ -40,14 +40,14 @@
   export default {
     name: 'page-detail',
     props: {
-      tagTop: {
-        type: Boolean,
-        default: false
-      },
       pageDtail: {
         type: Object,
-        default: function() {
-          return {total: 1, per_page: 10, total_page: 0}
+        default: () => {
+          return {
+            total: 1,
+            per_page: 10,
+            total_page: 0
+          }
         }
       }
     },
@@ -242,7 +242,4 @@
         border: 2px solid $color-white
         height: 29px
         margin-right: 10px
-
-  .totle-more
-    height: 4.8%
 </style>

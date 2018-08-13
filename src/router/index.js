@@ -15,7 +15,7 @@ const PlatformExpend = () => import('pages/platform-expend/platform-expend') // 
 const CashManagement = () => import('pages/cash-management/cash-management') // 提现管理
 const RoleManagement = () => import('pages/role-management/role-management') // 角色管理
 const NewAgent = () => import('pages/new-agrnt/new-agrnt') // 代理商管理新增编辑
-// const AgentDetail  = () => import('pages/new-agrnt/new-agrnt') // 代理商管理新增编辑
+const AgentDetail = () => import('pages/agent-detail/agent-detail') // 代理商管理查看
 
 Vue.use(Router)
 
@@ -83,6 +83,12 @@ const route = new Router({
         component: NewAgent,
         meta: {
           title: '商家管理,代理商管理,新增代理商'
+        }
+      }, {
+        path: 'agent-detail',
+        component: AgentDetail,
+        meta: {
+          title: '商家管理,代理商管理'
         }
       }]
     }, {
