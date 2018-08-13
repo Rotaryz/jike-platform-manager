@@ -18,7 +18,6 @@
     },
     methods: {
       showToast(content, time = 1000) {
-        console.log(9999)
         this.$refs.baseModel.showContent(content, time)
       }
     },

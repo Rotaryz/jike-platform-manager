@@ -7,9 +7,7 @@ const Home = () => import('pages/home/home')
 const Login = () => import('pages/login/login')
 const AgentManagement = () => import('pages/agent-management/agent-management') // 代理商管理列表
 const AgentList = () => import('pages/agent-list/agent-list') // 代理商管理列表
-const BusinessManagement = () => import('pages/business-management/business-management') // 企业管理
-const BusinessList = () => import('pages/business-list/business-list') // 企业管理列表
-const BusinessDetail = () => import('pages/business-detail/business-detail') // 企业管理详情
+const BusinessManagement = () => import('pages/business-management/business-management') // 企业管理列表
 const CustomerManagement = () => import('pages/customer-management/customer-management') // 客户管理列表
 const AgentOrder = () => import('pages/agent-order/agent-order') // 代理订单
 const RetailOrder = () => import('pages/retail-order/retail-order') // 零售订单
@@ -21,7 +19,8 @@ const NewAgent = () => import('pages/new-agent/new-agent') // 代理商管理新
 const AgentDetail = () => import('pages/agent-detail/agent-detail') // 代理商管理查看
 const AddOrder = () => import('pages/add-order/add-order') // 代理商管理查看
 const OrderManagement = () => import('pages/order-management/order-management') // 订单管理
-const MemberManagement = () => import('pages/member-management/member-management') // 成员管理
+const AgentOrderDetail = () => import('pages/agentOrder-detail/agentOrder-detail') // 代理订单详情
+const RetailOrderDetail = () => import('pages/retailOrder-detail/retailOrder-detail') // 代理订单详情
 
 Vue.use(Router)
 
@@ -57,20 +56,7 @@ const route = new Router({
         component: BusinessManagement,
         meta: {
           title: '商家管理,企业管理'
-        },
-        children: [{
-          path: 'business-list',
-          component: BusinessList,
-          meta: {
-            title: '商家管理,企业管理'
-          }
-        }, {
-          path: 'business-detail',
-          component: BusinessDetail,
-          meta: {
-            title: '商家管理,企业管理'
-          }
-        }]
+        }
       }, {
         path: 'customer-management',
         component: CustomerManagement,
@@ -100,6 +86,18 @@ const route = new Router({
             meta: {
               title: '订单管理,代理订单,新增订单'
             }
+          }, {
+            path: 'agentOrder-detail',
+            component: AgentOrderDetail,
+            meta: {
+              title: '订单管理,代理订单,查看详情'
+            }
+          }, {
+            path: 'retailOrder-detail',
+            component: RetailOrderDetail,
+            meta: {
+              title: '订单管理,零售订单,查看详情'
+            }
           }
         ]
       }, {
@@ -126,12 +124,6 @@ const route = new Router({
         meta: {
           title: '基础设置,角色设置'
         }
-      }, {
-        path: 'member-management',
-        component: MemberManagement,
-        meta: {
-          title: '商家管理,成员管理'
-        }
       }]
     }, {
       path: '/login',
@@ -139,7 +131,7 @@ const route = new Router({
     }
   ]
 })
-// const DEFAULT_ROUTE = '/agent-management/agent-list'
+// const DEFAULT_ROUTE = '/agent-management'
 // const OAUTH_ROUTE = '/login'
 // route.beforeEach((to, from, next) => {
 //   if (to.path === '/') {

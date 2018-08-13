@@ -16,7 +16,8 @@
       </div>
       <div class="list-box">
         <div class="list-content" v-for="(item, index) in orderList" :key="index">
-          <div class="list-item" v-for="(item1, index1) in headList" :key="index1">564544545454545645445</div>
+          <div class="list-item" v-for="(item1, index1) in headList" :key="index1" v-if="index1 != (headList.length - 1)">test</div>
+          <div class="list-item hand" :class="project + '-text'" @click="toDetail(item)">查看</div>
         </div>
       </div>
       <div class="page-box">
@@ -59,6 +60,10 @@
       },
       addOrderMsg() {
         this.$router.push({ path: `/order-management/add-order` })
+      },
+      toDetail(item) {
+        console.log(item)
+        this.$router.push({ path: `/order-management/agentOrder-detail`, query: {id: 2} })
       }
     },
     components: {

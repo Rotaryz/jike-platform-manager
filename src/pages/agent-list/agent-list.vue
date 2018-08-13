@@ -8,7 +8,7 @@
       <admin-select :select="account" ref="account"></admin-select>
       <div class="search">
         <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-        <span class="search-btn hand" :class="project + '-btn-blue'">搜 索</span>
+        <span class="search-btn" :class="project + '-btn-blue'">搜 索</span>
       </div>
     </div>
     <div class="form-list">
@@ -69,8 +69,8 @@
     computed: {
       ...mapGetters(['project'])
     },
-    mounted() {
-      // this.$emit('showShade')
+    created() {
+      console.log(this.$parent)
     },
     methods: {},
     components: {
@@ -174,6 +174,18 @@
     height: 40px
     border: none
     display: block
+
+  .check-box
+    width: 85px
+    .check-item
+      margin-left: 1.5vw
+      display: inline-block
+      width: 14px
+      box-sizing: border-box
+      height: 14px
+      border: 1px solid #D9D9D9
+    .check-ok
+      border: none
 
   .list-item
     color: $color-text
