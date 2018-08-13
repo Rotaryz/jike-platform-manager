@@ -1,15 +1,12 @@
 <template>
   <div class="agent-list">
-    <ul class="tab" v-if="project !== 'card'">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index">{{item}}</li>
-    </ul>
     <div class="check-box">
-      <admin-select :select="role" ref="role"></admin-select>
       <admin-select :select="account" ref="account"></admin-select>
       <div class="search">
         <input type="text" class="search-input" placeholder="请输入商家名称或账号">
         <span class="search-btn hand" :class="project + '-btn-blue'">搜 索</span>
       </div>
+      <div class="down-excel hand" :class="project + '-btn-blue'">导出Excel</div>
     </div>
     <div class="form-list">
       <div class="list-header">
@@ -26,9 +23,9 @@
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item hand list-item-tap"><router-link tag="span" :to="'/agent-management/new-agent'" :class="project + '-text-under'">编辑</router-link> | <router-link tag="span" :to="'/agent-management/agent-detail'" :class="project + '-text-under'">查看</router-link></div>
+          <div class="list-item hand list-item-tap">
+            <router-link tag="span" :to="'/business-management/business-detail'" :class="project + '-text-under'">查看</router-link>
+          </div>
         </div>
       </div>
       <div class="page">
@@ -45,20 +42,15 @@
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
 
-  const TITLELIST = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
+  const TITLELIST = ['商家名称', '商家账号', '所属代理商', '推荐人', '推荐人电话', '账户状态', '到期时间', '操作']
 
   export default {
-    name: 'list',
+    name: 'business-list',
     data() {
       return {
         titleList: TITLELIST,
         tabArr: ['代理商列表', '申请记录'],
         tabIndex: 0,
-        role: [{
-          select: false,
-          show: false,
-          children: [{content: '角色名称', data: [{title: 'ss'}, {title: '999'}]}]
-        }],
         account: [{
           select: false,
           show: false,
@@ -106,6 +98,7 @@
     align-items: center
     display: flex
     padding: 1.5vw 0 1.5vw 10px
+    position: relative
     .search
       display: flex
       align-items: center
@@ -129,6 +122,14 @@
         line-height: 28px
         font-size: $font-size-small12
         border-radius: 4px
+    .down-excel
+      border-radius: 4px
+      position: absolute
+      right: 1.5vw
+      height: 28px
+      width: 84px
+      line-height: 28px
+      font-size: $font-size-small12
 
   .form-list
     font-family: $fontFamilyRegular
@@ -192,6 +193,8 @@
         color: $color-nomal
     &:nth-child(1)
       flex: 1.5
+    &:last-child
+      flex: 0.7
 
   .list-box-active
     background: $color-background

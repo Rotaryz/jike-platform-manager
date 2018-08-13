@@ -1,7 +1,7 @@
 <template>
   <base-model ref="baseModel">
     <div slot="content" class="content-box">
-      <router-view @showToast="showToast" @showShade="showShade" @hideShade="hideShade"></router-view>
+      <router-view @showToast="showToast" @showShade="showShade" @hideShade="hideShade" @showImage="showImage"></router-view>
     </div>
     <div slot="shade-box" class="shade-box">
       <p class="shade-title">
@@ -22,8 +22,6 @@
 <script>
   // import { ERR_OK } from 'api/config'
   import BaseModel from 'components/base-model/base-model'
-  import AdminSelect from 'components/admin-select/admin-select'
-  import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -40,12 +38,13 @@
       },
       hideShade() {
         this.$refs.baseModel.hideShade()
+      },
+      showImage(img) {
+        this.$refs.baseModel.showImage(img)
       }
     },
     components: {
-      BaseModel,
-      AdminSelect,
-      PageDetail
+      BaseModel
     }
   }
 </script>

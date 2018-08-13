@@ -56,7 +56,7 @@
         type: 'normal'
       }, {
         title: '企业管理',
-        url: '/agent-management/new-agent',
+        url: '/business-management/business-list',
         type: 'normal'
       }, {
         title: '客户管理',
@@ -132,7 +132,7 @@
       ...mapGetters(['project'])
     },
     created() {
-      let path = this.$route.fullPath
+      let path = this.$route.matched[1].path
       this.info(path)
     },
     methods: {
@@ -322,7 +322,6 @@
           background: rgba(255, 255, 255, 0.1)
           border-left: 6px solid $color-active !important
           transition: all 0.5s
-
 
   //智推
   .card-big

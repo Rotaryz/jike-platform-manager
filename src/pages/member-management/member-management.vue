@@ -12,7 +12,7 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    name: 'agent-management',
+    name: 'member-management',
     computed: {
       ...mapGetters(['project'])
     },

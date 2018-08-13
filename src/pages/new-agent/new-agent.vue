@@ -45,7 +45,7 @@
       </div>
       <div class="new-input-box new-input-box-img">
         <span class="new-input-title">* 收款凭证</span>
-        <img src="" class="new-add-img">
+        <img src="./upload@2x.png" class="new-add-img">
         <input type="file" class="file-input" accept="image/*">
         <span class="new-tip">点击查看全图</span>
       </div>
