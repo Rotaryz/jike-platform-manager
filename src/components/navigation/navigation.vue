@@ -1,9 +1,21 @@
 <template>
   <div class="navigation" :class="project + '-big'">
     <div class="big-show" :class="{'big-hide': showAnimation}">
-      <div class="herder">
+      <div class="herder" @click.stop>
         <img src="" class="icon">
-        {{title}}
+        <p class="header-name hand" @click="_checkRole">{{title}}<img src="./icon-triangle_white@2x.png" class="header-change" :class="{'header-change-active': showRole}"></p>
+        <transition name="fade">
+          <div class="header-list" v-if="showRole">
+            <div class="header-item hand" @click="_checkPeo(0)">
+              <span>赞播AI名片</span>
+              <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === 0">
+            </div>
+            <div class="header-item-bottom hand" @click="_checkPeo(1)">
+              <span>赞播AI微商</span>
+              <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === 1">
+            </div>
+          </div>
+        </transition>
       </div>
       <ul class="nav-big">
         <li class="nav-item" v-for="(item , index) in navList" :key="index" @click="showChild(index)" :style="{'height':item.showHeight+'px'}">
@@ -31,7 +43,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   const HEIGHT = 69
   const NAVLIST = [
@@ -117,16 +129,14 @@
         smallIndex: 0,
         title: '赞播AI名片',
         navList: NAVLIST,
-        hoverIndex: -1,
-        hoverChildIndex: 0,
-        isBig: true,
         bigChild: 1,
         showHeight: HEIGHT,
         timer: null,
-        clickChild: 0,
         recodIndex: -1,
         showAnimation: false,
-        sortTimer: null
+        sortTimer: null,
+        showRole: false,
+        loginRole: 0
       }
     },
     computed: {
@@ -135,8 +145,31 @@
     created() {
       let path = this.$route.matched[1].path
       this.info(path)
+      this.loginRole = this.project === 'card' ? 0 : 1
     },
     methods: {
+      ...mapActions(['setProject']),
+      // 切换账户
+      _checkPeo(status) {
+        this.loginRole = status
+        this.showRole = false
+        let title = this.loginRole === 0 ? 'card' : 'ws'
+        this.setProject(title)
+        let num = 0
+        this.navList[this.recodIndex].children.forEach((item) => {
+          if (item.type === this.project || item.type === 'normal') {
+            num++
+          }
+        })
+        let height = (num + 1) * HEIGHT
+        this.navList[this.recodIndex].showHeight = height
+      },
+      hideRole() {
+        this.showRole = false
+      },
+      _checkRole() {
+        this.showRole = !this.showRole
+      },
       info(path) {
         let type = path
         this.navList.forEach((item, idx) => {
@@ -227,12 +260,10 @@
       .herder
         font-size: $font-size-large18
         height: 150px
-        overflow: hidden
         position: relative
         display: flex
         flex-direction: column
         align-items: center
-        justify-content: center
         padding-top: 35px
         box-sizing: border-box
         color: $color-white
@@ -245,6 +276,54 @@
           width: 50px
           margin-bottom: 14px
           border-radius: 50%
+        .header-change
+          position: absolute
+          top: 106px
+          right: 40px
+          width: 9px
+          transform: rotate(180deg)
+          transition: all 0.3s
+        .header-change-active
+          transform: rotate(0deg)
+          transition: all 0.3s
+        .header-list
+          position: absolute
+          top: 121px
+          color: $color-text33
+          font-family: $fontFamilyRegular
+          font-size: $font-size-medium14
+          z-index: 100
+          &.fade-enter, &.fade-leave-to
+            opacity: 0
+          &.fade-enter-to, &.fade-leave-to
+            transition: opacity .3s ease-in-out
+          .header-item
+            width: 164px
+            height: 40px
+            line-height: 40px
+            display: flex
+            justify-content: space-between
+            align-items: center
+            background: $color-white
+            padding: 0 10px
+            border-top-right-radius: 3px
+            border-top-left-radius: 3px
+            box-sizing: border-box
+          .header-item-bottom
+            width: 164px
+            height: 40px
+            line-height: 40px
+            display: flex
+            justify-content: space-between
+            background: $color-white
+            padding: 0 10px
+            box-sizing: border-box
+            border-bottom-right-radius: 3px
+            border-bottom-left-radius: 3px
+            margin-top: 1px
+            align-items: center
+          .header-item-icon
+            width: 20px
       .nav-big
         .nav-item
           overflow: hidden
@@ -315,15 +394,13 @@
       .nav-item
         border-bottom: 0.5px solid #3B3B43
         .nav-tap
-          border-left: 6px solid $color-menu-background
+          border-left: 6px solid transparent
           &:hover
             background: rgba(255, 255, 255, 0.1)
-            border-left: 6px solid transparent
         .nav-big-active
           background: rgba(255, 255, 255, 0.1)
           border-left: 6px solid $color-active !important
           transition: all 0.5s
-
 
   //智推
   .card-big
@@ -333,10 +410,9 @@
       .nav-item
         border-bottom: 0.5px solid #3C3E54
         .nav-tap
-          border-left: 6px solid $color-43455C
+          border-left: 6px solid transparent
           &:hover
             background: $color-3F4055
-            border-left: 6px solid transparent
         .nav-big-active
           transition: all 0.5s
           background: $color-3F4055

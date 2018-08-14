@@ -8,6 +8,7 @@ const Login = () => import('pages/login/login')
 const AgentManagement = () => import('pages/agent-management/agent-management') // 代理商管理列表
 const AgentList = () => import('pages/agent-list/agent-list') // 代理商管理列表
 const BusinessManagement = () => import('pages/business-management/business-management') // 企业管理列表
+const BusinessDetail = () => import('pages/business-detail/business-detail') // 企业管理详情
 const BusinessList = () => import('pages/business-list/business-list') // 企业管理列表
 const CustomerManagement = () => import('pages/customer-management/customer-management') // 客户管理列表
 const AgentOrder = () => import('pages/agent-order/agent-order') // 代理订单
@@ -66,6 +67,12 @@ const route = new Router({
         children: [{
           path: 'business-list',
           component: BusinessList,
+          meta: {
+            title: '商家管理,企业管理'
+          }
+        }, {
+          path: 'business-detail',
+          component: BusinessDetail,
           meta: {
             title: '商家管理,企业管理'
           }

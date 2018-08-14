@@ -23,7 +23,7 @@
     </div>
     <!-- 弹窗-->
     <transition name="fade">
-      <div class="shade-win" @click.stop="hideShade" v-show="isShade">
+      <div class="shade-win" @click.stop="isHideShade" v-show="isShade">
         <div class="shade-detail" @click.stop>
           <slot name="shade-box"></slot>
         </div>
@@ -49,6 +49,12 @@
 
   export default {
     name: 'base-model',
+    props: {
+      isHide: {
+        type: Boolean,
+        default: true
+      }
+    },
     data() {
       return {
         navStatus: true,
@@ -73,6 +79,12 @@
         this.isShade = true
       },
       hideShade() {
+        this.isShade = false
+      },
+      isHideShade() {
+        if (!this.isHide) {
+          return
+        }
         this.isShade = false
       },
       showlogout() {

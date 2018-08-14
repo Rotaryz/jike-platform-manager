@@ -2,10 +2,11 @@
   <div class="content-box">
     <div :class="project + '-line'" class="new-text">新增代理商</div>
     <div class="new-name-msg">
-      <div class="new-input-box">
+      <div class="new-input-box new-error">
         <span class="new-input-title">* 商家名称</span>
         <input type="text" class="new-input" placeholder="请输入商家姓名或名称">
         <span class="new-tip">负责人姓名或公司名</span>
+        <p class="error-tip">商家名称有误</p>
       </div>
       <div class="new-input-box">
         <span class="new-input-title">* 商家账号</span>
@@ -45,7 +46,11 @@
       </div>
       <div class="new-input-box new-input-box-img">
         <span class="new-input-title">* 收款凭证</span>
-        <img src="" class="new-add-img">
+        <img src="./upload@2x.png" class="new-add-img">
+        <!--<div class="new-add-img">-->
+          <!--<span class="new-add-img-small"></span>-->
+          <!--<img src="./icon-del@2x.png" class="del hand">-->
+        <!--</div>-->
         <input type="file" class="file-input" accept="image/*">
         <span class="new-tip">点击查看全图</span>
       </div>
@@ -91,7 +96,7 @@
 
   .new-name-msg
     border-top-1px(#EFEFEF)
-    margin-left: 1.5vw
+    margin-left: 30px
     .new-input-box
       display: flex
       align-items: center
@@ -126,8 +131,19 @@
       .new-add-img
         margin-left: 10px
         width: 120px
-        height: 80px
-        overflow: hidden
+        height: 96px
+        position: relative
+        .new-add-img-small
+          width: 100%
+          height: 100%
+          background-position: center
+          background-repeat: no-repeat
+          background-size: cover
+        .del
+          top: -10px
+          right: -10px
+          width: 26px
+          position: absolute
       .new-tip
         margin-left: 10px
         line-height: 80px
@@ -139,7 +155,7 @@
     display: flex
     color: $color-text33
     margin-top: 2.7vh
-    margin-left: 96px
+    margin-left: 112px
     .new-btn-item-border
       border-1px($color-lineCC, 6px)
     .new-btn-item
@@ -151,4 +167,14 @@
       text-align: center
       line-height: 40px
 
+  .new-error
+    position: relative
+    .new-input
+      border: 0.5px solid $color-EF705D
+    .error-tip
+      font-size: $font-size-medium14
+      left: 84px
+      bottom: -16px
+      color: $color-EF705D
+      position: absolute
 </style>

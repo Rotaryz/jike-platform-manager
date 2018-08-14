@@ -1,6 +1,6 @@
 <template>
   <div class="agent-list">
-    <ul class="tab" v-if="project !== 'card'">
+    <ul class="tab">
       <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index">{{item}}</li>
     </ul>
     <div class="check-box">
@@ -9,6 +9,10 @@
       <div class="search">
         <input type="text" class="search-input" placeholder="请输入商家名称或账号">
         <span class="search-btn" :class="project + '-btn-blue'">搜 索</span>
+      </div>
+      <div class="btn-big">
+        <div class="down-excel hand" :class="project + '-btn-blue'">+ 新增代理商</div>
+        <div class="down-excel hand" :class="project + '-btn-white'">导出Excel</div>
       </div>
     </div>
     <div class="form-list">
@@ -74,7 +78,9 @@
       ...mapGetters(['project'])
     },
     created() {
-      console.log(this.$parent)
+      // setTimeout(() => {
+      //   this.$emit('showShade')
+      // }, 100)
     },
     methods: {},
     components: {
@@ -110,6 +116,7 @@
     align-items: center
     display: flex
     padding: 1.5vw 0 1.5vw 10px
+    position: relative
     .search
       display: flex
       align-items: center
@@ -131,8 +138,20 @@
         width: 52px
         height: 28px
         line-height: 28px
+        text-align: center
         font-size: $font-size-small12
         border-radius: 4px
+    .btn-big
+      position: absolute
+      right: 1.5vw
+      display :flex
+    .down-excel
+      border-radius: 4px
+      height: 28px
+      width: 84px
+      line-height: 28px
+      font-size: $font-size-small12
+      margin-left: 9px
 
   .form-list
     font-size: $font-size-medium14
@@ -180,17 +199,6 @@
     border: none
     display: block
 
-  .check-box
-    width: 85px
-    .check-item
-      margin-left: 1.5vw
-      display: inline-block
-      width: 14px
-      box-sizing: border-box
-      height: 14px
-      border: 1px solid #D9D9D9
-    .check-ok
-      border: none
 
   .list-item
     color: $color-text
