@@ -8,7 +8,7 @@
       <admin-select :select="account" ref="account"></admin-select>
       <div class="search">
         <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-        <span class="search-btn" :class="project + '-btn-blue'">搜 索</span>
+        <span class="search-btn hand" :class="project + '-btn-blue'">搜 索</span>
       </div>
       <div class="btn-big">
         <div class="down-excel hand" :class="project + '-btn-blue'">+ 新增代理商</div>
@@ -71,7 +71,8 @@
           select: false,
           show: false,
           children: [{content: '账户状态', data: []}]
-        }]
+        }],
+        page: 1
       }
     },
     computed: {
@@ -82,7 +83,10 @@
       //   this.$emit('showShade')
       // }, 100)
     },
-    methods: {},
+    methods: {
+      _checkTab() {
+      }
+    },
     components: {
       BaseModel,
       AdminSelect,
@@ -122,8 +126,7 @@
       align-items: center
       margin-left: 10px
       .search-input
-        box-sizing: border-box
-        height: 30px
+        height: 28px
         width: 224px
         border-radius: 4px
         border: 1px solid $color-textD9
@@ -144,7 +147,7 @@
     .btn-big
       position: absolute
       right: 1.5vw
-      display :flex
+      display: flex
     .down-excel
       border-radius: 4px
       height: 28px
@@ -198,7 +201,6 @@
     height: 40px
     border: none
     display: block
-
 
   .list-item
     color: $color-text
