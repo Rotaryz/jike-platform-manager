@@ -48,8 +48,8 @@
         <span class="new-input-title">* 收款凭证</span>
         <img src="./upload@2x.png" class="new-add-img">
         <!--<div class="new-add-img">-->
-          <!--<span class="new-add-img-small"></span>-->
-          <!--<img src="./icon-del@2x.png" class="del hand">-->
+        <!--<span class="new-add-img-small"></span>-->
+        <!--<img src="./icon-del@2x.png" class="del hand">-->
         <!--</div>-->
         <input type="file" class="file-input" accept="image/*">
         <span class="new-tip">点击查看全图</span>
@@ -66,12 +66,25 @@
   // import { ERR_OK } from 'api/config'
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     name: 'new-agent',
     computed: {
       ...mapGetters(['project'])
+    },
+    created() {
+      let id = this.$route.query.id
+      if (!id) {
+        let arr = '商家管理,代理商管理,新增代理商'
+        this.setTitleArr(arr.split(','))
+        return
+      }
+      let arr = '商家管理,代理商管理,编辑'
+      this.setTitleArr(arr.split(','))
+    },
+    methods: {
+      ...mapActions(['setTitleArr'])
     },
     components: {
       BaseModel,

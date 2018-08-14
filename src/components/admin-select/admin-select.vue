@@ -95,7 +95,6 @@
 
   .admin-big-box
     cursor: pointer
-    height: 26px
     margin-left: 10px
     /*border: 2px solid $color-white*/
     box-sizing: border-box
@@ -109,7 +108,7 @@
       border: 1px solid $color-textD9
       padding: 0 31px 0 15px
       line-height: 28px
-      height: 100%
+      box-sizing :border-box
       white-space: nowrap
       font-size: $font-size-small12
       position: relative

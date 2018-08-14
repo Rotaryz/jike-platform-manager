@@ -1,7 +1,7 @@
 <template>
   <div class="agent-list">
     <ul class="tab">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index">{{item}}</li>
+      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex === index ? project + '-btn-line' : ''" :key="index">{{item}}</li>
     </ul>
     <div class="check-box">
       <admin-select :select="role" ref="role"></admin-select>
@@ -123,7 +123,7 @@
       margin-left: 10px
       .search-input
         box-sizing: border-box
-        height: 28px
+        height: 30px
         width: 224px
         border-radius: 4px
         border: 1px solid $color-textD9
