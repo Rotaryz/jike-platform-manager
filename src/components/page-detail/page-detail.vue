@@ -64,7 +64,7 @@
           if (this.pageInput !== '') {
             if (this.pageInput > this.pageDtail.total_page) {
               this.pageInput = this.pageDtail.total_page
-            } else if (this.pageInput * 1 < 0) {
+            } else if (this.pageInput * 1 <= 0) {
               this.pageInput = 1
             }
             this.pageInput = Math.floor(this.pageInput * 1)

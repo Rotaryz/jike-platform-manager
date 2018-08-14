@@ -3,7 +3,7 @@
     <div class="big-show" :class="{'big-hide': showAnimation}">
       <div class="herder" @click.stop>
         <img src="" class="icon">
-        <p class="header-name hand" @click="_checkRole">{{title}}<img src="./icon-triangle_white@2x.png" class="header-change" :class="{'header-change-active': showRole}"></p>
+        <p class="header-name hand" @click="_checkRole">{{roleName}}<img src="./icon-triangle_white@2x.png" class="header-change" :class="{'header-change-active': showRole}"></p>
         <transition name="fade">
           <div class="header-list" v-if="showRole">
             <div class="header-item hand" @click="_checkPeo(0)">
@@ -128,7 +128,6 @@
     data() {
       return {
         smallIndex: 0,
-        title: '赞播AI名片',
         navList: NAVLIST,
         bigChild: 1,
         showHeight: HEIGHT,
@@ -137,7 +136,8 @@
         showAnimation: false,
         sortTimer: null,
         showRole: false,
-        loginRole: 0
+        loginRole: 0,
+        roleName: '赞播AI微商'
       }
     },
     computed: {
@@ -155,16 +155,12 @@
         this.loginRole = status
         this.showRole = false
         let title = this.loginRole === 0 ? 'card' : 'ws'
+        this.roleName = this.loginRole === 0 ? '赞播AI名片' : '赞播AI微商'
         this.setProject(title)
         storage.set('project', title)
-        let num = 0
-        this.navList[this.recodIndex].children.forEach((item) => {
-          if (item.type === this.project || item.type === 'normal') {
-            num++
-          }
-        })
-        let height = (num + 1) * HEIGHT
-        this.navList[this.recodIndex].showHeight = height
+        this.navList[1].showHeight = HEIGHT
+        this.info('/agent-management/agent-list')
+        this.$router.replace('/agent-management/agent-list')
       },
       hideRole() {
         this.showRole = false
