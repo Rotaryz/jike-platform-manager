@@ -28,6 +28,7 @@ const MemberList = () => import('pages/member-list/member-list') // 成员管理
 const MemberDetail = () => import('pages/member-detail/member-detail') // 成员管理列表
 const RoleList = () => import('pages/role-list/role-list') // 角色设置
 const NewRole = () => import('pages/new-role/new-role') // 角色设置
+const FinancialManagement = () => import('pages/financial-management/financial-management') // 财务管理
 
 Vue.use(Router)
 
@@ -121,23 +122,30 @@ const route = new Router({
           }
         ]
       }, {
-        path: 'platform-income',
-        component: PlatformIncome,
-        meta: {
-          title: '财务管理,平台收入'
-        }
-      }, {
-        path: 'platform-expend',
-        component: PlatformExpend,
-        meta: {
-          title: '财务管理,平台支出'
-        }
-      }, {
-        path: 'cash-management',
-        component: CashManagement,
-        meta: {
-          title: '财务管理,提现管理'
-        }
+        path: 'financial-management',
+        component: FinancialManagement,
+        redirect: 'financial-management/platform-income',
+        children: [
+          {
+            path: 'platform-income',
+            component: PlatformIncome,
+            meta: {
+              title: '财务管理,平台收入'
+            }
+          }, {
+            path: 'platform-expend',
+            component: PlatformExpend,
+            meta: {
+              title: '财务管理,平台支出'
+            }
+          }, {
+            path: 'cash-management',
+            component: CashManagement,
+            meta: {
+              title: '财务管理,提现管理'
+            }
+          }
+        ]
       }, {
         path: 'role-management',
         component: RoleManagement,

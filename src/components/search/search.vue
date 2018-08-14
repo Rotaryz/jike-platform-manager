@@ -75,7 +75,7 @@
       font-family: $fontFamilyRegular
       font-size: $font-size-small12
       color: $color-white
-      margin-left: 10px
+      margin-left: 20px
 
 
 </style>

@@ -1,22 +1,135 @@
 <template>
-  <base-model>
-    <div slot="content" class="content-box">
+  <div class="platform-expend">
+    <div class="top-box">
+      <div class="top-item">
+        <div class="first-icon">
+          <img src="./icon-payout@2x.png" class="icon-img">
+        </div>
+        <div class="money-box">
+          <div class="top-money">888,000.00</div>
+          <div class="down-txt">平台总支出(元)</div>
+        </div>
+      </div>
+      <div class="top-item">
+        <div class="money-box">
+          <div class="top-money">23,443.00</div>
+          <div class="down-txt">推荐奖励支出(元)</div>
+        </div>
+      </div>
+      <div class="top-item">
+      </div>
+      <div class="top-item">
+      </div>
+      <div class="top-item">
+      </div>
     </div>
-  </base-model>
+    <div class="down-box">
+      <ul class="tab" v-if="project === 'ws'">
+        <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex == index ? (project + '-btn-line') : ''" :key="index" @click="checkTab(index)">{{item}}</li>
+      </ul>
+      <div class="list-container">
+        <div class="list-head">
+          <div class="list-item" v-for="(item, index) in headlist" :key="index" :class="item.flex">{{item.txt}}</div>
+        </div>
+        <div class="list-box">
+          <div class="list-content" v-for="(item, index) in orderList" :key="index">
+            <div class="list-item" v-for="(item1, index1) in headlist" :key="index1" v-if="index1 != (headlist.length - 1)" :class="item1.flex">test</div>
+            <div class="list-item hand" :class="project + '-text'" @click="upAnyImg(item)" v-if="tabIndex == 1">发放</div>
+            <div class="list-item hand" :class="project + '-text'" @click="showImg(item)" v-if="tabIndex == 0">查看凭证</div>
+          </div>
+        </div>
+        <div class="page-box">
+          <page-detail @addPage="addPage"></page-detail>
+        </div>
+      </div>
+    </div>
+    <transition name="fade">
+      <div class="center-box" v-show="showCenter">
+        <div class="cover-top">
+          <div class="top-txt">上传付款凭证</div>
+          <img src="./icon-del2@2x.png" class="top-icon hand" @click="cancel">
+        </div>
+        <div class="cover-content">
+          <div class="bottom-item">
+            <div class="item-title">付款凭证</div>
+            <div class="item-right">
+              <div class="add-img-box hand">
+                <img src="./icon-upload@2x.png" class="upload-icon">
+                <input type="file" class="image-file hand" @change="_fileImage($event)" accept="image/*">
+              </div>
+              <div class="add-img-txt">点击上传凭证，小于10M</div>
+            </div>
+          </div>
+          <div class="bottom-btns">
+            <div class="back-btn btn hand" @click="cancel">取消</div>
+            <div class="btn hand" :class="project + '-btn-blue'" @click="submitAny">确定</div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
   // import { ERR_OK } from 'api/config'
-  import BaseModel from 'components/base-model/base-model'
+  import { mapGetters } from 'vuex'
+  import PageDetail from 'components/page-detail/page-detail'
+  const FIRSTARR = [
+    {txt: '发放时间', flex: 'flex1'},
+    {txt: '商家名称', flex: 'flex1'},
+    {txt: '商家帐号', flex: 'flex1'},
+    {txt: '被推荐商家', flex: 'flex1'},
+    {txt: '被推荐商家账号', flex: 'flex1'},
+    {txt: '被推荐角色', flex: 'flex1'},
+    {txt: '代理金额', flex: 'flex1'},
+    {txt: '佣金比例', flex: 'flex1'},
+    {txt: '奖励金额', flex: 'flex1'},
+    {txt: '发放状态', flex: 'flex1'},
+    {txt: '操作', flex: 'flex1'}]
 
   export default {
-    name: 'platform-expend',
+    name: 'platform-income',
     data() {
       return {
+        tabArr: ['已发放', '未发放'],
+        tabIndex: 0,
+        headlist: FIRSTARR,
+        orderList: [1, 2, 3, 4, 5, 6],
+        showCenter: false
+      }
+    },
+    methods: {
+      checkTab(idx) {
+        this.tabIndex = idx * 1
+      },
+      addPage(page) {
+        console.log(page)
+      },
+      upAnyImg(item) {
+        console.log(item)
+        this.showCenter = true
+        this.$emit('showCover')
+      },
+      showImg(item) {
+        console.log(item)
+        this.$emit('showImg', '')
+      },
+      _fileImage(e) {
+        console.log(e.target.files[0])
+      },
+      cancel() {
+        this.$emit('hideCover')
+        this.showCenter = false
+      },
+      submitAny() {
+        console.log(99999)
       }
     },
     components: {
-      BaseModel
+      PageDetail
+    },
+    computed: {
+      ...mapGetters(['project'])
     }
   }
 </script>
@@ -24,11 +137,221 @@
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
   @import '~common/stylus/theme'
-  .content-box
-    height: 100%
+  .platform-expend
     width: 100%
-    box-shadow: 0 1px 6px 0 rgba(0, 8, 39, 0.10)
-    background: $color-white
-    border-radius: 6px
+    height: 100%
+    display: flex
+    flex-direction: column
+    .top-box
+      height: 180px
+      width: 100%
+      box-shadow: 0 1px 6px 0 rgba(0, 8, 39, 0.10)
+      background: $color-white
+      border-radius: 6px
+      margin-bottom: 20px
+      display: flex
+      align-items: center
+      .top-item
+        flex: 1
+        overflow: hidden
+        height: 72px
+        &:nth-child(2)
+          border-left: 1px solid $color-line
+        &:first-child
+          flex: 1.4
+          margin-left: 40px
+          display: flex
+          .first-icon
+            width: 72px
+            height: 72px
+            font-size: 0
+            margin-right: 20px
+            .icon-img
+              width: 72px
+              height: 72px
+          .money-box
+            margin-left: 0
+            height: 72px
+            padding: 0
+            .top-money
+              font-size: 52px
+            .down-txt
+              color: $color-text33
+        .money-box
+          margin-left: 28px
+          height: 62px
+          padding: 4px 0
+          display: flex
+          flex-direction: column
+          justify-content: space-between
+          .top-money
+            font-family: DINAlternate-Bold
+            font-size: 38px
+            color: $color-text33
+            text-align: start
+          .down-txt
+            font-family: $fontFamilyRegular
+            font-size: $font-size-medium14
+            color: $color-text-66
+            text-align: start
+    .down-box
+      width: 100%
+      flex: 1
+      overflow: hidden
+      box-shadow: 0 1px 6px 0 rgba(0, 8, 39, 0.10)
+      background: $color-white
+      border-radius: 6px
+      display: flex
+      flex-direction: column
+      .tab
+        height: 60px
+        display: flex
+        align-items: center
+        box-sizing: border-box
+        border-bottom: 1px solid $color-line-E1
+        .tab-item
+          height: 100%
+          line-height: 60px
+          margin: 0 1.5vw
+          font-size: $font-size-medium16
+      .list-container
+        flex: 1
+        padding: 30px 30px 0
+        overflow: hidden
+        display: flex
+        flex-direction: column
+        .list-head
+          padding-left: 40px
+          height: 50px
+          display: flex
+          background: $color-FAFAFA
+          align-items: center
+          border-bottom: 1px solid $color-line
+        .list-item
+          flex: 1
+          text-align: left
+          font-family: $fontFamilyRegular
+          font-size: $font-size-medium14
+          color: $color-text33
+          text-overflow: ellipsis
+          overflow: hidden
+          white-space: nowrap
+          margin-right: 10px
+        .list-item.flex1
+          flex: 1
+        .list-item.flex2
+          flex: 1.5
+        .list-item.flex3
+          flex: 2
+        .last-item
+          width: 112px
+          text-align: left
+          font-family: $fontFamilyRegular
+          font-size: $font-size-medium14
+          color: $color-text33
+          text-overflow: ellipsis
+          overflow: hidden
+          white-space: nowrap
+          margin-right: 10px
+        .list-box
+          width: 100%
+          flex: 1
+          overflow: hidden
+          display: flex
+          flex-direction: column
+          .list-content
+            flex: 1
+            padding-left: 40px
+            border-bottom: 1px solid $color-line
+            display: flex
+            align-items: center
+      .page-box
+        width: 100%
+        height: 59px
+        margin-bottom: 10px
 
+    .center-box
+      width: 534px
+      height: 331px
+      background: $color-white
+      box-shadow: 0 0 5px 0 rgba(12,6,14,0.60)
+      border-radius: 3px
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      z-index: 999
+      .cover-top
+        padding: 0 20px 0 30px
+        height: 60px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        border-bottom: 1px solid $color-line
+        font-size: 0
+        .top-txt
+          font-size: $font-size-medium16
+          color: $color-text33
+          font-family: $fontFamilyLight
+        .top-icon
+          width: 16px
+          height: 16px
+          padding: 10px
+      .cover-content
+        width: 100%
+        height: 270px
+        box-sizing: border-box
+        padding: 20px 30px
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        .bottom-item
+          display: flex
+          .item-title
+            margin-top: 10px
+            font-family: $fontFamilyLight
+            font-size: $font-size-medium14
+            color: $color-text33
+            text-align: start
+            margin-right: 20px
+          .item-right
+            display: flex
+            align-items: center
+            .add-img-box
+              width: 120px
+              height: 96px
+              margin-right: 10px
+              font-size: 0
+              position: relative
+              .upload-icon
+                width: 100%
+                height: 100%
+              .image-file
+                width: 100%
+                height: 100%
+                opacity: 0
+                position: absolute
+                left: 0
+                top: 0
+            .add-img-txt
+              font-family: $fontFamilyLight
+              font-size: $font-size-medium14
+              color: $color-ccc
+        .bottom-btns
+          display: flex
+          justify-content: flex-end
+          .btn
+            width: 96px
+            height: 40px
+            line-height: 40px
+            text-align: center
+            border-radius: 3px
+            font-family: $fontFamilyLight
+            font-size: $font-size-medium16
+          .back-btn
+            box-sizing: border-box
+            line-height: 38px
+            border: 1px solid $color-ccc
+            color: $color-text33
+            margin-right: 20px
 </style>

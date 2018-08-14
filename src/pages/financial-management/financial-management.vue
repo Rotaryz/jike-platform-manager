@@ -1,7 +1,7 @@
 <template>
   <base-model ref="baseModel">
     <div slot="content" class="content-box">
-      <router-view @showToast="showToast" @showImg="showImg"></router-view>
+      <router-view @showToast="showToast" @showImg="showImg" @showCover="showCover" @hideCover="hideCover"></router-view>
     </div>
   </base-model>
 </template>
@@ -11,7 +11,7 @@
   import BaseModel from 'components/base-model/base-model'
 
   export default {
-    name: 'order-management',
+    name: 'financial-management',
     data() {
       return {
       }
@@ -22,6 +22,12 @@
       },
       showImg(src) {
         this.$refs.baseModel.showImage(src)
+      },
+      showCover() {
+        this.$refs.baseModel.showShade()
+      },
+      hideCover() {
+        this.$refs.baseModel.hideShade()
       }
     },
     components: {
