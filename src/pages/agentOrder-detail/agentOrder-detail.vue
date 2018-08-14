@@ -1,34 +1,39 @@
 <template>
-  <div class="order-detail">
-    <div class="top-title">
-      <div :class="project + '-line'">订单详情</div>
-    </div>
-    <div class="order-content">
-      <div class="order-msg">
-        <div class="msg-item">收货方：XXX代理商</div>
-        <div class="msg-item">收货方账号:15833333333</div>
-        <div class="msg-item">商品名称：赞播AI微店</div>
-        <div class="msg-item">商品单价(元)：298.00</div>
-        <div class="msg-item">商品数量：200</div>
-        <div class="msg-item">商品总价(元)：59600.00</div>
-        <div class="msg-item">订单编号：s6545513211558</div>
-        <div class="msg-item">订单状态：已付款</div>
-        <div class="msg-item">下单时间：2018-06-20 13:54:45</div>
-        <div class="msg-item">支付时间：2018-06-20 13:54:45</div>
+  <div class="agentOrder-detail">
+    <div class="order-detail">
+      <div class="top-title">
+        <div :class="project + '-line'">订单详情</div>
       </div>
-      <div class="order-msg borderTop">
-        <div class="msg-item">发货方：平台</div>
-        <div class="msg-item">发货方账号：——</div>
-      </div>
-      <div class="msg-bottom">
-        <div class="msg-title">支付凭证：</div>
-        <div class="msg-right">
-          <div class="img-box">
-            <img src="" class="image hand" @click="showImg">
+      <div class="order-content">
+        <div class="order-msg">
+          <div class="msg-item">收货方：XXX代理商</div>
+          <div class="msg-item">收货方账号:15833333333</div>
+          <div class="msg-item">商品名称：赞播AI微店</div>
+          <div class="msg-item">商品单价(元)：298.00</div>
+          <div class="msg-item">商品数量：200</div>
+          <div class="msg-item">商品总价(元)：59600.00</div>
+          <div class="msg-item">订单编号：s6545513211558</div>
+          <div class="msg-item">订单状态：已付款</div>
+          <div class="msg-item">下单时间：2018-06-20 13:54:45</div>
+          <div class="msg-item">支付时间：2018-06-20 13:54:45</div>
+        </div>
+        <div class="order-msg borderTop">
+          <div class="msg-item">发货方：平台</div>
+          <div class="msg-item">发货方账号：——</div>
+        </div>
+        <div class="msg-bottom">
+          <div class="msg-title">付款凭证：</div>
+          <div class="msg-right">
+            <div class="img-box hand">
+              <img src="" class="image hand" @click="showImg">
+            </div>
+            <div class="msg-right-txt">点击查看全图</div>
           </div>
-          <div class="msg-right-txt">点击查看全图</div>
         </div>
       </div>
+    </div>
+    <div class="bottom-box">
+      <div class="back-btn hand" :class="project + '-btn-blue'" @click="backBefore">返回</div>
     </div>
   </div>
 </template>
@@ -43,9 +48,6 @@
       console.log(this.$route.query.id)
     },
     methods: {
-      _fileImage(e) {
-        console.log(e.target.files[0])
-      },
       backBefore() {
         this.$router.back()
       },
@@ -75,6 +77,7 @@
     .order-content
       padding: 0 30px
       .order-msg
+        padding-left: 12px
         padding-bottom: 15px
         display: flex
         flex-wrap: wrap
@@ -95,6 +98,7 @@
         display: flex
         padding-top: 20px
         .msg-title
+          padding-left: 12px
           font-family: $fontFamilyLight
           font-size: $font-size-medium14
           color: $color-text33
@@ -109,13 +113,28 @@
             height: 96px
             border: 1px solid $color-line
             margin-right: 10px
+            overflow: hidden
+            position: relative
             .image
               width: 100%
-              height: 100%
+              all-center()
           .msg-right-txt
             font-family: $fontFamilyLight
             font-size: $font-size-medium14
             color: $color-ccc
 
-
+  .bottom-box
+    height: 40px
+    display: flex
+    align-items: center
+    margin-top: 40px
+    justify-content: center
+    .back-btn
+      width: 96px
+      height: 40px
+      line-height: 40px
+      text-align: center
+      border-radius: 3px
+      font-family: $fontFamilyLight
+      font-size: $font-size-medium16
 </style>

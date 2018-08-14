@@ -82,19 +82,19 @@
     }, {
       title: '财务管理',
       icon: require('./icon-money_manage@2x.png'),
-      url: '/platform-income',
+      url: '/financial-management/platform-income',
       childrenIndex: -1,
       children: [{
         title: '平台收入',
-        url: '/platform-income',
+        url: '/financial-management/platform-income',
         type: 'normal'
       }, {
         title: '平台支出',
-        url: '/platform-expend',
+        url: '/financial-management/platform-expend',
         type: 'ws'
       }, {
         title: '提现管理',
-        url: '/cash-management',
+        url: '/financial-management/cash-management',
         type: 'ws'
       }],
       showHeight: HEIGHT

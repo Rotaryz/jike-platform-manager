@@ -29,7 +29,6 @@
 
 <script>
   // import { ERR_OK } from 'api/config'
-  import BaseModel from 'components/base-model/base-model'
   import Search from 'components/search/search'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
@@ -67,7 +66,6 @@
       }
     },
     components: {
-      BaseModel,
       Search,
       PageDetail
     },
