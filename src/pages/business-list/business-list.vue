@@ -24,7 +24,7 @@
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item hand list-item-tap">
-            <router-link tag="span" :to="'/business-management/business-detail'" :class="project + '-text-under'">查看</router-link>
+            <router-link tag="span" :to="'/business-management/business-list/business-detail'" :class="project + '-text-under'">查看</router-link>
           </div>
         </div>
       </div>

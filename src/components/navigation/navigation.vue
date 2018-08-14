@@ -19,7 +19,7 @@
       </div>
       <ul class="nav-big">
         <li class="nav-item" v-for="(item , index) in navList" :key="index" @click="showChild(index)" :style="{'height':item.showHeight+'px'}">
-          <router-link :to="{path: item.url}" class="nav-tap" :class="{'nav-tap-active':bigChild === index,'nav-item-no-border':item.children.length > 1}">
+          <router-link :to="{path: item.url}" class="nav-tap">
             <span class="nav-icon"><img :src="item.icon" class="nav-pic"></span>
             <div class="nav-title" v-show="!showAnimation">
               <span>{{item.title}}</span>
@@ -28,7 +28,7 @@
           </router-link>
           <ul class="nav-big-child" v-if="item.children">
             <li class="nav-item" v-for="(items , idx) in item.children" :key="idx" @click.stop="bigChildren(idx)" v-if="items.type === project || items.type === 'normal'">
-              <router-link :to="{path: items.url}" class="nav-tap" :class="item.childrenIndex === idx ? 'nav-big-active' : ''">
+              <router-link :to="{path: items.url}" class="nav-tap">
                 <span class="nav-icon"><img src=""></span>
                 <div class="nav-title">
                   <span v-for="(child , index) in items.title" :key="index">{{child}}</span>
@@ -371,15 +371,16 @@
         .nav-big-child
           .nav-item
             border-bottom: none
+            .router-link-active
+              background: rgba(255, 255, 255, 0.1) !important
+              border-left: 6px solid $color-active
           .nav-tap
             border-left: 6px solid $color-menu-background
             .nav-icon
               width: 46px
           .nav-title
             margin-left: 13px
-          .nav-big-active
-            background: rgba(255, 255, 255, 0.1) !important
-            border-left: 6px solid $color-active
+
       .big-hide
         width: 79px
         transition: all .2s
@@ -395,7 +396,7 @@
           border-left: 6px solid transparent
           &:hover
             background: rgba(255, 255, 255, 0.1)
-        .nav-big-active
+        .nav-big-child .nav-item .router-link-active
           background: rgba(255, 255, 255, 0.1)
           border-left: 6px solid $color-active !important
           transition: all 0.5s
@@ -411,7 +412,7 @@
           border-left: 6px solid transparent
           &:hover
             background: $color-3F4055
-        .nav-big-active
+        .nav-big-child .nav-item .router-link-active
           transition: all 0.5s
           background: $color-3F4055
           border-left: 6px solid $color-pink-CA799A !important

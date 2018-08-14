@@ -47,13 +47,13 @@ const route = new Router({
             title: '商家管理,代理商管理'
           }
         }, {
-          path: 'new-agent',
+          path: 'agent-list/new-agent',
           component: NewAgent,
           meta: {
             title: '商家管理,代理商管理,新增代理商'
           }
         }, {
-          path: 'agent-detail',
+          path: 'agent-list/agent-detail',
           component: AgentDetail,
           meta: {
             title: '商家管理,代理商管理'
@@ -72,7 +72,7 @@ const route = new Router({
             title: '商家管理,企业管理'
           }
         }, {
-          path: 'business-detail',
+          path: 'business-list/business-detail',
           component: BusinessDetail,
           meta: {
             title: '商家管理,企业管理'
@@ -178,7 +178,7 @@ const route = new Router({
             title: '商家管理,成员管理'
           }
         }, {
-          path: 'member-detail',
+          path: 'member-list/member-detail',
           component: MemberDetail,
           meta: {
             title: '商家管理,成员管理'

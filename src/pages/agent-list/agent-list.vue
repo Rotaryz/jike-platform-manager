@@ -33,9 +33,9 @@
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text" v-if="tabIndex === 0">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item hand list-item-tap">
-            <router-link tag="span" :to="'/agent-management/new-agent'" :class="project + '-text-under'">编辑</router-link>
+            <router-link tag="span" :to="'/agent-management/agent-list/new-agent'" :class="project + '-text-under'">编辑</router-link>
             |
-            <router-link tag="span" :to="'/agent-management/agent-detail'" :class="project + '-text-under'">查看</router-link>
+            <router-link tag="span" :to="'/agent-management/agent-list/agent-detail'" :class="project + '-text-under'">查看</router-link>
           </div>
         </div>
       </div>
