@@ -104,7 +104,6 @@
       align-items: center
       margin-left: 10px
       .search-input
-        box-sizing: border-box
         height: 28px
         width: 224px
         border-radius: 4px

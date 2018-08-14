@@ -8,6 +8,8 @@ const Login = () => import('pages/login/login')
 const AgentManagement = () => import('pages/agent-management/agent-management') // 代理商管理列表
 const AgentList = () => import('pages/agent-list/agent-list') // 代理商管理列表
 const BusinessManagement = () => import('pages/business-management/business-management') // 企业管理列表
+const BusinessDetail = () => import('pages/business-detail/business-detail') // 企业管理详情
+const BusinessList = () => import('pages/business-list/business-list') // 企业管理列表
 const CustomerManagement = () => import('pages/customer-management/customer-management') // 客户管理列表
 const AgentOrder = () => import('pages/agent-order/agent-order') // 代理订单
 const RetailOrder = () => import('pages/retail-order/retail-order') // 零售订单
@@ -25,6 +27,8 @@ const MemberManagement = () => import('pages/member-management/member-management
 const MemberList = () => import('pages/member-list/member-list') // 成员管理列表
 const MemberDetail = () => import('pages/member-detail/member-detail') // 成员管理列表
 const FinancialManagement = () => import('pages/financial-management/financial-management') // 财务管理
+const RoleList = () => import('pages/role-list/role-list') // 角色设置
+const NewRole = () => import('pages/new-role/new-role') // 角色设置
 
 Vue.use(Router)
 
@@ -60,7 +64,20 @@ const route = new Router({
         component: BusinessManagement,
         meta: {
           title: '商家管理,企业管理'
-        }
+        },
+        children: [{
+          path: 'business-list',
+          component: BusinessList,
+          meta: {
+            title: '商家管理,企业管理'
+          }
+        }, {
+          path: 'business-detail',
+          component: BusinessDetail,
+          meta: {
+            title: '商家管理,企业管理'
+          }
+        }]
       }, {
         path: 'customer-management',
         component: CustomerManagement,
@@ -134,7 +151,20 @@ const route = new Router({
         component: RoleManagement,
         meta: {
           title: '基础设置,角色设置'
-        }
+        },
+        children: [{
+          path: 'role-list',
+          component: RoleList,
+          meta: {
+            title: '基础设置,角色设置'
+          }
+        }, {
+          path: 'new-role',
+          component: NewRole,
+          meta: {
+            title: '基础设置,角色设置'
+          }
+        }]
       }, {
         path: 'member-management',
         component: MemberManagement,

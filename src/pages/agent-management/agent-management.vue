@@ -1,7 +1,20 @@
 <template>
-  <base-model>
+  <base-model ref="baseModel">
     <div slot="content" class="content-box">
-      <router-view></router-view>
+      <router-view @showToast="showToast" @showShade="showShade" @hideShade="hideShade" @showImage="showImage"></router-view>
+    </div>
+    <div slot="shade-box" class="shade-box">
+      <p class="shade-title">
+        提示
+        <transition name="fade-enter">
+          <img src="./icon-del2@2x.png" class="del-icon hand" @click="hideShade">
+        </transition>
+      </p>
+      <div class="del-tip">真要删除该条记录吗？</div>
+      <div class="shade-btn">
+        <div class="btn-item hand btn-border" @click="hideShade">取消</div>
+        <div class="btn-item hand" :class="project + '-btn-blue'">确定</div>
+      </div>
     </div>
   </base-model>
 </template>
@@ -9,43 +22,29 @@
 <script>
   // import { ERR_OK } from 'api/config'
   import BaseModel from 'components/base-model/base-model'
-  import AdminSelect from 'components/admin-select/admin-select'
-  import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
-
-  const TITLELIST = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
 
   export default {
     name: 'agent-management',
-    data() {
-      return {
-        titleList: TITLELIST,
-        tabArr: ['代理商列表', '申请记录'],
-        tabIndex: 0,
-        role: [{
-          select: false,
-          show: false,
-          children: [{content: '角色名称', data: [{title: 'ss'}, {title: '999'}]}]
-        }],
-        account: [{
-          select: false,
-          show: false,
-          children: [{content: '账户状态', data: []}]
-        }]
-      }
-    },
     computed: {
       ...mapGetters(['project'])
     },
     methods: {
-      dododo() {
-        console.log('sss')
+      showToast(content, time = 1000) {
+        this.$refs.baseModel.showContent(content, time)
+      },
+      showShade() {
+        this.$refs.baseModel.showShade()
+      },
+      hideShade() {
+        this.$refs.baseModel.hideShade()
+      },
+      showImage(img) {
+        this.$refs.baseModel.showImage(img)
       }
     },
     components: {
-      BaseModel,
-      AdminSelect,
-      PageDetail
+      BaseModel
     }
   }
 </script>
@@ -59,4 +58,46 @@
     display: flex
     flex-direction: column
 
+  .shade-box
+    height: 261px
+    color: $color-text33
+    font-family: $fontFamilyLight
+    .shade-title
+      height: 60px
+      text-indent: 30px
+      line-height: 60px
+      border-bottom-1px()
+    .del-icon
+      width: 16px
+      col-center()
+      right: 30px
+      transform: rotate(0deg)
+      transform-origin: 50% 50%
+      transition: all .5s
+      &:hover
+        transform: rotate(90deg)
+        transform-origin: 50% 50%
+        transition: all 0.5s
+    .del-tip
+      margin-top: 46px
+      text-indent: 30px
+      font-size: $font-size-medium14
+
+    .shade-btn
+      position: absolute
+      width: 100%
+      bottom: 20px
+      display: flex
+      justify-content: flex-end
+      padding-right: 10px
+      box-sizing: border-box
+      .btn-item
+        margin-left: 20px
+        border-radius: 3px
+        width: 96px
+        height: 40px
+        text-align: center
+        line-height: 40px
+      .btn-border
+        border-1px($color-lineCC, 6px)
 </style>

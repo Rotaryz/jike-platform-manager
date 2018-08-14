@@ -1,14 +1,7 @@
 <template>
   <div class="agent-list">
-    <ul class="tab" v-if="project !== 'card'">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index">{{item}}</li>
-    </ul>
     <div class="check-box">
-      <admin-select :select="openType" ref="openType"></admin-select>
-      <div class="search">
-        <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-        <span class="search-btn hand" :class="project + '-btn-blue'">搜 索</span>
-      </div>
+      <div class="down-excel hand" :class="project + '-btn-blue'">+ 新增角色</div>
     </div>
     <div class="form-list">
       <div class="list-header">
@@ -22,13 +15,10 @@
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item hand list-item-tap">
-            <router-link tag="span" :to="'/member-management/member-detail'" :class="project + '-text-under'">查看</router-link>
+            <router-link tag="span" :to="'/agent-management/new-agent'" :class="project + '-text-under'">编辑</router-link>
+            |
+            <router-link tag="span" :to="'/agent-management/agent-detail'" :class="project + '-text-under'">查看</router-link>
           </div>
         </div>
       </div>
@@ -46,19 +36,19 @@
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
 
-  const TITLELIST = ['成员名称', '成员账号', '所属代理商', '所属企业', '推荐人', '推荐人电话', '开通方式', '职位', '到期时间', '操作']
+  const TITLELIST = ['角色名称', '等级', '代理金额(元)', '进货单价(元)', '操作']
 
   export default {
-    name: 'member-list',
+    name: 'role-list',
     data() {
       return {
         titleList: TITLELIST,
-        tabArr: ['正式版', '试用版'],
+        tabArr: ['代理商列表', '申请记录'],
         tabIndex: 0,
-        openType: [{
+        account: [{
           select: false,
           show: false,
-          children: [{content: '开通方式', data: []}]
+          children: [{content: '账户状态', data: []}]
         }]
       }
     },
@@ -99,9 +89,12 @@
       margin: 0 1.5vw
 
   .check-box
+    height: 60px
+    box-sizing :border-box
     align-items: center
     display: flex
     padding: 1.5vw 0 1.5vw 10px
+    position: relative
     .search
       display: flex
       align-items: center
@@ -124,9 +117,17 @@
         line-height: 28px
         font-size: $font-size-small12
         border-radius: 4px
+    .down-excel
+      border-radius: 4px
+      position: absolute
+      right: 1.5vw
+      height: 28px
+      width: 84px
+      line-height: 28px
+      font-size: $font-size-small12
 
   .form-list
-    font-size :$font-size-medium14
+    font-size: $font-size-medium14
     font-family: $fontFamilyRegular
     padding: 0 1.5vw 10px
     flex: 1
@@ -186,6 +187,8 @@
         color: $color-text-little
       .audit
         color: $color-nomal
+    &:nth-child(4)
+      flex: 3
     &:last-child
       flex: 0.7
 

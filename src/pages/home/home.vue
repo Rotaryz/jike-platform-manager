@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <navigation></navigation>
+  <div class="home" @click="hideRole">
+    <navigation ref="nav"></navigation>
     <div class="content">
       <router-view />
     </div>
@@ -15,7 +15,11 @@
     name: 'home',
     created() {
     },
-    methods: {},
+    methods: {
+      hideRole() {
+        this.$refs.nav.hideRole()
+      }
+    },
     components: {
       Navigation
     }
