@@ -44,6 +44,7 @@
 
 <script type="text/ecmascript-6">
   import { mapGetters, mapActions } from 'vuex'
+  import storage from 'storage-controller'
 
   const HEIGHT = 69
   const NAVLIST = [
@@ -155,6 +156,7 @@
         this.showRole = false
         let title = this.loginRole === 0 ? 'card' : 'ws'
         this.setProject(title)
+        storage.set('project', title)
         let num = 0
         this.navList[this.recodIndex].children.forEach((item) => {
           if (item.type === this.project || item.type === 'normal') {

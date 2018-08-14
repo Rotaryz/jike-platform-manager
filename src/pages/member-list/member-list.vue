@@ -1,7 +1,7 @@
 <template>
   <div class="agent-list">
     <ul class="tab" v-if="project !== 'card'">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index">{{item}}</li>
+      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index" @click="_checkTab(index)">{{item}}</li>
     </ul>
     <div class="check-box">
       <admin-select :select="openType" ref="openType"></admin-select>
@@ -59,7 +59,8 @@
           select: false,
           show: false,
           children: [{content: '开通方式', data: []}]
-        }]
+        }],
+        page: 1
       }
     },
     computed: {
@@ -68,7 +69,12 @@
     mounted() {
       // this.$emit('showShade')
     },
-    methods: {},
+    methods: {
+      _checkTab(index) {
+        this.tabIndex = index
+        this.page = 1
+      }
+    },
     components: {
       BaseModel,
       AdminSelect,
@@ -126,7 +132,7 @@
         border-radius: 4px
 
   .form-list
-    font-size :$font-size-medium14
+    font-size: $font-size-medium14
     font-family: $fontFamilyRegular
     padding: 0 1.5vw 10px
     flex: 1

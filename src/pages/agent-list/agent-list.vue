@@ -1,7 +1,7 @@
 <template>
   <div class="agent-list">
     <ul class="tab">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex === index ? project + '-btn-line' : ''" :key="index">{{item}}</li>
+      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex === index ? project + '-btn-line' : ''" :key="index" @click="_checkTab(index)">{{item}}</li>
     </ul>
     <div class="check-box">
       <admin-select :select="role" ref="role"></admin-select>
@@ -31,7 +31,7 @@
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+          <div class="list-item list-text" v-if="tabIndex === 0">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
           <div class="list-item hand list-item-tap">
             <router-link tag="span" :to="'/agent-management/new-agent'" :class="project + '-text-under'">编辑</router-link>
             |
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="page">
-        <page-detail></page-detail>
+        <page-detail @></page-detail>
       </div>
     </div>
   </div>
@@ -54,6 +54,7 @@
   import { mapGetters } from 'vuex'
 
   const TITLELIST = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
+  const TITLELIST2 = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '操作']
 
   export default {
     name: 'list',
@@ -84,7 +85,10 @@
       // }, 100)
     },
     methods: {
-      _checkTab() {
+      _checkTab(index) {
+        this.tabIndex = index
+        this.page = 1
+        this.titleList = index === 0 ? TITLELIST : TITLELIST2
       }
     },
     components: {
