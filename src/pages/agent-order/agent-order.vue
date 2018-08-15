@@ -15,13 +15,13 @@
         <div class="list-item" v-for="(item, index) in headList" :key="index">{{item}}</div>
       </div>
       <div class="list-box">
-        <div class="list-content" v-for="(item, index) in orderList" :key="index">
-          <div class="list-item" v-for="(item1, index1) in headList" :key="index1" v-if="index1 != (headList.length - 1)">test</div>
+        <div class="list-content" v-for="(item, index) in agentList" :key="index">
+          <div class="list-item" v-for="(item1, index1) in headList" :key="index1" v-if="index1 != (headList.length - 1)">{{item[nameObj[index1]]}}</div>
           <div class="list-item hand" :class="project + '-text'" @click="toDetail(item)">查看</div>
         </div>
       </div>
       <div class="page-box">
-        <page-detail @addPage="addPage"></page-detail>
+        <page-detail @addPage="addPage" :pageDtail="pageTotal" ref="page"></page-detail>
       </div>
     </div>
   </div>
@@ -32,8 +32,11 @@
   import Search from 'components/search/search'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
+  import { Order } from 'api'
+  import { ERR_OK } from 'common/js/config'
 
   const HEADLIST = ['支付时间', '订单编号', '发货方', '商品名称', '商品单价', '商品数量', '总金额', '收货方', '订单状态', '操作']
+  const OBJ = {'0': 'pay_at', '1': 'order_sn', '2': 'delivery', '3': 'title', '4': 'price', '5': 'num', '6': 'total_price', '7': 'name', '8': 'status'}
 
   export default {
     name: 'agent-order',
@@ -42,27 +45,56 @@
         tabArr: ['销售记录', '申请记录'],
         tabIndex: 0,
         headList: HEADLIST,
-        orderList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        orderList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        agentList: [],
+        pageTotal: {
+          total: 1,
+          per_page: 10,
+          total_page: 0
+        },
+        orderSn: '',
+        page: 1,
+        nameObj: OBJ
       }
+    },
+    async created() {
+      await this._getAgentOrderList()
     },
     methods: {
       addPage(page) {
-        console.log(page)
+        this.page = page
+        this._getAgentOrderList()
       },
       checkTab(idx) {
         if (idx * 1 === 1) {
           this.$emit('showToast', '研发中, 待上线')
         }
       },
-      search(txt) {
-        console.log(txt)
+      async _getAgentOrderList() {
+        let data = {page: this.page, order_sn: this.orderSn}
+        let res = await Order.agentOrderList(data)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let pages = res.meta
+        this.pageTotal = Object.assign({}, {
+          total: pages.total,
+          per_page: pages.per_page,
+          total_page: pages.last_page
+        })
+        this.agentList = res.data
+      },
+      async search(txt) {
+        this.page = 1
+        this.orderSn = txt
+        this.$refs.page.beginPage()
+        await this._getAgentOrderList()
       },
       addOrderMsg() {
-        this.$router.push({ path: `/order-management/agent-order/add-order` })
+        this.$router.push({path: `/order-management/agent-order/add-order`})
       },
       toDetail(item) {
-        console.log(item)
-        this.$router.push({ path: `/order-management/agent-order/agentOrder-detail`, query: {id: 2} })
+        this.$router.push({path: `/order-management/agent-order/agentOrder-detail`, query: {id: item.id}})
       }
     },
     components: {
@@ -133,7 +165,6 @@
           box-sizing: border-box
           margin-left: 20px
 
-
     .list-head
       width: 100%
       height: 50px
@@ -163,7 +194,7 @@
       display: flex
       flex-direction: column
       .list-content
-        flex: 1
+        height: 10%
         width: 100%
         border-bottom: 1px solid $color-line
         display: flex

@@ -6,26 +6,26 @@
       </div>
       <div class="order-content">
         <div class="order-msg">
-          <div class="msg-item">收货方：XXX代理商</div>
-          <div class="msg-item">收货方账号:15833333333</div>
-          <div class="msg-item">商品名称：赞播AI微店</div>
-          <div class="msg-item">商品单价(元)：298.00</div>
-          <div class="msg-item">商品数量：200</div>
-          <div class="msg-item">商品总价(元)：59600.00</div>
-          <div class="msg-item">订单编号：s6545513211558</div>
-          <div class="msg-item">订单状态：已付款</div>
-          <div class="msg-item">下单时间：2018-06-20 13:54:45</div>
-          <div class="msg-item">支付时间：2018-06-20 13:54:45</div>
+          <div class="msg-item">收货方：{{agentOrder.name}}</div>
+          <div class="msg-item">收货方账号:{{agentOrder.name}}</div>
+          <div class="msg-item">商品名称：{{agentOrder.title}}</div>
+          <div class="msg-item">商品单价(元)：{{agentOrder.price}}</div>
+          <div class="msg-item">商品数量：{{agentOrder.num}}</div>
+          <div class="msg-item">商品总价(元)：{{agentOrder.total_price}}</div>
+          <div class="msg-item">订单编号：{{agentOrder.order_sn}}</div>
+          <div class="msg-item">订单状态：{{agentOrder.status}}</div>
+          <div class="msg-item">下单时间：{{agentOrder.created_at}}</div>
+          <div class="msg-item">支付时间：{{agentOrder.pay_at}}</div>
         </div>
         <div class="order-msg borderTop">
-          <div class="msg-item">发货方：平台</div>
-          <div class="msg-item">发货方账号：——</div>
+          <div class="msg-item">发货方：{{agentOrder.delivery}}</div>
+          <div class="msg-item">发货方账号：{{agentOrder.delivery_mobile}}</div>
         </div>
         <div class="msg-bottom">
           <div class="msg-title">付款凭证：</div>
           <div class="msg-right">
             <div class="img-box hand">
-              <img src="" class="image hand" @click="showImg">
+              <img :src="agentOrder.image_url" class="image hand" @click="showImg">
             </div>
             <div class="msg-right-txt">点击查看全图</div>
           </div>
@@ -41,11 +41,19 @@
 <script>
   // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
+  import { Order } from 'api'
+  import { ERR_OK } from 'common/js/config'
 
   export default {
     name: 'agentOrder-detail',
-    created() {
-      console.log(this.$route.query.id)
+    data() {
+      return {
+        agentOrder: {}
+      }
+    },
+    async created() {
+      let id = this.$route.query.id
+      await this._agentDetail(id)
     },
     methods: {
       backBefore() {
@@ -53,6 +61,14 @@
       },
       showImg() {
         this.$emit('showImg', '')
+      },
+      async _agentDetail(id) {
+        let res = await Order.agentOrderDetail(id)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        this.agentOrder = res.data
+        console.log(res.data)
       }
     },
     computed: {
