@@ -9,11 +9,11 @@ const DEV_URL = {
 }
 
 const TEST_URL = {
-  api: 'https://test.net'
+  api: 'http://agent-admin-api.net'
 }
 
 const PROD_URL = {
-  api: 'https://prod.com'
+  api: 'http://agent-admin-api.com'
 }
 
 export const BASE_URL = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : env.NODE_ENV === 'dev' ? DEV_URL : LOCAL_URL
