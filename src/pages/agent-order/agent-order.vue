@@ -58,11 +58,11 @@
         console.log(txt)
       },
       addOrderMsg() {
-        this.$router.push({ path: `/order-management/add-order` })
+        this.$router.push({ path: `/order-management/agent-order/add-order` })
       },
       toDetail(item) {
         console.log(item)
-        this.$router.push({ path: `/order-management/agentOrder-detail`, query: {id: 2} })
+        this.$router.push({ path: `/order-management/agent-order/agentOrder-detail`, query: {id: 2} })
       }
     },
     components: {

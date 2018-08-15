@@ -17,7 +17,7 @@
     <div class="list-box">
       <div class="list-content" v-for="(item, index) in orderList" :key="index">
         <div class="list-item" v-for="(item1, index1) in headList" :key="index1">test</div>
-        <div class="last-item hand" :class="project + '-text'" @click="toDetail(item)">查看</div>
+        <div class="last-item hand" :class="project + '-text'" @click="toDetail(item)">审核</div>
       </div>
     </div>
     <div class="page-box">

@@ -26,9 +26,9 @@ const RetailOrderDetail = () => import('pages/retailOrder-detail/retailOrder-det
 const MemberManagement = () => import('pages/member-management/member-management') // 成员管理
 const MemberList = () => import('pages/member-list/member-list') // 成员管理列表
 const MemberDetail = () => import('pages/member-detail/member-detail') // 成员管理列表
+const FinancialManagement = () => import('pages/financial-management/financial-management') // 财务管理
 const RoleList = () => import('pages/role-list/role-list') // 角色设置
 const NewRole = () => import('pages/new-role/new-role') // 角色设置
-const FinancialManagement = () => import('pages/financial-management/financial-management') // 财务管理
 
 Vue.use(Router)
 
@@ -102,19 +102,19 @@ const route = new Router({
               title: '订单管理,零售订单'
             }
           }, {
-            path: 'add-order',
+            path: 'agent-order/add-order',
             component: AddOrder,
             meta: {
               title: '订单管理,代理订单,新增订单'
             }
           }, {
-            path: 'agentOrder-detail',
+            path: 'agent-order/agentOrder-detail',
             component: AgentOrderDetail,
             meta: {
               title: '订单管理,代理订单,查看详情'
             }
           }, {
-            path: 'retailOrder-detail',
+            path: 'retail-order/retailOrder-detail',
             component: RetailOrderDetail,
             meta: {
               title: '订单管理,零售订单,查看详情'
