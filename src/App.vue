@@ -20,6 +20,9 @@
     watch: {
       '$route'(to) {
         let title = to.meta.title
+        if (!title) {
+          return
+        }
         let titleArr = title.split(',')
         this.setTitleArr(titleArr)
       }

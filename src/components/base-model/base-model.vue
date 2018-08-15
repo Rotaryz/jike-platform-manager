@@ -46,6 +46,7 @@
   // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
   import Toast from 'components/toast/toast'
+  import storage from 'storage-controller'
 
   export default {
     name: 'base-model',
@@ -58,7 +59,7 @@
     data() {
       return {
         navStatus: true,
-        userName: localStorage.getItem('userName') || sessionStorage.getItem('userName'),
+        userName: storage.get('userName', 'super'),
         logout: false,
         showOut: false,
         dataStatus: '',
@@ -95,7 +96,7 @@
       },
       isLogout() {
         localStorage.clear()
-        this.$router.push({path: '/'})
+        this.$router.push({path: '/login'})
       },
       showHeight() {
         this.showOut = true

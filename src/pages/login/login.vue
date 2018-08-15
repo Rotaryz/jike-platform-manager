@@ -20,13 +20,13 @@
         </div>
         <div class="input-box shop hand" @click="_showMore">
           <span class="input-icon"></span>
-          <div class="inputs">赞播AI微店</div>
+          <div class="inputs">{{role}}</div>
           <span class="input-way" :class="{'input-way-active': isShowMore}"></span>
           <transition name="fade">
             <ul class="shop-list" v-if="isShowMore" @click.stop>
-              <li class="shop-item" v-for="(item, index) in shopArr" :key="index">
+              <li class="shop-item" v-for="(item, index) in shopArr" :key="index" @click="_checkRole(index)">
                 {{item}}
-                <span class="shop-icon"></span>
+                <img src="./icon-select_login@2x.png" class="shop-icon" v-if="shopIndex === index">
               </li>
             </ul>
           </transition>
@@ -36,7 +36,7 @@
       <!--<i class="check" :class="{'check-yes' : remenber}"></i>-->
       <!--<span class="tip">记住密码</span>-->
       <!--</div>-->
-      <div class="submit-no hand ws-btn-blue" :class="{'submit-disable': !isLogin}" @click="login">
+      <div class="submit-no hand ws-btn-blue" @click="login">
         登录
       </div>
     </div>
@@ -45,8 +45,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  // import { Admin } from 'api'
+  import { Login } from 'api'
   import Toast from 'components/toast/toast'
+  import { mapGetters, mapActions } from 'vuex'
+  import storage from 'storage-controller'
 
   export default {
     data() {
@@ -57,14 +59,14 @@
         password: '',
         remenber: true,
         isShowMore: false,
-        shopArr: ['赞播AI微店', '赞播AI智推']
+        shopArr: ['赞播AI微店', '赞播AI智推'],
+        shopIndex: 0,
+        role: '赞播AI微店'
       }
     },
     created() {
-      let token = localStorage.getItem('business-token') || false
-      if (token) {
-        this.$router.push('container/officialNetwork')
-      }
+      this.shopIndex = this.project === 'ws' ? 0 : 1
+      this.role = this.shopArr[this.shopIndex]
       window.onkeydown = (e) => {
         if (e.keyCode === 13) {
           this.login()
@@ -72,13 +74,25 @@
       }
     },
     computed: {
+      ...mapGetters(['project']),
       isLogin() {
         return this.user && this.password
       }
     },
     methods: {
+      ...mapActions(['setProject']),
       _showMore() {
         this.isShowMore = !this.isShowMore
+      },
+      _checkRole(index) {
+        this.shopIndex = index
+        this.role = this.shopArr[index]
+        let title = index === 0 ? 'ws' : 'card'
+        this.setProject(title)
+        storage.set('project', title)
+        setTimeout(() => {
+          this.isShowMore = false
+        }, 100)
       },
       hideFocus() {
         this.focusPhone = false
@@ -95,20 +109,20 @@
           this.$refs.toast.show('请输入密码')
           return false
         }
-        // let data = {mobile: this.user, password: this.password}
-        // Admin.adminLogin(data).then((res) => {
-        //   if (!res.error) {
-        //     let data = res.data
-        //     this.$refs.toast.show('登陆成功')
-        //     localStorage.setItem('business-token', data.access_token)
-        //     localStorage.setItem('userName', data.merchant_info.name)
-        //     setTimeout(() => {
-        //       this.$router.push('container/officialNetwork')
-        //     }, 500)
-        //   } else if (res.error) {
-        //     this.$refs.toast.show(res.message)
-        //   }
-        // })
+        let data = {username: this.user, password: this.password}
+        Login.adminLogin(data).then((res) => {
+          if (!res.error) {
+            let data = res.data
+            this.$refs.toast.show('登陆成功')
+            storage.set('aiToken', data.access_token)
+            storage.set('userName', data.admin_info.username)
+            setTimeout(() => {
+              this.$router.push('/agent-management/agent-list')
+            }, 300)
+          } else if (res.error) {
+            this.$refs.toast.show(res.message)
+          }
+        })
       }
     },
     components: {
@@ -244,8 +258,15 @@
           &.fade-enter-to, &.fade-leave-to
             transition: all .3s ease-in-out
           .shop-item
+            display flex
+            align-items: center
+            justify-content: space-between
+            padding-right: 35px
+            box-sizing: border-box
             height: 80px
             line-height: 80px
+            .shop-icon
+              width: 20px
             &:last-child
               border-top: 1px solid #EFEFEF
       .remenber

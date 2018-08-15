@@ -35,6 +35,10 @@
 
   export default {
     name: 'new-role',
+    data() {
+      return {
+      }
+    },
     computed: {
       ...mapGetters(['project'])
     },
@@ -105,6 +109,7 @@
       .new-tip
         margin-left: 10px
         line-height: 80px
+
   .new-btn
     display: flex
     color: $color-text33

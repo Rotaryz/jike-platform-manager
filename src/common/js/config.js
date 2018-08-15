@@ -5,7 +5,7 @@ const LOCAL_URL = {
 }
 
 const DEV_URL = {
-  api: 'http://dev.com'
+  api: 'http://agent-admin-api.jerryf.cn'
 }
 
 const TEST_URL = {

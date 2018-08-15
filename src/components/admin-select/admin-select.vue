@@ -8,7 +8,7 @@
           <img src="./icon-dropdown@2x.png" class="city-tap-top" :class="{'city-tap-top-active': item.select}">
           <!--<span class="city-tap-top" :class="{'city-tap-bottom':item.show && item.select,'city-tap-top-two': item.show && !item.select}"></span>-->
           <ul class="select-child" v-show="item.select" @mouseleave="leaveHide(index)" @mouseenter="endShow">
-            <li class="select-child-item" v-for="(child, chidx) in items.data" :key="chidx" @click.stop="setValue(child,index,idx)">
+            <li class="select-child-item" v-for="(child, chIdx) in items.data" :key="chIdx" @click.stop="setValue(child,index,idx)">
               {{child.title}}
             </li>
           </ul>
@@ -28,6 +28,10 @@
           show: false,
           children: [{content: '全部', data: []}]
         }]
+      },
+      isUse: {
+        type: Boolean,
+        default: true
       }
     },
     created() {
@@ -55,6 +59,9 @@
         }, 1500)
       },
       selectType(type, index) {
+        if (!this.isUse) {
+          return
+        }
         this.select[index].select = !this.select[index].select
         this.select.forEach((item, idx) => {
           if (idx !== index) {
@@ -82,9 +89,7 @@
   .select-item
     display: flex
     align-items: center
-    margin-left: 2.6vw
     position: relative
-    z-index: 50
     &:first-child
       margin-left: 0px
 
@@ -108,7 +113,7 @@
       border: 1px solid $color-textD9
       padding: 0 31px 0 15px
       line-height: 28px
-      box-sizing :border-box
+      box-sizing: border-box
       white-space: nowrap
       font-size: $font-size-small12
       position: relative
@@ -129,12 +134,11 @@
       .select-child
         left: 0
         background: $color-white
-        z-index: 100
+        z-index: 300
         position: absolute
         width: 100%
         border-radius: 3px
         box-shadow: 0 1px 5px 0 rgba(12, 6, 14, 0.20)
-        background: $color-white
         margin-top: 4px
         max-height: 228px
         overflow-y: auto

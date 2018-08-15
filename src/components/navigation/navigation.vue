@@ -2,7 +2,7 @@
   <div class="navigation" :class="project + '-big'">
     <div class="big-show" :class="{'big-hide': showAnimation}">
       <div class="herder" @click.stop>
-        <img src="" class="icon">
+        <img src="./icon-logo@2x.png" class="icon" :class="project + '-logo'">
         <p class="header-name hand" @click="_checkRole">{{roleName}}<img src="./icon-triangle_white@2x.png" class="header-change" :class="{'header-change-active': showRole}"></p>
         <transition name="fade">
           <div class="header-list" v-if="showRole">
@@ -144,9 +144,9 @@
       ...mapGetters(['project'])
     },
     created() {
+      this.loginRole = this.project === 'card' ? 0 : 1
       let path = this.$route.matched[1].path
       this.info(path)
-      this.loginRole = this.project === 'card' ? 0 : 1
     },
     methods: {
       ...mapActions(['setProject']),
@@ -269,11 +269,16 @@
         border-bottom: 1px solid #3B3B43
         .icon
           overflow: hidden
-          background: $color-white
           height: 50px
           width: 50px
           margin-bottom: 14px
           border-radius: 50%
+        .ws-logo
+          background: $color-active
+          transition :all 0.5s
+        .card-logo
+          background: #F94C5F
+          transition :all 0.5s
         .header-change
           position: absolute
           top: 106px

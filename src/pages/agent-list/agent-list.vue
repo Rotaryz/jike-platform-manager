@@ -4,14 +4,14 @@
       <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex === index ? project + '-btn-line' : ''" :key="index" @click="_checkTab(index)">{{item}}</li>
     </ul>
     <div class="check-box">
-      <admin-select :select="role" ref="role"></admin-select>
-      <admin-select :select="account" ref="account"></admin-select>
+      <admin-select :select="role" ref="role" @setValue="setValue"></admin-select>
+      <!--<admin-select :select="account" ref="account" @setValue="setValue"></admin-select>-->
       <div class="search">
-        <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-        <span class="search-btn hand" :class="project + '-btn-blue'">搜 索</span>
+        <input type="text" class="search-input" placeholder="请输入商家名称或账号" v-model="name">
+        <span class="search-btn hand" :class="project + '-btn-blue'" @click="_search">搜 索</span>
       </div>
       <div class="btn-big">
-        <div class="down-excel hand" :class="project + '-btn-blue'">+ 新增代理商</div>
+        <router-link tag="div" to="/agent-management/agent-list/new-agent" class="down-excel hand" :class="project + '-btn-blue'">+ 新增代理商</router-link>
         <div class="down-excel hand" :class="project + '-btn-white'">导出Excel</div>
       </div>
     </div>
@@ -22,39 +22,41 @@
         </div>
       </div>
       <div class="list">
-        <div class="list-box" v-for="item in 10">
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text" v-if="tabIndex === 0">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item hand list-item-tap">
-            <router-link tag="span" :to="'/agent-management/agent-list/new-agent'" :class="project + '-text-under'">编辑</router-link>
+        <div class="list-box" v-for="(item, index) in agentList" :key="index">
+          <div class="list-item list-text">{{item.name}}</div>
+          <div class="list-item list-text">{{item.mobile}}</div>
+          <div class="list-item list-text">{{item.role}}</div>
+          <div class="list-item list-text">---</div>
+          <div class="list-item list-text">---</div>
+          <div class="list-item list-text">{{item.recomm_invite_name}}</div>
+          <div class="list-item list-text">{{item.invite_mobile}}</div>
+          <div class="list-item list-text">{{item.status === 1 ? '使用中' : item.status === 2 ? '过期' : ''}}</div>
+          <div class="list-item hand list-item-tap" v-if="tabIndex === 0">
+            <router-link tag="span" :to="'/agent-management/agent-list/new-agent?id='+ item.id" :class="project + '-text-under'">编辑</router-link>
             |
-            <router-link tag="span" :to="'/agent-management/agent-list/agent-detail'" :class="project + '-text-under'">查看</router-link>
+            <router-link tag="span" :to="'/agent-management/agent-list/agent-detail?id='+ item.id + '&type=1'" :class="project + '-text-under'">查看</router-link>
+          </div>
+          <div class="list-item hand list-item-tap" v-if="tabIndex === 1">
+            <div @click="_deal" :class="project + '-text-under'">{{item.status === 0 ? '审核' : '查看'}}</div>
           </div>
         </div>
       </div>
       <div class="page">
-        <page-detail @></page-detail>
+        <page-detail ref="page" :pageDtail="pageTotal" @addPage="_addPage"></page-detail>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  // import { ERR_OK } from 'api/config'
+  import { Agent } from 'api'
+  import { ERR_OK } from 'common/js/config'
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
 
-  const TITLELIST = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
-  const TITLELIST2 = ['申请时间', '商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '操作']
+  const TITLELIST = ['商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
 
   export default {
     name: 'list',
@@ -71,24 +73,115 @@
         account: [{
           select: false,
           show: false,
-          children: [{content: '账户状态', data: []}]
+          children: [{content: '账户状态', data: [{title: '全部', status: 0, type: 'status'}, {title: '使用中', status: 1, type: 'status'}, {title: '已过期', status: 2, type: 'status'}]}]
         }],
-        page: 1
+        page: 1,
+        agentList: [],
+        pageTotal: {
+          total: 1,
+          per_page: 10,
+          total_page: 0
+        },
+        name: '',
+        roleId: 0,
+        endRoleId: 0,
+        endName: ''
       }
     },
     computed: {
       ...mapGetters(['project'])
     },
-    created() {
+    async created() {
+      await this._getAngetList()
+      await this._roleList()
       // setTimeout(() => {
       //   this.$emit('showShade')
       // }, 100)
     },
     methods: {
-      _checkTab(index) {
+      _deal(item) {
+        let url = ''
+        if (item.status === 0) {
+          url = '/agent-management/agent-list/new-agent?id=' + item.id + '&check=1'
+        } else {
+          url = '/agent-management/agent-list/agent-detail?id=' + item.id + '&type=2'
+        }
+        this.$router.push(url)
+      },
+      async _search() {
+        this.endRoleId = this.roleId
+        this.endName = this.name
+        this.page = 1
+        this.$refs.page.beginPage()
+        await this._getAngetList()
+      },
+      // 角色列表
+      async _roleList() {
+        let res = await Agent.roleList()
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let arr = []
+        res.data.forEach((item) => {
+          arr.push({title: item.level_name, type: 'role', level: item.level})
+        })
+        this.role[0].children[0].data = arr
+      },
+      async _checkTab(index) {
         this.tabIndex = index
         this.page = 1
-        this.titleList = index === 0 ? TITLELIST : TITLELIST2
+        this.roleId = 0
+        this.role[0].children[0].content = '角色名称'
+        this.name = ''
+        this.endRoleId = this.roleId
+        this.endName = this.name
+        this.$refs.page.beginPage()
+        await this._getAngetList()
+      },
+      async _getAngetList() {
+        if (this.tabIndex === 0) {
+          let data = {page: this.page, role: this.endRoleId, status: 0, name: this.endName}
+          let res = await Agent.agentList(data)
+          if (res.error !== ERR_OK) {
+            return
+          }
+          let pages = res.meta
+          this.pageTotal = Object.assign({}, {
+            total: pages.total,
+            per_page: pages.per_page,
+            total_page: pages.last_page
+          })
+          this.agentList = res.data
+          return
+        }
+        let data = {page: this.page, role: this.endRoleId, status: 0, name: this.endName}
+        let res = await Agent.applyAgent(data)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let pages = res.meta
+        this.pageTotal = Object.assign({}, {
+          total: pages.total,
+          per_page: pages.per_page,
+          total_page: pages.last_page
+        })
+        this.agentList = res.data
+      },
+      setValue(item) {
+        switch (item.type) {
+          case 'role':
+            this.role[0].children[0].content = item.title
+            this.roleId = item.level
+            break
+          case 'status':
+            this.account[0].children[0].content = item.title
+            this.status = item.status
+            break
+        }
+        this._getAngetList()
+      },
+      _addPage(page) {
+        this._getAngetList()
       }
     },
     components: {

@@ -1,15 +1,15 @@
 'use strict'
 
 import axios from 'axios'
-import { baseUrl } from './config'
+import { BASE_URL } from './config'
+import storage from 'storage-controller'
 
 const TIME_OUT = 10000
-const COMMON_HEADER = {}
 const ERR_OK = 0
 const ERR_NO = -404
 
 const http = axios.create({
-  baseURL: baseUrl.api,
+  baseURL: BASE_URL.api,
   timeout: TIME_OUT
 })
 
@@ -71,7 +71,10 @@ export default {
       method: 'post',
       url,
       data, // post 请求时带的参数
-      headers: COMMON_HEADER
+      headers: {
+        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        Authorization: storage.get('aiToken')
+      }
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -83,7 +86,10 @@ export default {
       method: 'get',
       url,
       params, // get 请求时带的参数
-      headers: COMMON_HEADER
+      headers: {
+        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        Authorization: storage.get('aiToken')
+      }
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -95,7 +101,10 @@ export default {
       method: 'put',
       url,
       data, // put 请求时带的参数
-      headers: COMMON_HEADER
+      headers: {
+        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        Authorization: storage.get('aiToken')
+      }
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -107,7 +116,10 @@ export default {
       method: 'delete',
       url,
       data, // put 请求时带的参数
-      headers: COMMON_HEADER
+      headers: {
+        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        Authorization: storage.get('aiToken')
+      }
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
