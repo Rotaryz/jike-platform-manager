@@ -195,7 +195,7 @@ const DEFAULT_ROUTE = '/agent-management/agent-list'
 const OAUTH_ROUTE = '/login'
 route.beforeEach((to, from, next) => {
   if (to.path === '/') {
-    const token = storage.get('aiToken', '')
+    const token = storage.get('aiToken')
     if (token) {
       next({path: DEFAULT_ROUTE, replace: true})
     } else {
