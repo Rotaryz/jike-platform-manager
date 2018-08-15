@@ -102,19 +102,19 @@ const route = new Router({
               title: '订单管理,零售订单'
             }
           }, {
-            path: 'add-order',
+            path: 'agent-order/add-order',
             component: AddOrder,
             meta: {
               title: '订单管理,代理订单,新增订单'
             }
           }, {
-            path: 'agentOrder-detail',
+            path: 'agent-order/agentOrder-detail',
             component: AgentOrderDetail,
             meta: {
               title: '订单管理,代理订单,查看详情'
             }
           }, {
-            path: 'retailOrder-detail',
+            path: 'retail-order/retailOrder-detail',
             component: RetailOrderDetail,
             meta: {
               title: '订单管理,零售订单,查看详情'
