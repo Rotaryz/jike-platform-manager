@@ -37,7 +37,7 @@
             <router-link tag="span" :to="'/agent-management/agent-list/agent-detail?id='+ item.id + '&type=1'" :class="project + '-text-under'">查看</router-link>
           </div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 1">
-            <div @click="_deal" :class="project + '-text-under'">{{item.status === 0 ? '审核' : '查看'}}</div>
+            <div @click="_deal(item)" :class="project + '-text-under'">{{item.status === 0 ? '审核' : '查看'}}</div>
           </div>
         </div>
       </div>
