@@ -60,7 +60,7 @@
         this.$router.back()
       },
       showImg() {
-        this.$emit('showImg', '')
+        this.$emit('showImg', this.agentOrder.image_url)
       },
       async _agentDetail(id) {
         let res = await Order.agentOrderDetail(id)

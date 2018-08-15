@@ -94,7 +94,7 @@
         this.$router.push({path: `/order-management/agent-order/add-order`})
       },
       toDetail(item) {
-        this.$router.push({path: `/order-management/agent-order/agentOrder-detail`, query: {id: item.id}})
+        this.$router.push({path: `/order-management/agent-order/agentOrder-detail`, query: {id: item.order_sn}})
       }
     },
     components: {
