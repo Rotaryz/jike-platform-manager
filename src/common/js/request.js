@@ -78,7 +78,7 @@ export default {
       url,
       data, // post 请求时带的参数
       headers: {
-        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
         Authorization: storage.get('aiToken')
       }
     }).then((response) => {
@@ -93,7 +93,7 @@ export default {
       url,
       params, // get 请求时带的参数
       headers: {
-        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
         Authorization: storage.get('aiToken')
       }
     }).then((response) => {
@@ -108,7 +108,7 @@ export default {
       url,
       data, // put 请求时带的参数
       headers: {
-        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
         Authorization: storage.get('aiToken')
       }
     }).then((response) => {
@@ -123,7 +123,7 @@ export default {
       url,
       data, // put 请求时带的参数
       headers: {
-        current_application: storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
         Authorization: storage.get('aiToken')
       }
     }).then((response) => {
