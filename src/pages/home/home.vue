@@ -2,7 +2,7 @@
   <div class="home" @click="hideRole">
     <navigation ref="nav"></navigation>
     <div class="content">
-      <router-view />
+      <router-view @showChild="showChild" />
     </div>
   </div>
 </template>
@@ -18,6 +18,9 @@
     methods: {
       hideRole() {
         this.$refs.nav.hideRole()
+      },
+      showChild(index) {
+        this.$refs.nav.showChild(index)
       }
     },
     components: {

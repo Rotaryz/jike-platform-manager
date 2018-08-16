@@ -6,16 +6,16 @@
           <img src="./icon-payout@2x.png" class="icon-img">
         </div>
         <div class="money-box">
-          <div class="top-money">888,000.00</div>
+          <div class="top-money">{{total}}</div>
           <div class="down-txt">平台总支出(元)</div>
         </div>
       </div>
-      <div class="top-item">
-        <div class="money-box">
-          <div class="top-money">23,443.00</div>
-          <div class="down-txt">推荐奖励支出(元)</div>
-        </div>
-      </div>
+      <!--<div class="top-item">-->
+      <!--<div class="money-box">-->
+      <!--<div class="top-money">23,443.00</div>-->
+      <!--<div class="down-txt">推荐奖励支出(元)</div>-->
+      <!--</div>-->
+      <!--</div>-->
       <div class="top-item">
       </div>
       <div class="top-item">
@@ -33,7 +33,7 @@
         </div>
         <div class="list-box">
           <div class="list-content" v-for="(item, index) in expendList" :key="index">
-            <div class="list-item" v-for="(item1, index1) in headlist" :key="index1" v-if="index1 != (headlist.length - 1)" :class="item1.flex">{{item[nameObj[index1]] || '---'}}</div>
+            <div class="list-item" v-for="(item1, index1) in headlist" :key="index1" v-if="index1 != (headlist.length - 1)" :class="item1.flex">{{item[nameObj[index1]] + '' || '---'}}</div>
             <div class="list-item hand" :class="project + '-text'" @click="upAnyImg(item)" v-if="tabIndex == 1">发放</div>
             <div class="list-item hand" :class="project + '-text'" @click="showImg(item)" v-if="tabIndex == 0">查看凭证</div>
           </div>
@@ -106,6 +106,7 @@
           per_page: 10,
           total_page: 0
         },
+        total: '',
         nameObj: NAME_OBJ
       }
     },
@@ -126,7 +127,11 @@
           per_page: pages.per_page,
           total_page: pages.last_page
         })
-        console.log(res.data)
+        this.total = res.total_sum
+        res.data.map((item) => {
+          item.status = item.status === 0 ? '未发放' : '已发放'
+          return item
+        })
         this.expendList = res.data
       },
       async checkTab(idx) {
@@ -188,8 +193,6 @@
       .top-item
         overflow: hidden
         height: 72px
-        &:nth-child(2)
-          border-left: 1px solid $color-line
         &:first-child
           margin-left: 40px
           display: flex

@@ -72,7 +72,7 @@
         url: '/business-management/business-list',
         type: 'normal'
       }, {
-        title: '客户管理',
+        title: '成员管理',
         url: '/member-management/member-list',
         type: 'ws'
       }],
@@ -243,6 +243,15 @@
         let num = this.recodIndex
         this.navList[num].url = this.navList[num].children[this.navList[num].childrenIndex].url
       }
+    },
+    watch: {
+      '$route'(to, from) {
+        if (to.path === '/agent-management/agent-list/agent-detail' && from.path === '/financial-management/platform-income') {
+          this.showChild(1)
+        } else if (from.path === '/agent-management/agent-list/agent-detail' && to.path === '/financial-management/platform-income') {
+          this.showChild(3)
+        }
+      }
     }
   }
 </script>
@@ -278,10 +287,10 @@
           width: 50px
           margin-bottom: 14px
           border-radius: 50%
-        .ws-logo
+        .card-logo
           background: $color-active
           transition: all 0.5s
-        .card-logo
+        .ws-logo
           background: #F94C5F
           transition: all 0.5s
         .header-change
@@ -396,7 +405,7 @@
         transition: all .2s
 
   /*微商*/
-  .ws-big
+  .card-big
     background: $color-menu-background
     transition: all 0.5s
     .big-show .nav-big
@@ -412,7 +421,7 @@
           transition: all 0.5s
 
   //智推
-  .card-big
+  .ws-big
     background: $color-43455C
     transition: all 0.5s
     .big-show .nav-big

@@ -326,9 +326,11 @@
           }
           let res = await Agent.editAgent(this.content, this.id)
           this.$emit('showToast', res.message)
-          setTimeout(() => {
-            this._back()
-          }, 1000)
+          if (res.error === ERR_OK) {
+            setTimeout(() => {
+              this._back()
+            }, 1000)
+          }
           // 编辑
           return
         }
@@ -355,9 +357,11 @@
         }
         let json = await Agent.newAgent(this.content)
         this.$emit('showToast', json.message)
-        setTimeout(() => {
-          this._back()
-        }, 1000)
+        if (json.error === ERR_OK) {
+          setTimeout(() => {
+            this._back()
+          }, 1000)
+        }
         // 新建
       }
     },

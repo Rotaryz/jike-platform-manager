@@ -49,7 +49,8 @@
         </div>
         <div class="list-box">
           <div class="list-content" v-for="(item, index) in orderList" :key="index">
-            <div class="list-item" v-for="(item1, index1) in listHead[tabIndex]" :key="index1" v-if="index1 != (listHead[tabIndex].length - 1)" :class="item1.flex">{{item[contentName[tabIndex][index1]] || '---'}}</div>
+            <!---->
+            <div class="list-item" v-for="(item1, index1) in listHead[tabIndex]" :key="index1" v-if="index1 != (listHead[tabIndex].length - 1)" :class="item1.flex">{{item[contentName[tabIndex][index1]] + '' || '---'}}</div>
             <div class="last-item hand" :class="project + '-text'" @click="_toDetail(item)">查看</div>
           </div>
         </div>
@@ -69,14 +70,14 @@
   import { ERR_OK } from 'common/js/config'
 
   const WSTAB = [
-    {txt: '加盟收入', idx: 1, status: 31},
-    {txt: '销货收入', idx: 2, status: 32},
-    {txt: '分销收入', idx: 3, status: 33}
+    {txt: '加盟收入', idx: 1, status: 32},
+    {txt: '销货收入', idx: 2, status: 33},
+    {txt: '分销收入', idx: 3, status: 31}
     // {txt: '年费收入', idx: 5}
   ]
   const MPTAB = [
-    {txt: '加盟收入', idx: 1, status: 31},
-    {txt: '销货收入', idx: 2, status: 32}
+    {txt: '加盟收入', idx: 1, status: 32},
+    {txt: '销货收入', idx: 2, status: 33}
     // {txt: '年费收入', idx: 4}
   ]
   const FIRSTARR = [
@@ -124,8 +125,8 @@
   ]
 
   const FIRST_NAME = {'0': 'created_at', '1': 'name', '2': 'mobile', '3': 'role_name', '4': 'money'}
-  const SECOND_NAME = {'0': 'created_at', '2': 'order_sn', '3': 'name', '4': 'good_name', '5': 'price', '6': 'num', '7': 'money'}
-  const THREE_NAME = {'0': 'created_at', '2': 'order_sn', '3': 'name', '4': 'good_name', '5': 'price', '6': 'num', '7': 'money', '8': ''}
+  const SECOND_NAME = {'0': 'created_at', '1': 'order_sn', '2': 'name', '3': 'good_name', '4': 'price', '5': 'num', '6': 'money'}
+  const THREE_NAME = {'0': 'created_at', '1': 'order_sn', '2': 'name', '3': 'good_name', '4': 'price', '5': 'num', '6': 'money', '7': 'total'}
   export default {
     name: 'platform-income',
     data() {
@@ -152,7 +153,7 @@
           per_page: 10,
           total_page: 0
         },
-        detail: {}
+        detail: {join_income: '0.00', sale_income: '0.00', distribute_income: '0.00', total: '0.00'}
       }
     },
     async created() {

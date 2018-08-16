@@ -38,23 +38,23 @@
         <div class="agent-item"><span class="agent-title">年费奖励收入(元)：</span><span class="until hand" :class="project + '-text-under'">查询明细</span></div>
       </div>
       <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">总支出(元)：88888.00：</span></div>
+        <div class="agent-item"><span class="agent-title">总支出(元)：</span></div>
       </div>
       <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">代理支出(元)：18888.00：</span><span class="until hand" :class="project + '-text-under'">收款凭证</span></div>
+        <div class="agent-item"><span class="agent-title">代理支出(元)：</span><span class="until hand" :class="project + '-text-under'">收款凭证</span></div>
         <div class="agent-item"><span class="agent-title">商品进货支出(元)：</span><span class="until hand" :class="project + '-text-under'">查询明细</span></div>
       </div>
     </div>
     <div class="agent-detail-box">
       <div :class="project + '-line'" class="agent-text">团队信息</div>
       <div class="agent-box agent-box-border">
-        <div class="agent-item"><span class="agent-title">自有商家(个)：12：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
-        <div class="agent-item"><span class="agent-title">自有成员(人)：220：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
+        <div class="agent-item"><span class="agent-title">自有商家(个)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
+        <div class="agent-item"><span class="agent-title">自有成员(人)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
         <div class="agent-item"><span class="agent-title">分销成员(人)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
       </div>
       <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">推荐代理商(个)：12：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
-        <div class="agent-item"><span class="agent-title">推荐代理商商家(个)：220：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
+        <div class="agent-item"><span class="agent-title">推荐代理商(个)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
+        <div class="agent-item"><span class="agent-title">推荐代理商商家(个)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
         <div class="agent-item"><span class="agent-title">推荐代理商分销成员(人)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
         <div class="agent-item"><span class="agent-title">推荐代理商成员(人)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
       </div>

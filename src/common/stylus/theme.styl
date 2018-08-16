@@ -2,63 +2,6 @@
 @import "./mixin.styl"
 
 // ws主题
-.ws-line
-  font-family: $fontFamilyLight
-  color: $color-text33
-  font-size: $font-size-large18
-  position: relative
-  line-height: 20px
-  text-indent: 42px
-  text-align: left
-  &:after
-    position: absolute
-    top: 0
-    left: 0
-    content: ''
-    width: 6px
-    height: 20px
-    background: $color-active
-    transition: all 0.5s
-
-.ws-btn-blue
-  text-align: center
-  background: $color-active
-  color: $color-white
-  transition: all 0.5s
-
-.ws-btn-white
-  text-align: center
-  background: $color-white
-  color: $color-active
-  border: 1px solid $color-active
-  transition: all 0.5s
-
-.ws-btn-line
-  color: $color-active
-  position: relative
-  &:after
-    content: ''
-    background: $color-active
-    height: 3px
-    width: 40px
-    row-center()
-    bottom: 0
-    transition: all 0.5s
-
-.ws-text
-  ont-size: $font-size-medium14
-  font-family: $fontFamilyLight
-  color: $color-active !important
-  transition: all 0.5s
-
-.ws-text-under
-  font-size: $font-size-medium14
-  font-family: $fontFamilyLight
-  color: $color-active !important
-  text-decoration: underline
-  transition: all 0.5s
-
-// card主题
 .card-line
   font-family: $fontFamilyLight
   color: $color-text33
@@ -74,23 +17,80 @@
     content: ''
     width: 6px
     height: 20px
-    background: $color-pink-CA799A
+    background: $color-active
     transition: all 0.5s
 
 .card-btn-blue
   text-align: center
-  background: $color-pink-CA799A
+  background: $color-active
   color: $color-white
   transition: all 0.5s
 
 .card-btn-white
   text-align: center
   background: $color-white
+  color: $color-active
+  border: 1px solid $color-active
+  transition: all 0.5s
+
+.card-btn-line
+  color: $color-active
+  position: relative
+  &:after
+    content: ''
+    background: $color-active
+    height: 3px
+    width: 40px
+    row-center()
+    bottom: 0
+    transition: all 0.5s
+
+.card-text
+  ont-size: $font-size-medium14
+  font-family: $fontFamilyLight
+  color: $color-active !important
+  transition: all 0.5s
+
+.card-text-under
+  font-size: $font-size-medium14
+  font-family: $fontFamilyLight
+  color: $color-active !important
+  text-decoration: underline
+  transition: all 0.5s
+
+// card主题
+.ws-line
+  font-family: $fontFamilyLight
+  color: $color-text33
+  font-size: $font-size-large18
+  position: relative
+  line-height: 20px
+  text-indent: 42px
+  text-align: left
+  &:after
+    position: absolute
+    top: 0
+    left: 0
+    content: ''
+    width: 6px
+    height: 20px
+    background: $color-pink-CA799A
+    transition: all 0.5s
+
+.ws-btn-blue
+  text-align: center
+  background: $color-pink-CA799A
+  color: $color-white
+  transition: all 0.5s
+
+.ws-btn-white
+  text-align: center
+  background: $color-white
   color: $color-pink-CA799A
   border: 1px solid $color-pink-CA799A
   transition: all 0.5s
 
-.card-btn-line
+.ws-btn-line
   color: $color-pink-CA799A
   position: relative
   &:after
@@ -102,13 +102,13 @@
     bottom: 0
     transition: all 0.5s
 
-.card-text
+.ws-text
   ont-size: $font-size-medium14
   font-family: $fontFamilyLight
   color: $color-pink-CA799A
   transition: all 0.5s
 
-.card-text-under
+.ws-text-under
   font-size: $font-size-medium14
   font-family: $fontFamilyLight
   color: $color-pink-CA799A !important
