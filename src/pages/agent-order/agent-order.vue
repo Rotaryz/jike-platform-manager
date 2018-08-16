@@ -8,7 +8,7 @@
         <search @search="search"></search>
         <div class="top-right">
           <div class="add-btn hand" :class="project + '-btn-blue'" @click="addOrderMsg">+ 新增订单</div>
-          <div class="excel-btn hand" :class="project + '-btn-white'">导出Excel</div>
+          <a :href="downUrl" class="excel-btn hand" :class="project + '-btn-white'">导出Excel</a>
         </div>
       </div>
       <div class="list-head">
@@ -33,7 +33,8 @@
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
   import { Order } from 'api'
-  import { ERR_OK } from 'common/js/config'
+  import { ERR_OK, BASE_URL } from 'common/js/config'
+  import storage from 'storage-controller'
 
   const HEADLIST = ['支付时间', '订单编号', '发货方', '商品名称', '商品单价', '商品数量', '总金额', '收货方', '订单状态', '操作']
   const OBJ = {'0': 'pay_at', '1': 'order_sn', '2': 'delivery', '3': 'title', '4': 'price', '5': 'num', '6': 'total_price', '7': 'name', '8': 'status'}
@@ -54,11 +55,14 @@
         },
         orderSn: '',
         page: 1,
-        nameObj: OBJ
+        nameObj: OBJ,
+        downUrl: ''
       }
     },
     async created() {
       await this._getAgentOrderList()
+      let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+      this.downUrl = BASE_URL.api + `/api/order/export-record?access_token=${storage.get('aiToken')}&storage=${title}&order_sn=`
     },
     methods: {
       addPage(page) {
@@ -83,6 +87,7 @@
           total_page: pages.last_page
         })
         this.agentList = res.data
+        this.downUrl += this.orderSn
       },
       async search(txt) {
         this.page = 1

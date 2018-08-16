@@ -1,10 +1,10 @@
 <template>
   <div class="agent-list">
     <div class="check-box">
-      <admin-select :select="account" ref="account"></admin-select>
+      <!--<admin-select :select="account" ref="account" @setValue="setValue"></admin-select>-->
       <div class="search">
-        <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-        <span class="search-btn hand" :class="project + '-btn-blue'">搜 索</span>
+        <input type="text" class="search-input" placeholder="请输入商家名称或账号" v-model="keyword">
+        <span class="search-btn hand" :class="project + '-btn-blue'" @click="_search">搜 索</span>
       </div>
       <div class="down-excel hand" :class="project + '-btn-blue'">导出Excel</div>
     </div>
@@ -15,21 +15,21 @@
         </div>
       </div>
       <div class="list">
-        <div class="list-box" v-for="item in 10">
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+        <div class="list-box" v-for="(item,index) in businessList" :key="index">
+          <div class="list-item list-text">{{item.name || '---'}}</div>
+          <div class="list-item list-text">{{item.mobile || '---'}}</div>
+          <div class="list-item list-text">{{item.agent.name || '---'}}</div>
+          <div class="list-item list-text">---</div>
+          <div class="list-item list-text">---</div>
+          <div class="list-item list-text">{{item.status === 1 ? '使用中' : '已过期'}}</div>
+          <div class="list-item list-text">{{item.agent_merchant_end_time || '---'}}</div>
           <div class="list-item hand list-item-tap">
-            <router-link tag="span" :to="'/business-management/business-list/business-detail'" :class="project + '-text-under'">查看</router-link>
+            <router-link tag="span" :to="'/business-management/business-list/business-detail?id=' + item.id" :class="project + '-text-under'">查看</router-link>
           </div>
         </div>
       </div>
       <div class="page">
-        <page-detail></page-detail>
+        <page-detail :pageDtail="pageTotal" @addPage="_addPage"></page-detail>
       </div>
     </div>
   </div>
@@ -41,6 +41,8 @@
   import AdminSelect from 'components/admin-select/admin-select'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
+  import { Business } from 'api'
+  import { ERR_OK } from 'common/js/config'
 
   const TITLELIST = ['商家名称', '商家账号', '所属代理商', '推荐人', '推荐人电话', '账户状态', '到期时间', '操作']
 
@@ -54,17 +56,60 @@
         account: [{
           select: false,
           show: false,
-          children: [{content: '账户状态', data: []}]
-        }]
+          children: [{content: '账户状态', data: [{title: '全部', status: 0, type: 'account'}, {title: '使用中', status: 1, type: 'account'}, {title: '已过期', status: 2, type: 'account'}]}]
+        }],
+        page: 1,
+        keyword: '',
+        status: 0,
+        firstStatus: 0,
+        businessList: [],
+        pageTotal: {
+          total: 1,
+          per_page: 10,
+          total_page: 0
+        }
       }
     },
     computed: {
       ...mapGetters(['project'])
     },
-    mounted() {
-      // this.$emit('showShade')
+    async created() {
+      await this._getBusinessList()
     },
-    methods: {},
+    methods: {
+      async _search() {
+        this.status = this.firstStatus
+        this.page = 1
+        await this._getBusinessList()
+      },
+      async _getBusinessList() {
+        let data = {page: this.page, status: this.status, keyword: this.keyword}
+        let res = await Business.managetMerchant(data)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let pages = res.meta
+        this.pageTotal = Object.assign({}, {
+          total: pages.total,
+          per_page: pages.per_page,
+          total_page: pages.last_page
+        })
+        this.businessList = res.data
+        console.log(res.data)
+      },
+      setValue(item) {
+        switch (item.type) {
+          case 'account':
+            this.account[0].children[0].content = item.title
+            this.firstStatus = item.status
+            break
+        }
+      },
+      async _addPage(page) {
+        this.page = page
+        await this._getBusinessList()
+      }
+    },
     components: {
       BaseModel,
       AdminSelect,

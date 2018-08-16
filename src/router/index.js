@@ -136,7 +136,7 @@ const route = new Router({
             path: 'platform-expend',
             component: PlatformExpend,
             meta: {
-              title: '财务管理,平台支出'
+              title: '财务管理,发放记录'
             }
           }, {
             path: 'cash-management',

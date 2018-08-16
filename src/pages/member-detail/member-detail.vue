@@ -4,34 +4,34 @@
       <div :class="project + '-line'" class="agent-text">基本信息</div>
       <div class="agent-content">
         <div class="agent-box">
-          <div class="agent-item"><span class="agent-title">商家名称：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">商家账号：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">角色名称：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">职位：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">所属企业：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">所属企业账号：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">所属代理商：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">所属代理商账号：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">推荐人名称：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">推荐人账号：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">使用期限：</span>XXX代理商</div>
-          <div class="agent-item"><span class="agent-title">开通方式：</span>XXX代理商</div>
+          <div class="agent-item"><span class="agent-title">商家名称：</span>{{detail.name || '---'}}</div>
+          <div class="agent-item"><span class="agent-title">商家账号：</span>{{detail.mobile|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">角色名称：</span>{{detail.role || '---'}}</div>
+          <div class="agent-item"><span class="agent-title">职位：</span>---</div>
+          <div class="agent-item"><span class="agent-title">所属企业：</span>{{detail.merchant_name|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">所属企业账号：</span>{{detail.merchant_mobile|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">所属代理商：</span>---</div>
+          <div class="agent-item"><span class="agent-title">所属代理商账号：</span>---</div>
+          <div class="agent-item"><span class="agent-title">推荐人名称：</span>{{detail.relation_employee_name|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">推荐人账号：</span>{{detail.relation_employee_mobile|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">使用期限：</span>{{detail.expiration_time|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">开通方式：</span>{{detail.open_type === 0 ? '自费开通' : '激活码开通'}}</div>
         </div>
       </div>
     </div>
     <div class="agent-detail-box">
       <div :class="project + '-line'" class="agent-text">资产信息</div>
       <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">总收入(元)：</span>XXX代理商</div>
+        <div class="agent-item"><span class="agent-title">总收入(元)：</span></div>
       </div>
       <div class="agent-box ">
-        <div class="agent-item"><span class="agent-title">推荐奖励收入(元)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查询明细</span></div>
+        <div class="agent-item"><span class="agent-title">推荐奖励收入(元)：</span><span class="until hand" :class="project + '-text-under'">查询明细</span></div>
       </div>
     </div>
     <div class="agent-detail-box">
       <div :class="project + '-line'" class="agent-text">团队信息</div>
       <div class="agent-box">
-        <div class="agent-item"><span class="agent-title">直接推荐(人)：</span>XXX代理商<span class="until hand" :class="project + '-text-under'">查看列表</span></div>
+        <div class="agent-item"><span class="agent-title">直接推荐(人)：</span>{{detail.relation_employee_mobile|| '---'}}<span class="until hand" :class="project + '-text-under'">查看列表</span></div>
       </div>
     </div>
     <div class="agent-btn hand" :class="project + '-btn-blue'" @click="_back">返回</div>
@@ -42,15 +42,34 @@
   // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
   import BaseModel from 'components/base-model/base-model'
+  import { Member } from 'api'
+  import { ERR_OK } from 'common/js/config'
 
   export default {
     name: 'member-detail',
+    data() {
+      return {
+        detail: {}
+      }
+    },
     computed: {
       ...mapGetters(['project'])
+    },
+    created() {
+      let id = this.$route.query.id
+      this._memberDetail(id)
     },
     methods: {
       _back() {
         this.$router.back()
+      },
+      async _memberDetail(id) {
+        let res = await Member.memberDetail({employee_id: id})
+        if (res.error !== ERR_OK) {
+          return
+        }
+        this.detail = res.data
+        console.log(res.data)
       }
     },
     components: {

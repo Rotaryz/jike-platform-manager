@@ -86,11 +86,13 @@
         title: '代理订单',
         url: '/order-management/agent-order',
         type: 'normal'
-      }, {
-        title: '零售订单',
-        url: '/order-management/retail-order',
-        type: 'ws'
-      }],
+      }
+        //   ,{
+        //   title: '零售订单',
+        //   url: '/order-management/retail-order',
+        //   type: 'ws'
+        // }
+      ],
       showHeight: HEIGHT
     }, {
       title: '财务管理',
@@ -102,14 +104,16 @@
         url: '/financial-management/platform-income',
         type: 'normal'
       }, {
-        title: '平台支出',
+        title: '发放记录',
         url: '/financial-management/platform-expend',
         type: 'ws'
-      }, {
-        title: '提现管理',
-        url: '/financial-management/cash-management',
-        type: 'ws'
-      }],
+      }
+        // , {
+        //   title: '提现管理',
+        //   url: '/financial-management/cash-management',
+        //   type: 'ws'
+        // }
+      ],
       showHeight: HEIGHT
     }]
   //   , {
@@ -145,6 +149,7 @@
     },
     created() {
       this.loginRole = this.project === 'card' ? 0 : 1
+      this.roleName = this.loginRole === 0 ? '赞播AI名片' : '赞播AI微商'
       let path = this.$route.matched[1].path
       this.info(path)
     },
@@ -275,10 +280,10 @@
           border-radius: 50%
         .ws-logo
           background: $color-active
-          transition :all 0.5s
+          transition: all 0.5s
         .card-logo
           background: #F94C5F
-          transition :all 0.5s
+          transition: all 0.5s
         .header-change
           position: absolute
           top: 106px

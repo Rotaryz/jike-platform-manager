@@ -7,7 +7,7 @@
       <div class="order-content">
         <div class="order-msg">
           <div class="msg-item">收货方：{{agentOrder.name}}</div>
-          <div class="msg-item">收货方账号:{{agentOrder.name}}</div>
+          <div class="msg-item">收货方账号:{{agentOrder.mobile}}</div>
           <div class="msg-item">商品名称：{{agentOrder.title}}</div>
           <div class="msg-item">商品单价(元)：{{agentOrder.price}}</div>
           <div class="msg-item">商品数量：{{agentOrder.num}}</div>

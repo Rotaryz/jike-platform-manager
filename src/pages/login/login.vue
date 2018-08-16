@@ -165,6 +165,9 @@
         margin-left: 10px
         font-size: 36px
     .login-box
+      display :flex
+      flex-direction :column
+      align-items :center
       .login-title
         font-size: 32px
         font-family: $fontFamilyLight
@@ -195,8 +198,10 @@
         height: 80px
         font-size: $font-size-small
         position: relative
-        &:first-child
-          border-bottom: 1px solid $color-icon-line
+        border-bottom: 1px solid #EFEFEF
+        box-sizing :border-box
+        &:last-child
+          border-bottom :none
         .inputs
           text-indent: 65px
           height: 100%

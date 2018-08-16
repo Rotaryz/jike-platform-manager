@@ -7,11 +7,13 @@
         <div class="admin-select-box input-height-item" :class="{'admin-select-box-active': item.show}">{{items.content}}
           <img src="./icon-dropdown@2x.png" class="city-tap-top" :class="{'city-tap-top-active': item.select}">
           <!--<span class="city-tap-top" :class="{'city-tap-bottom':item.show && item.select,'city-tap-top-two': item.show && !item.select}"></span>-->
-          <ul class="select-child" v-show="item.select" @mouseleave="leaveHide(index)" @mouseenter="endShow">
-            <li class="select-child-item" v-for="(child, chIdx) in items.data" :key="chIdx" @click.stop="setValue(child,index,idx)">
-              {{child.title}}
-            </li>
-          </ul>
+          <transition name="fade">
+            <ul class="select-child" v-show="item.select" @mouseleave="leaveHide(index)" @mouseenter="endShow">
+              <li class="select-child-item" v-for="(child, chIdx) in items.data" :key="chIdx" @click.stop="setValue(child,index,idx)">
+                {{child.title}}
+              </li>
+            </ul>
+          </transition>
         </div>
       </div>
     </div>

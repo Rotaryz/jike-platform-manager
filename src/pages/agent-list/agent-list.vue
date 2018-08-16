@@ -5,7 +5,7 @@
     </ul>
     <div class="check-box">
       <admin-select :select="role" ref="role" @setValue="setValue"></admin-select>
-      <!--<admin-select :select="account" ref="account" @setValue="setValue"></admin-select>-->
+      <admin-select :select="account" ref="account" @setValue="setValue" v-if="tabIndex === 1"></admin-select>
       <div class="search">
         <input type="text" class="search-input" placeholder="请输入商家名称或账号" v-model="name">
         <span class="search-btn hand" :class="project + '-btn-blue'" @click="_search">搜 索</span>
@@ -23,14 +23,15 @@
       </div>
       <div class="list">
         <div class="list-box" v-for="(item, index) in agentList" :key="index">
-          <div class="list-item list-text">{{item.name}}</div>
-          <div class="list-item list-text">{{item.mobile}}</div>
-          <div class="list-item list-text">{{item.role}}</div>
+          <div class="list-item list-text">{{item.name || '---'}}</div>
+          <div class="list-item list-text">{{item.mobile || '---'}}</div>
+          <div class="list-item list-text">{{item.role || '---'}}</div>
           <div class="list-item list-text">---</div>
           <div class="list-item list-text">---</div>
-          <div class="list-item list-text">{{item.recomm_invite_name}}</div>
-          <div class="list-item list-text">{{item.invite_mobile}}</div>
-          <div class="list-item list-text">{{item.status === 1 ? '使用中' : item.status === 2 ? '过期' : ''}}</div>
+          <div class="list-item list-text">{{item.recomm_invite_name || '---'}}</div>
+          <div class="list-item list-text">{{item.invite_mobile || '---'}}</div>
+          <div class="list-item list-text" v-if="tabIndex === 0">{{item.status === 1 ? '使用中' : item.status === 2 ? '过期' : ''}}</div>
+          <div class="list-item list-text" v-if="tabIndex === 1">{{item.status === 0 ? '待审核' :item.status === 1 ? '审核通过' : item.status === 2 ? '审核不通过' : '---'}}</div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 0">
             <router-link tag="span" :to="'/agent-management/agent-list/new-agent?id='+ item.id" :class="project + '-text-under'">编辑</router-link>
             |
@@ -73,7 +74,7 @@
         account: [{
           select: false,
           show: false,
-          children: [{content: '账户状态', data: [{title: '全部', status: 0, type: 'status'}, {title: '使用中', status: 1, type: 'status'}, {title: '已过期', status: 2, type: 'status'}]}]
+          children: [{content: '账户状态', data: [{title: '全部', status: 3, type: 'status'}, {title: '待审核', status: 0, type: 'status'}, {title: '审核通过', status: 1, type: 'status'}, {title: '审核不通过', status: 2, type: 'status'}]}]
         }],
         page: 1,
         agentList: [],
@@ -85,11 +86,20 @@
         name: '',
         roleId: 0,
         endRoleId: 0,
-        endName: ''
+        endName: '',
+        status: 3,
+        endStatus: 3
       }
     },
     computed: {
       ...mapGetters(['project'])
+    },
+    watch: {
+      project(newValue) {
+        if (newValue) {
+          this._getAngetList()
+        }
+      }
     },
     async created() {
       await this._getAngetList()
@@ -112,6 +122,7 @@
         this.endRoleId = this.roleId
         this.endName = this.name
         this.page = 1
+        this.endStatus = this.status
         this.$refs.page.beginPage()
         await this._getAngetList()
       },
@@ -125,6 +136,7 @@
         res.data.forEach((item) => {
           arr.push({title: item.level_name, type: 'role', level: item.level})
         })
+        arr.unshift({title: '全部', type: 'role', level: ''})
         this.role[0].children[0].data = arr
       },
       async _checkTab(index) {
@@ -135,6 +147,8 @@
         this.name = ''
         this.endRoleId = this.roleId
         this.endName = this.name
+        this.status = 3
+        this.endStatus = this.status
         this.$refs.page.beginPage()
         await this._getAngetList()
       },
@@ -154,7 +168,7 @@
           this.agentList = res.data
           return
         }
-        let data = {page: this.page, role: this.endRoleId, status: 0, name: this.endName}
+        let data = {page: this.page, role: this.endRoleId, status: this.status, name: this.endName}
         let res = await Agent.applyAgent(data)
         if (res.error !== ERR_OK) {
           return
@@ -178,10 +192,10 @@
             this.status = item.status
             break
         }
-        this._getAngetList()
       },
-      _addPage(page) {
-        this._getAngetList()
+      async _addPage(page) {
+        this.page = page
+        await this._getAngetList()
       }
     },
     components: {

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -39,4 +41,10 @@
     width: 100vw
     height: 100vh
     overflow: hidden
+
+  .fade-enter, .fade-leave-to
+    opacity: 0
+
+  .fade-enter-to, .fade-leave-to
+    transition: opacity .2s ease-in-out
 </style>

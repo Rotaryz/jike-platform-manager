@@ -83,7 +83,6 @@
     created() {
       let id = this.$route.query.id
       let type = this.$route.query.type
-      console.log(type)
       this._getAgentDetail(id, type)
     },
     methods: {
@@ -97,23 +96,23 @@
           case 1:
             Agent.agentDetail(id).then((res) => {
               if (res.error !== ERR_OK) {
+                this.$emit('showToast', res.message)
                 return
               }
               let arr = `商家管理,代理商管理,${res.data.name}代理商`
               this.setTitleArr(arr.split(','))
               this.role = res.data
-              console.log(res)
             })
             break
           case 2:
             Agent.examineDetail(id).then((res) => {
               if (res.error !== ERR_OK) {
+                this.$emit('showToast', res.message)
                 return
               }
               let arr = `商家管理,代理商管理,${res.data.name}代理商`
               this.setTitleArr(arr.split(','))
               this.role = res.data
-              console.log(res)
             })
             break
         }

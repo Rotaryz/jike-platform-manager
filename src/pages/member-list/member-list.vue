@@ -1,13 +1,13 @@
 <template>
   <div class="agent-list">
     <ul class="tab" v-if="project !== 'card'">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index" @click="_checkTab(index)">{{item}}</li>
+      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index" @click="_checkTab(index)">{{item.title}}</li>
     </ul>
     <div class="check-box">
-      <admin-select :select="openType" ref="openType"></admin-select>
+      <admin-select :select="openType" ref="openType" v-if="tabIndex === 0" @setValue="setValue"></admin-select>
       <div class="search">
-        <input type="text" class="search-input" placeholder="请输入商家名称或账号">
-        <span class="search-btn hand" :class="project + '-btn-blue'">搜 索</span>
+        <input type="text" class="search-input" placeholder="请输入商家名称或账号" v-model="word">
+        <span class="search-btn hand" :class="project + '-btn-blue'" @click="_search">搜 索</span>
       </div>
     </div>
     <div class="form-list">
@@ -17,23 +17,23 @@
         </div>
       </div>
       <div class="list">
-        <div class="list-box" v-for="item in 10">
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
-          <div class="list-item list-text">撒谎反馈绝对会分开的时候放开手撒发放撒法</div>
+        <div class="list-box" v-for="(item, index) in memberList" :key="index">
+          <div class="list-item list-text">{{item.name || '---'}}</div>
+          <div class="list-item list-text">{{item.mobile || '---'}}</div>
+          <div class="list-item list-text">{{item.agent_name || '---'}}</div>
+          <div class="list-item list-text">{{item.merchant_name || '---'}}</div>
+          <div class="list-item list-text">{{item.relation_employee_name || '---'}}</div>
+          <div class="list-item list-text">{{item.relation_employee_mobile || '---'}}</div>
+          <div class="list-item list-text">{{item.open_type}}</div>
+          <div class="list-item list-text">{{item.role}}</div>
+          <div class="list-item list-text">{{item.expiration_time}}</div>
           <div class="list-item hand list-item-tap">
-            <router-link tag="span" :to="'/member-management/member-list/member-detail'" :class="project + '-text-under'">查看</router-link>
+            <router-link tag="span" :to="'/member-management/member-list/member-detail?id='+ item.id" :class="project + '-text-under'">查看</router-link>
           </div>
         </div>
       </div>
       <div class="page">
-        <page-detail></page-detail>
+        <page-detail :pageDtail="pageTotal" @addPage="_addPage" ref="page"></page-detail>
       </div>
     </div>
   </div>
@@ -45,6 +45,8 @@
   import AdminSelect from 'components/admin-select/admin-select'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
+  import { Member } from 'api'
+  import { ERR_OK } from 'common/js/config'
 
   const TITLELIST = ['成员名称', '成员账号', '所属代理商', '所属企业', '推荐人', '推荐人电话', '开通方式', '职位', '到期时间', '操作']
 
@@ -53,26 +55,76 @@
     data() {
       return {
         titleList: TITLELIST,
-        tabArr: ['正式版', '试用版'],
+        tabArr: [{title: '正式版', status: 1}, {title: '试用版', status: 0}],
         tabIndex: 0,
         openType: [{
           select: false,
           show: false,
-          children: [{content: '开通方式', data: []}]
+          children: [{content: '开通方式', data: [{title: '全部', status: 2, type: 'open'}, {title: '自费开通', status: 0, type: 'open'}, {title: '激活码开通', status: 1, type: 'open'}]}]
         }],
-        page: 1
+        page: 1,
+        keyword: '',
+        word: '',
+        status: 2,
+        firstStatus: 2,
+        memberList: [],
+        pageTotal: {
+          total: 1,
+          per_page: 10,
+          total_page: 0
+        }
       }
     },
     computed: {
       ...mapGetters(['project'])
     },
-    mounted() {
-      // this.$emit('showShade')
+    async created() {
+      await this._getBusinessList()
     },
     methods: {
-      _checkTab(index) {
+      async _checkTab(index) {
         this.tabIndex = index
+        this.keyword = ''
+        this.word = ''
+        this.status = 2
+        this.firstStatus = 2
         this.page = 1
+        this.$refs.page.beginPage()
+        await this._getBusinessList()
+      },
+      async _search() {
+        this.keyword = this.word
+        this.status = this.firstStatus
+        console.log()
+        this.page = 1
+        await this._getBusinessList()
+      },
+      async _getBusinessList() {
+        let data = {page: this.page, open_type: this.status, keyword: this.keyword, service_version: this.tabArr[this.tabIndex].status}
+        let res = await Member.memberList(data)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let pages = res.meta
+        this.pageTotal = Object.assign({}, {
+          total: pages.total,
+          per_page: pages.per_page,
+          total_page: pages.last_page
+        })
+        this.memberList = res.data
+        console.log(res.data)
+      },
+      setValue(item) {
+        switch (item.type) {
+          case 'open':
+            this.openType[0].children[0].content = item.title
+            this.firstStatus = item.status
+            break
+        }
+      },
+      async _addPage(page) {
+        this.page = page
+        await this._getBusinessList()
       }
     },
     components: {

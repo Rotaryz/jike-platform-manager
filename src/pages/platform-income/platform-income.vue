@@ -6,34 +6,34 @@
           <img src="./icon-payout@2x.png" class="icon-img">
         </div>
         <div class="money-box">
-          <div class="top-money">888,000.00</div>
+          <div class="top-money">{{detail.total}}</div>
           <div class="down-txt">平台总收入(元)</div>
         </div>
       </div>
       <div class="top-item">
         <div class="money-box">
-          <div class="top-money">23,443.00</div>
+          <div class="top-money">{{detail.join_income}}</div>
           <div class="down-txt">加盟收入(元)</div>
         </div>
       </div>
       <div class="top-item">
         <div class="money-box">
-          <div class="top-money">45,000.00</div>
+          <div class="top-money">{{detail.sale_income}}</div>
           <div class="down-txt">销货收入(元)</div>
         </div>
       </div>
       <div class="top-item">
         <div class="money-box">
-          <div class="top-money">65,000.00</div>
+          <div class="top-money">{{detail.distribute_income}}</div>
           <div class="down-txt">分销收入(元)</div>
         </div>
       </div>
-      <div class="top-item">
-        <div class="money-box">
-          <div class="top-money">3,800.00</div>
-          <div class="down-txt">年费收入(元)</div>
-        </div>
-      </div>
+      <!--<div class="top-item">-->
+      <!--<div class="money-box">-->
+      <!--<div class="top-money">3,800.00</div>-->
+      <!--<div class="down-txt">年费收入(元)</div>-->
+      <!--</div>-->
+      <!--</div>-->
     </div>
     <div class="down-box">
       <ul class="tab" v-if="project === 'ws'">
@@ -49,12 +49,12 @@
         </div>
         <div class="list-box">
           <div class="list-content" v-for="(item, index) in orderList" :key="index">
-            <div class="list-item" v-for="(item1, index1) in listHead[tabIndex]" :key="index1" v-if="index1 != (listHead[tabIndex].length - 1)" :class="item1.flex">test</div>
-            <div class="last-item hand" :class="project + '-text'" @click="toDetail(item)">查看</div>
+            <div class="list-item" v-for="(item1, index1) in listHead[tabIndex]" :key="index1" v-if="index1 != (listHead[tabIndex].length - 1)" :class="item1.flex">{{item[contentName[tabIndex][index1]] || '---'}}</div>
+            <div class="last-item hand" :class="project + '-text'" @click="_toDetail(item)">查看</div>
           </div>
         </div>
         <div class="page-box">
-          <page-detail @addPage="addPage"></page-detail>
+          <page-detail @addPage="addPage" ref="page" :pageDtail="pageTotal"></page-detail>
         </div>
       </div>
     </div>
@@ -65,16 +65,19 @@
   // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
   import PageDetail from 'components/page-detail/page-detail'
+  import { Finance } from 'api'
+  import { ERR_OK } from 'common/js/config'
+
   const WSTAB = [
-    {txt: '加盟收入', idx: 1},
-    {txt: '销货收入', idx: 2},
-    {txt: '分销收入', idx: 3},
-    {txt: '年费收入', idx: 5}
+    {txt: '加盟收入', idx: 1, status: 31},
+    {txt: '销货收入', idx: 2, status: 32},
+    {txt: '分销收入', idx: 3, status: 33}
+    // {txt: '年费收入', idx: 5}
   ]
   const MPTAB = [
-    {txt: '加盟收入', idx: 1},
-    {txt: '销货收入', idx: 2},
-    {txt: '年费收入', idx: 4}
+    {txt: '加盟收入', idx: 1, status: 31},
+    {txt: '销货收入', idx: 2, status: 32}
+    // {txt: '年费收入', idx: 4}
   ]
   const FIRSTARR = [
     {txt: '加入时间', flex: 'flex2'},
@@ -120,6 +123,9 @@
     {txt: '操作', flex: 'flex1'}
   ]
 
+  const FIRST_NAME = {'0': 'created_at', '1': 'name', '2': 'mobile', '3': 'role_name', '4': 'money'}
+  const SECOND_NAME = {'0': 'created_at', '2': 'order_sn', '3': 'name', '4': 'good_name', '5': 'price', '6': 'num', '7': 'money'}
+  const THREE_NAME = {'0': 'created_at', '2': 'order_sn', '3': 'name', '4': 'good_name', '5': 'price', '6': 'num', '7': 'money', '8': ''}
   export default {
     name: 'platform-income',
     data() {
@@ -134,15 +140,53 @@
           4: FOREARR1,
           5: FOREARR2
         },
-        orderList: [1, 2, 3, 4, 5, 6]
+        contentName: {
+          1: FIRST_NAME,
+          2: SECOND_NAME,
+          3: THREE_NAME
+        },
+        orderList: [],
+        page: 1,
+        pageTotal: {
+          total: 1,
+          per_page: 10,
+          total_page: 0
+        },
+        detail: {}
       }
     },
+    async created() {
+      await this._getExpendList()
+    },
     methods: {
-      checkTab(idx) {
-        this.tabIndex = idx * 1
+      _toDetail(item) {
+        this.$router.push({path: '/agent-management/agent-list/agent-detail?id=', query: {id: item.order_sn, type: 1}})
       },
-      addPage(page) {
-        console.log(page)
+      async checkTab(idx) {
+        this.tabIndex = idx * 1
+        this.page = 1
+        this.$refs.page.beginPage()
+        await this._getExpendList()
+      },
+      async addPage(page) {
+        this.page = page
+        await this._getExpendList()
+      },
+      async _getExpendList() {
+        let data = {page: this.page, type: this.wsTabArr[this.tabIndex - 1].status}
+        let res = await Finance.incomeList(data)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let pages = res.meta
+        this.pageTotal = Object.assign({}, {
+          total: pages.total,
+          per_page: pages.per_page,
+          total_page: pages.last_page
+        })
+        this.orderList = res.data
+        // console.log(res.data)
+        this.detail = Object.assign({}, {join_income: res.join_income, sale_income: res.sale_income, distribute_income: res.distribute_income, total: res.total})
       }
     },
     components: {
@@ -236,7 +280,7 @@
           font-size: $font-size-medium16
       .list-container
         flex: 1
-        padding: 30px 30px 0
+        padding: 1.5vw 1.5vw 0
         overflow: hidden
         display: flex
         flex-direction: column
@@ -280,7 +324,7 @@
           display: flex
           flex-direction: column
           .list-content
-            flex: 1
+            height: 16.66%
             padding-left: 40px
             border-bottom: 1px solid $color-line
             display: flex

@@ -25,21 +25,21 @@
     </div>
     <div class="down-box">
       <ul class="tab" v-if="project === 'ws'">
-        <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex == index ? (project + '-btn-line') : ''" :key="index" @click="checkTab(index)">{{item}}</li>
+        <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex == index ? (project + '-btn-line') : ''" :key="index" @click="checkTab(index)">{{item.title}}</li>
       </ul>
       <div class="list-container">
         <div class="list-head">
           <div class="list-item" v-for="(item, index) in headlist" :key="index" :class="item.flex">{{item.txt}}</div>
         </div>
         <div class="list-box">
-          <div class="list-content" v-for="(item, index) in orderList" :key="index">
-            <div class="list-item" v-for="(item1, index1) in headlist" :key="index1" v-if="index1 != (headlist.length - 1)" :class="item1.flex">test</div>
+          <div class="list-content" v-for="(item, index) in expendList" :key="index">
+            <div class="list-item" v-for="(item1, index1) in headlist" :key="index1" v-if="index1 != (headlist.length - 1)" :class="item1.flex">{{item[nameObj[index1]] || '---'}}</div>
             <div class="list-item hand" :class="project + '-text'" @click="upAnyImg(item)" v-if="tabIndex == 1">发放</div>
             <div class="list-item hand" :class="project + '-text'" @click="showImg(item)" v-if="tabIndex == 0">查看凭证</div>
           </div>
         </div>
         <div class="page-box">
-          <page-detail @addPage="addPage"></page-detail>
+          <page-detail @addPage="addPage" :pageDtail="pageTotal" ref="page"></page-detail>
         </div>
       </div>
     </div>
@@ -74,6 +74,9 @@
   // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
   import PageDetail from 'components/page-detail/page-detail'
+  import { Finance } from 'api'
+  import { ERR_OK } from 'common/js/config'
+
   const FIRSTARR = [
     {txt: '发放时间', flex: 'flex1'},
     {txt: '商家名称', flex: 'flex1'},
@@ -86,24 +89,55 @@
     {txt: '奖励金额', flex: 'flex1'},
     {txt: '发放状态', flex: 'flex1'},
     {txt: '操作', flex: 'flex1'}]
-
+  const NAME_OBJ = {'0': 'recommended_time', '1': 'name', '2': 'mobile', '3': 'recommended_name', '4': 'recommended_mobile', '5': 'recommended_role_name', '6': 'total_money', '7': 'rate', '8': 'reward_money', '9': 'status'}
   export default {
     name: 'platform-income',
     data() {
       return {
-        tabArr: ['已发放', '未发放'],
+        tabArr: [{title: '已发放', status: 1}, {title: '未发放', status: 0}],
         tabIndex: 0,
         headlist: FIRSTARR,
         orderList: [1, 2, 3, 4, 5, 6],
-        showCenter: false
+        showCenter: false,
+        expendList: [],
+        page: 1,
+        pageTotal: {
+          total: 1,
+          per_page: 10,
+          total_page: 0
+        },
+        nameObj: NAME_OBJ
       }
     },
+    async created() {
+      await this._getExpendList()
+    },
     methods: {
-      checkTab(idx) {
-        this.tabIndex = idx * 1
+      async _getExpendList() {
+        console.log(this.tabArr[this.tabIndex].status)
+        let data = {page: this.page, status: this.tabArr[this.tabIndex].status}
+        let res = await Finance.bonusApplyList(data)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let pages = res.meta
+        this.pageTotal = Object.assign({}, {
+          total: pages.total,
+          per_page: pages.per_page,
+          total_page: pages.last_page
+        })
+        console.log(res.data)
+        this.expendList = res.data
       },
-      addPage(page) {
-        console.log(page)
+      async checkTab(idx) {
+        this.tabIndex = idx * 1
+        this.page = 1
+        this.$refs.page.beginPage()
+        await this._getExpendList()
+      },
+      async addPage(page) {
+        this.page = page
+        await this._getExpendList()
       },
       upAnyImg(item) {
         console.log(item)
@@ -152,15 +186,14 @@
       display: flex
       align-items: center
       .top-item
-        flex: 1
         overflow: hidden
         height: 72px
         &:nth-child(2)
           border-left: 1px solid $color-line
         &:first-child
-          flex: 1.4
           margin-left: 40px
           display: flex
+          margin-right: 5.8vw
           .first-icon
             width: 72px
             height: 72px
@@ -216,7 +249,7 @@
           font-size: $font-size-medium16
       .list-container
         flex: 1
-        padding: 30px 30px 0
+        padding: 1.5vw 1.5vw 0
         overflow: hidden
         display: flex
         flex-direction: column
@@ -260,7 +293,7 @@
           display: flex
           flex-direction: column
           .list-content
-            flex: 1
+            height: 16.66%
             padding-left: 40px
             border-bottom: 1px solid $color-line
             display: flex
@@ -274,7 +307,7 @@
       width: 534px
       height: 331px
       background: $color-white
-      box-shadow: 0 0 5px 0 rgba(12,6,14,0.60)
+      box-shadow: 0 0 5px 0 rgba(12, 6, 14, 0.60)
       border-radius: 3px
       position: absolute
       top: 50%
