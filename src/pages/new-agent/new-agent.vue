@@ -156,6 +156,8 @@
       let id = this.$route.query.id
       this.check = this.$route.query.check
       this.id = id
+      this._infoPro()
+      await this._roleList()
       if (!id) {
         let arr = '商家管理,代理商管理,新增代理商'
         this.setTitleArr(arr.split(','))
@@ -168,8 +170,6 @@
         this.setTitleArr(arr.split(','))
         await this._examineDetail(id)
       }
-      this._infoPro()
-      await this._roleList()
     },
     methods: {
       ...mapActions(['setTitleArr']),
@@ -237,6 +237,13 @@
         this.city[1].children[0].content = this.content.city || '请选择'
         this.city[2].children[0].content = this.content.area || '请选择'
         this.role[0].children[0].content = this.content.role || '角色名称'
+        // 初始化城市
+        let index = this.city[0].children[0].data.findIndex(item => item.title === this.city[0].children[0].content)
+        this._infoCity(index)
+        this.cityIndex = index
+        // 初始化市区
+        let idx = this.city[1].children[0].data.findIndex(item => item.title === this.city[1].children[0].content)
+        this._infoArea(idx)
       },
       async _roleList() {
         let res = await Agent.roleList()
@@ -248,7 +255,6 @@
           arr.push({title: item.level_name, type: 'role', level: item.level})
         })
         this.role[0].children[0].data = arr
-        console.log(this.role)
       },
       // 上传图片
       async _getImg(e) {
@@ -322,6 +328,15 @@
       async _submit() {
         if (this.id) {
           if (!this.content.name || !this.content.mobile || !this.content.money) {
+            return
+          } else if (!this.content.province || this.content.province.includes('选择')) {
+            this.$emit('showToast', '请选择省份')
+            return
+          } else if (!this.content.city || this.content.city.includes('选择')) {
+            this.$emit('showToast', '请选择城市')
+            return
+          } else if (!this.content.area || this.content.area.includes('选择')) {
+            this.$emit('showToast', '请选择地区')
             return
           }
           let res = await Agent.editAgent(this.content, this.id)
