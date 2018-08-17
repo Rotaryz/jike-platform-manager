@@ -11,7 +11,7 @@
           <div class="agent-item"><span class="agent-title">所属上级名称：</span>---</div>
           <div class="agent-item"><span class="agent-title">所属上级账号：</span>---</div>
           <div class="agent-item"><span class="agent-title">推荐人名称：</span>{{role.recomm_invite_name|| '---'}}</div>
-          <div class="agent-item"><span class="agent-title">推荐人账号：</span>{{role.recomm_invite_mobile|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">推荐人账号：</span>{{role.invite_mobile|| '---'}}</div>
           <div class="agent-item"><span class="agent-title">代理金额(元)：</span>{{role.money|| '---'}}</div>
           <div class="agent-item"><span class="agent-title">代理期限：</span>{{role.agent_end_time|| '---'}}</div>
         </div>
