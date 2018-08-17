@@ -95,7 +95,6 @@
       async _search() {
         this.keyword = this.word
         this.status = this.firstStatus
-        console.log()
         this.page = 1
         await this._getBusinessList()
       },
@@ -112,7 +111,6 @@
           total_page: pages.last_page
         })
         this.memberList = res.data
-        console.log(res.data)
       },
       setValue(item) {
         switch (item.type) {
