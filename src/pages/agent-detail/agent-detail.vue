@@ -4,16 +4,16 @@
       <div :class="project + '-line'" class="agent-text">基本信息</div>
       <div class="agent-content">
         <div class="agent-box">
-          <div class="agent-item"><span class="agent-title">商家名称：</span>{{role.name}}</div>
-          <div class="agent-item"><span class="agent-title">商家账号：</span>{{role.mobile}}</div>
-          <div class="agent-item"><span class="agent-title">角色名称：</span>{{role.role}}</div>
-          <div class="agent-item"><span class="agent-title">所在地区：</span>{{role.address}}</div>
+          <div class="agent-item"><span class="agent-title">商家名称：</span>{{role.name || '---'}}</div>
+          <div class="agent-item"><span class="agent-title">商家账号：</span>{{role.mobile|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">角色名称：</span>{{role.role|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">所在地区：</span>{{role.address|| '---'}}</div>
           <div class="agent-item"><span class="agent-title">所属上级名称：</span>---</div>
           <div class="agent-item"><span class="agent-title">所属上级账号：</span>---</div>
-          <div class="agent-item"><span class="agent-title">推荐人名称：</span>{{role.recomm_invite_name}}</div>
-          <div class="agent-item"><span class="agent-title">推荐人账号：</span>{{role.invite_mobile}}</div>
-          <div class="agent-item"><span class="agent-title">代理金额(元)：</span>{{role.money}}</div>
-          <div class="agent-item"><span class="agent-title">代理期限：</span>{{role.agent_end_time}}</div>
+          <div class="agent-item"><span class="agent-title">推荐人名称：</span>{{role.recomm_invite_name|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">推荐人账号：</span>{{role.recomm_invite_mobile|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">代理金额(元)：</span>{{role.money|| '---'}}</div>
+          <div class="agent-item"><span class="agent-title">代理期限：</span>{{role.agent_end_time|| '---'}}</div>
         </div>
       </div>
     </div>
