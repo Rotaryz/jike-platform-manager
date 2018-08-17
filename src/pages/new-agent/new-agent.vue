@@ -298,8 +298,8 @@
             this.city[2].children[0].content = '请选择'
             this._infoCity(index)
             this.content.province = item.title
-            this.content.city = '请选择'
-            this.content.area = '请选择'
+            this.content.city = '选择市'
+            this.content.area = '选择区'
             break
           case 'city' :
             let idx = regionArr[this.cityIndex].sub.findIndex(child => child.name === item.title)
@@ -342,13 +342,13 @@
         } else if (this.content.role_id === '') {
           this.$emit('showToast', '请选择角色')
           return
-        } else if (!this.content.province) {
+        } else if (!this.content.province || this.content.province.includes('选择')) {
           this.$emit('showToast', '请选择省份')
           return
-        } else if (!this.content.city) {
+        } else if (!this.content.city || this.content.city.includes('选择')) {
           this.$emit('showToast', '请选择城市')
           return
-        } else if (!this.content.area) {
+        } else if (!this.content.area || this.content.area.includes('选择')) {
           this.$emit('showToast', '请选择地区')
           return
         } else if (!this.content.collection_evidence_image_id) {

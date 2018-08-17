@@ -17,5 +17,13 @@ export default {
   bonusApplyList(data) {
     let url = '/api/finance/bonus-apply-list'
     return request.get(url, data)
+  }, /**
+   * 审核发放凭证
+   * @param data
+   * @returns {*}
+   */
+  bonusApplyAudit(id, data) {
+    let url = `/api/finance/bonus-apply-audit/${id}`
+    return request.post(url, data)
   }
 }

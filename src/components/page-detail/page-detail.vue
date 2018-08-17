@@ -123,9 +123,9 @@
           this.$emit('addPage', this.page)
         }
       },
-      beginPage() {
+      beginPage(page = 1) {
         this.pageInput = ''
-        this.page = 1
+        this.page = page
       }
     }
   }

@@ -34,7 +34,7 @@
         <div class="list-box">
           <div class="list-content" v-for="(item, index) in expendList" :key="index">
             <div class="list-item" v-for="(item1, index1) in headlist" :key="index1" v-if="index1 != (headlist.length - 1)" :class="item1.flex">{{item[nameObj[index1]] + '' || '---'}}</div>
-            <div class="list-item hand" :class="project + '-text'" @click="upAnyImg(item)" v-if="tabIndex == 1">发放</div>
+            <div class="list-item hand" :class="project + '-text'" @click="upAnyImg(index, item)" v-if="tabIndex == 1">发放</div>
             <div class="list-item hand" :class="project + '-text'" @click="showImg(item)" v-if="tabIndex == 0">查看凭证</div>
           </div>
         </div>
@@ -43,30 +43,6 @@
         </div>
       </div>
     </div>
-    <transition name="fade">
-      <div class="center-box" v-show="showCenter">
-        <div class="cover-top">
-          <div class="top-txt">上传付款凭证</div>
-          <img src="./icon-del2@2x.png" class="top-icon hand" @click="cancel">
-        </div>
-        <div class="cover-content">
-          <div class="bottom-item">
-            <div class="item-title">付款凭证</div>
-            <div class="item-right">
-              <div class="add-img-box hand">
-                <img src="./icon-upload@2x.png" class="upload-icon">
-                <input type="file" class="image-file hand" @change="_fileImage($event)" accept="image/*">
-              </div>
-              <div class="add-img-txt">点击上传凭证，小于10M</div>
-            </div>
-          </div>
-          <div class="bottom-btns">
-            <div class="back-btn btn hand" @click="cancel">取消</div>
-            <div class="btn hand" :class="project + '-btn-blue'" @click="submitAny">确定</div>
-          </div>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -107,7 +83,8 @@
           total_page: 0
         },
         total: '',
-        nameObj: NAME_OBJ
+        nameObj: NAME_OBJ,
+        id: 0
       }
     },
     async created() {
@@ -115,7 +92,6 @@
     },
     methods: {
       async _getExpendList() {
-        console.log(this.tabArr[this.tabIndex].status)
         let data = {page: this.page, status: this.tabArr[this.tabIndex].status}
         let res = await Finance.bonusApplyList(data)
         if (res.error !== ERR_OK) {
@@ -144,24 +120,18 @@
         this.page = page
         await this._getExpendList()
       },
-      upAnyImg(item) {
-        console.log(item)
-        this.showCenter = true
-        this.$emit('showCover')
+      upAnyImg(index, item) {
+        this.$emit('showCover', item.id, index)
       },
       showImg(item) {
-        console.log(item)
-        this.$emit('showImg', '')
+        this.$emit('showImg', item.image_url)
       },
-      _fileImage(e) {
-        console.log(e.target.files[0])
-      },
-      cancel() {
-        this.$emit('hideCover')
-        this.showCenter = false
-      },
-      submitAny() {
-        console.log(99999)
+      async cutList() {
+        if (this.expendList.length === 1 && this.page > 1) {
+          this.page--
+        }
+        this.$refs.page.beginPage(this.page)
+        await this._getExpendList()
       }
     },
     components: {

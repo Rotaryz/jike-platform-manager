@@ -95,7 +95,6 @@
           total_page: pages.last_page
         })
         this.businessList = res.data
-        console.log(res.data)
       },
       setValue(item) {
         switch (item.type) {

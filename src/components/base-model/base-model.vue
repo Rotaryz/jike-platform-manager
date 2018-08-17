@@ -87,6 +87,7 @@
           return
         }
         this.isShade = false
+        this.$emit('close')
       },
       showlogout() {
         this.logout = true
