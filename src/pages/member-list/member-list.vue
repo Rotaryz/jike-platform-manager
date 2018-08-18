@@ -9,6 +9,7 @@
         <input type="text" class="search-input" placeholder="请输入商家名称或账号" v-model="word">
         <span class="search-btn hand" :class="project + '-btn-blue'" @click="_search">搜 索</span>
       </div>
+      <a :href="downUrl" class="down-excel hand" :class="project + '-btn-blue'">导出Excel</a>
     </div>
     <div class="form-list">
       <div class="list-header">
@@ -46,7 +47,8 @@
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
   import { Member } from 'api'
-  import { ERR_OK } from 'common/js/config'
+  import { ERR_OK, BASE_URL } from 'common/js/config'
+  import storage from 'storage-controller'
 
   const TITLELIST = ['成员名称', '成员账号', '所属代理商', '所属企业', '推荐人', '推荐人电话', '开通方式', '职位', '到期时间', '操作']
 
@@ -72,16 +74,22 @@
           total: 1,
           per_page: 10,
           total_page: 0
-        }
+        },
+        downUrl: ''
       }
     },
     computed: {
       ...mapGetters(['project'])
     },
     async created() {
+      this._getUrl()
       await this._getBusinessList()
     },
     methods: {
+      _getUrl() {
+        let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+        this.downUrl = BASE_URL.api + `/api/manage/export-employee-record?access_token=${storage.get('aiToken')}&current-application=${title}&open_type=${this.status}&keyword=${this.keyword}&service_version=${this.tabArr[this.tabIndex].status}`
+      },
       async _checkTab(index) {
         this.tabIndex = index
         this.keyword = ''
@@ -101,6 +109,7 @@
       async _getBusinessList() {
         let data = {page: this.page, open_type: this.status, keyword: this.keyword, service_version: this.tabArr[this.tabIndex].status}
         let res = await Member.memberList(data)
+        this._getUrl()
         if (res.error !== ERR_OK) {
           return
         }
@@ -158,6 +167,7 @@
     align-items: center
     display: flex
     padding: 1.5vw 0 1.5vw 10px
+    position: relative
     .search
       display: flex
       align-items: center
@@ -250,4 +260,13 @@
 
   .page
     height: 9.1%
+
+  .down-excel
+    border-radius: 4px
+    position: absolute
+    right: 1.5vw
+    height: 28px
+    width: 84px
+    line-height: 28px
+    font-size: $font-size-small12
 </style>

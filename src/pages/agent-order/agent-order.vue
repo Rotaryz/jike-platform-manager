@@ -60,11 +60,14 @@
       }
     },
     async created() {
+      this._getUrl()
       await this._getAgentOrderList()
-      let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
-      this.downUrl = BASE_URL.api + `/api/order/export-record?access_token=${storage.get('aiToken')}&storage=${title}&order_sn=`
     },
     methods: {
+      _getUrl() {
+        let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+        this.downUrl = BASE_URL.api + `/api/order/export-record?access_token=${storage.get('aiToken')}&current-application=${title}&order_sn=${this.orderSn}`
+      },
       addPage(page) {
         this.page = page
         this._getAgentOrderList()
@@ -77,6 +80,7 @@
       async _getAgentOrderList() {
         let data = {page: this.page, order_sn: this.orderSn}
         let res = await Order.agentOrderList(data)
+        this._getUrl()
         if (res.error !== ERR_OK) {
           return
         }
@@ -87,7 +91,6 @@
           total_page: pages.last_page
         })
         this.agentList = res.data
-        this.downUrl += this.orderSn
       },
       async search(txt) {
         this.page = 1

@@ -6,7 +6,7 @@
         <input type="text" class="search-input" placeholder="请输入商家名称或账号" v-model="keyword">
         <span class="search-btn hand" :class="project + '-btn-blue'" @click="_search">搜 索</span>
       </div>
-      <div class="down-excel hand" :class="project + '-btn-blue'">导出Excel</div>
+      <a :href="downUrl" class="down-excel hand" :class="project + '-btn-blue'">导出Excel</a>
     </div>
     <div class="form-list">
       <div class="list-header">
@@ -42,7 +42,8 @@
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
   import { Business } from 'api'
-  import { ERR_OK } from 'common/js/config'
+  import { ERR_OK, BASE_URL } from 'common/js/config'
+  import storage from 'storage-controller'
 
   const TITLELIST = ['商家名称', '商家账号', '所属代理商', '推荐人', '推荐人电话', '账户状态', '到期时间', '操作']
 
@@ -67,16 +68,22 @@
           total: 1,
           per_page: 10,
           total_page: 0
-        }
+        },
+        downUrl: ''
       }
     },
     computed: {
       ...mapGetters(['project'])
     },
     async created() {
+      this._getUrl()
       await this._getBusinessList()
     },
     methods: {
+      _getUrl() {
+        let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+        this.downUrl = BASE_URL.api + `/api/manage/export-agent-record?access_token=${storage.get('aiToken')}&current-application=${title}&status=${this.status}&keyword=${this.keyword}`
+      },
       async _search() {
         this.status = this.firstStatus
         this.page = 1
@@ -85,6 +92,7 @@
       async _getBusinessList() {
         let data = {page: this.page, status: this.status, keyword: this.keyword}
         let res = await Business.managetMerchant(data)
+        this._getUrl()
         if (res.error !== ERR_OK) {
           return
         }
