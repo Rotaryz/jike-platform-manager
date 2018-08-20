@@ -86,13 +86,11 @@
         title: '代理订单',
         url: '/order-management/agent-order',
         type: 'normal'
-      }
-        //   ,{
-        //   title: '零售订单',
-        //   url: '/order-management/retail-order',
-        //   type: 'ws'
-        // }
-      ],
+      }, {
+        title: '零售订单',
+        url: '/order-management/retail-order',
+        type: 'ws'
+      }],
       showHeight: HEIGHT
     }, {
       title: '财务管理',

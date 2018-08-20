@@ -3,7 +3,7 @@
     <div class="top-box">
       <search @search="search"></search>
       <div class="top-right">
-        <div class="add-btn hand" :class="project + '-btn-blue'" @click="">导出Excel</div>
+        <a :href="downUrl" class="add-btn hand" :class="project + '-btn-blue'">导出Excel</a>
       </div>
     </div>
     <div class="list-head">
@@ -11,12 +11,12 @@
     </div>
     <div class="list-box">
       <div class="list-content" v-for="(item, index) in orderList" :key="index">
-        <div class="list-item" v-for="(item1, index1) in headList" :key="index1" v-if="index1 != (headList.length - 1)">test</div>
+        <div class="list-item" v-for="(item1, index1) in headList" :key="index1" v-if="index1 != (headList.length - 1)">{{item[orderObj[index1]] || '---'}}</div>
         <div class="list-item hand" :class="project + '-text'" @click="toDetail(item)">查看</div>
       </div>
     </div>
     <div class="page-box">
-      <page-detail @addPage="addPage"></page-detail>
+      <page-detail @addPage="addPage" :pageDtail="pageTotal" ref="page"></page-detail>
     </div>
   </div>
 </template>
@@ -26,26 +26,70 @@
   import Search from 'components/search/search'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
+  import { Order } from 'api'
+  import { ERR_OK, BASE_URL } from 'common/js/config'
+  import storage from 'storage-controller'
+
   const HEADLIST = ['支付时间', '订单编号', '发货方', '商品名称', '商品单价', '商品数量', '总金额', '收货方', '订单状态', '操作']
+  const HEADOBJ = {'0': 'pay_at', '1': 'order_sn', '2': 'delivery', '3': 'title', '4': 'price', '5': 'num', '6': 'total', '7': 'shop_name', '8': 'status'}
 
   export default {
     name: 'retail-order',
     data() {
       return {
         headList: HEADLIST,
-        orderList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        orderList: [],
+        orderObj: HEADOBJ,
+        pageTotal: {
+          total: 1,
+          per_page: 10,
+          total_page: 0
+        },
+        orderSn: '',
+        page: 1,
+        downUrl: ''
       }
     },
+    async created() {
+      await this._getList()
+      this._getUrl()
+    },
     methods: {
-      addPage(page) {
-        console.log(page)
+      _getUrl() {
+        let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+        this.downUrl = BASE_URL.api + `/api/order/export-service-order?access_token=${storage.get('aiToken')}&current-application=${title}&order_sn=${this.orderSn}`
       },
-      search(txt) {
-        console.log(txt)
+      async _getList() {
+        let data = {
+          'order_sn': this.orderSn,
+          page: this.page
+        }
+        let res = await Order.retailOrderList(data)
+        this._getUrl()
+        if (res.error !== ERR_OK) {
+          return
+        }
+        let pages = res.meta
+        this.pageTotal = Object.assign({}, {
+          total: pages.total,
+          per_page: pages.per_page,
+          total_page: pages.last_page
+        })
+        this.orderList = res.data
+      },
+      addPage(page) {
+        this.page = page
+        this._getList()
+      },
+      async search(txt) {
+        this.page = 1
+        this.orderSn = txt
+        this.$refs.page.beginPage()
+        await this._getList()
       },
       toDetail(item) {
         console.log(item)
-        this.$router.push({ path: `/order-management/retailOrder-detail`, query: {id: 2} })
+        this.$router.push({ path: `/order-management/retail-order/retailOrder-detail`, query: {id: item.order_sn} })
       }
     },
     components: {
@@ -131,7 +175,7 @@
       display: flex
       flex-direction: column
       .list-content
-        flex: 1
+        height: 10%
         width: 100%
         border-bottom: 1px solid $color-line
         display: flex

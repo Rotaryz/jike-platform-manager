@@ -6,20 +6,20 @@
       </div>
       <div class="order-content">
         <div class="order-msg">
-          <div class="msg-item">收货方：XXX代理商</div>
-          <div class="msg-item">收货方账号:15833333333</div>
-          <div class="msg-item">商品名称：赞播AI微店</div>
-          <div class="msg-item">商品单价(元)：298.00</div>
-          <div class="msg-item">商品数量：200</div>
-          <div class="msg-item">商品总价(元)：59600.00</div>
-          <div class="msg-item">订单编号：s6545513211558</div>
-          <div class="msg-item">订单状态：已付款</div>
-          <div class="msg-item">下单时间：2018-06-20 13:54:45</div>
-          <div class="msg-item">支付时间：2018-06-20 13:54:45</div>
+          <div class="msg-item">收货方：{{orderDetail.shop_name}}</div>
+          <div class="msg-item">收货方账号：{{orderDetail.mobile}}</div>
+          <div class="msg-item">商品名称：{{orderDetail.title}}</div>
+          <div class="msg-item">商品单价(元)：{{orderDetail.price}}</div>
+          <div class="msg-item">商品数量：{{orderDetail.num}}</div>
+          <div class="msg-item">商品总价(元)：{{orderDetail.total}}</div>
+          <div class="msg-item">订单编号：{{orderDetail.order_sn}}</div>
+          <div class="msg-item">订单状态：{{orderDetail.status}}</div>
+          <div class="msg-item">下单时间：{{orderDetail.created_at}}</div>
+          <div class="msg-item">支付时间：{{orderDetail.pay_at}}</div>
         </div>
         <div class="order-msg borderTop">
-          <div class="msg-item">发货方：平台</div>
-          <div class="msg-item">发货方账号：——</div>
+          <div class="msg-item">发货方：{{orderDetail.delivery}}</div>
+          <div class="msg-item">发货方账号：{{orderDetail.delivery_mobile}}</div>
         </div>
       </div>
     </div>
@@ -29,12 +29,20 @@
       </div>
       <div class="order-content">
         <div class="bottom-msg-item">
-          <div class="msg-item">结算方1(发货方)：平台</div>
-          <div class="msg-item">结算金额：99.00</div>
+          <div class="msg-item">结算方1(发货方)：{{orderDetail.delivery_name}}</div>
+          <div class="msg-item">结算金额：{{orderDetail.delivery_money}}</div>
         </div>
         <div class="bottom-msg-item">
-          <div class="msg-item">结算方1(发货方)：平台</div>
-          <div class="msg-item">结算金额：99.00</div>
+          <div class="msg-item">结算方2(推荐人)：{{orderDetail.recommend}}</div>
+          <div class="msg-item">结算金额：{{orderDetail.recommend_money}}</div>
+        </div>
+        <div class="bottom-msg-item">
+          <div class="msg-item">结算方3(所属团队)：{{orderDetail.belongs_team}}</div>
+          <div class="msg-item">结算金额：{{orderDetail.belongs_team_money}}</div>
+        </div>
+        <div class="bottom-msg-item">
+          <div class="msg-item">结算方4(推荐团队)：{{orderDetail.recommend_team}}</div>
+          <div class="msg-item">结算金额：{{orderDetail.recommend_team_money}}</div>
         </div>
       </div>
     </div>
@@ -47,15 +55,30 @@
 <script>
   // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
+  import { Order } from 'api'
+  import { ERR_OK } from 'common/js/config'
 
   export default {
     name: 'retailOrder-detail',
-    created() {
-      console.log(this.$route.query.id)
+    data() {
+      return {
+        orderDetail: {}
+      }
+    },
+    async created() {
+      let id = this.$route.query.id
+      await this._getDetail(id)
     },
     methods: {
       backBefore() {
         this.$router.back()
+      },
+      async _getDetail(id) {
+        let res = await Order.retailOrderDetail(id)
+        if (res.error !== ERR_OK) {
+          return
+        }
+        this.orderDetail = res.data
       }
     },
     computed: {

@@ -12,7 +12,7 @@
       </div>
       <div class="btn-big">
         <router-link tag="div" to="/agent-management/agent-list/new-agent" class="down-excel hand" :class="project + '-btn-blue'">+ 新增代理商</router-link>
-        <div class="down-excel hand" :class="project + '-btn-white'">导出Excel</div>
+        <a :href="downUrl" class="down-excel hand" :class="project + '-btn-white'">导出Excel</a>
       </div>
     </div>
     <div class="form-list">
@@ -51,11 +51,12 @@
 
 <script>
   import { Agent } from 'api'
-  import { ERR_OK } from 'common/js/config'
+  import { ERR_OK, BASE_URL } from 'common/js/config'
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
+  import storage from 'storage-controller'
 
   const TITLELIST = ['商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
 
@@ -88,7 +89,8 @@
         endRoleId: 0,
         endName: '',
         status: 3,
-        endStatus: 3
+        endStatus: 3,
+        downUrl: ''
       }
     },
     computed: {
@@ -104,11 +106,23 @@
     async created() {
       await this._getAngetList()
       await this._roleList()
+      this._getUrl()
       // setTimeout(() => {
       //   this.$emit('showShade')
       // }, 100)
     },
     methods: {
+      _getUrl() {
+        let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+        switch (this.tabIndex * 1) {
+          case 0:
+            this.downUrl = BASE_URL.api + `/api/manage/agent-export?access_token=${storage.get('aiToken')}&current-application=${title}&role=${this.endRoleId}&name=${this.endName}`
+            break
+          case 1:
+            this.downUrl = BASE_URL.api + `/api/manage/apply-export?access_token=${storage.get('aiToken')}&current-application=${title}&role=${this.endRoleId}&name=${this.endName}&status=${this.endStatus}`
+            break
+        }
+      },
       _deal(item) {
         let url = ''
         if (item.status === 0) {
@@ -156,6 +170,7 @@
         if (this.tabIndex === 0) {
           let data = {page: this.page, role: this.endRoleId, status: 0, name: this.endName}
           let res = await Agent.agentList(data)
+          this._getUrl()
           if (res.error !== ERR_OK) {
             return
           }
@@ -170,6 +185,7 @@
         }
         let data = {page: this.page, role: this.endRoleId, status: this.status, name: this.endName}
         let res = await Agent.applyAgent(data)
+        this._getUrl()
         if (res.error !== ERR_OK) {
           return
         }
