@@ -116,10 +116,10 @@
         let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
         switch (this.tabIndex * 1) {
           case 0:
-            this.downUrl = BASE_URL.api + `/api/manage/agent-export?access_token=${storage.get('aiToken')}&current-application=${title}&role=${this.endRoleId}&name=${this.endName}`
+            this.downUrl = BASE_URL.api + `/api/manage/agent-export?access_token=${storage.get('aiToken')}&current_application=${title}&role=${this.endRoleId}&name=${this.endName}`
             break
           case 1:
-            this.downUrl = BASE_URL.api + `/api/manage/apply-export?access_token=${storage.get('aiToken')}&current-application=${title}&role=${this.endRoleId}&name=${this.endName}&status=${this.endStatus}`
+            this.downUrl = BASE_URL.api + `/api/manage/apply-export?access_token=${storage.get('aiToken')}&current_application=${title}&role=${this.endRoleId}&name=${this.endName}&status=${this.endStatus}`
             break
         }
       },

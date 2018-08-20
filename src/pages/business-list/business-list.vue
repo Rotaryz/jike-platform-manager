@@ -82,7 +82,7 @@
     methods: {
       _getUrl() {
         let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
-        this.downUrl = BASE_URL.api + `/api/manage/export-agent-record?access_token=${storage.get('aiToken')}&current-application=${title}&status=${this.status}&keyword=${this.keyword}`
+        this.downUrl = BASE_URL.api + `/api/manage/export-agent-record?access_token=${storage.get('aiToken')}&current_application=${title}&status=${this.status}&keyword=${this.keyword}`
       },
       async _search() {
         this.status = this.firstStatus

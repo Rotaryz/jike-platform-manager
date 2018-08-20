@@ -57,7 +57,7 @@
     methods: {
       _getUrl() {
         let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
-        this.downUrl = BASE_URL.api + `/api/order/export-service-order?access_token=${storage.get('aiToken')}&current-application=${title}&order_sn=${this.orderSn}`
+        this.downUrl = BASE_URL.api + `/api/order/export-service-order?access_token=${storage.get('aiToken')}&current_application=${title}&order_sn=${this.orderSn}`
       },
       async _getList() {
         let data = {
