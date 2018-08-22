@@ -18,7 +18,7 @@
         <div class="list-box" v-for="(item,index) in businessList" :key="index">
           <div class="list-item list-text">{{item.name || '---'}}</div>
           <div class="list-item list-text">{{item.mobile || '---'}}</div>
-          <div class="list-item list-text">{{item.agent.name || '---'}}</div>
+          <div class="list-item list-text">{{item.agent ? item.agent.name ? item.agent.name : '---' : '---'}}</div>
           <div class="list-item list-text">---</div>
           <div class="list-item list-text">---</div>
           <div class="list-item list-text">{{item.status === 1 ? '使用中' : '已过期'}}</div>
@@ -102,6 +102,7 @@
           per_page: pages.per_page,
           total_page: pages.last_page
         })
+        console.log(res)
         this.businessList = res.data
       },
       setValue(item) {
