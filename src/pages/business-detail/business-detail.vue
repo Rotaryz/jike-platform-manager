@@ -6,9 +6,9 @@
         <div class="agent-box">
           <div class="agent-item"><span class="agent-title">商家名称：</span>{{detail.name}}</div>
           <div class="agent-item"><span class="agent-title">商家账号：</span>{{detail.mobile}}</div>
-          <div class="agent-item"><span class="agent-title">角色名称：</span></div>
-          <div class="agent-item"><span class="agent-title">所在地区：</span>{{detail.address}}</div>
-          <div class="agent-item"><span class="agent-title">所属行业：</span>{{detail.industry}}</div>
+          <div class="agent-item"><span class="agent-title">角色名称：</span>---</div>
+          <div class="agent-item"><span class="agent-title">所在地区：</span>{{detail.address || '---'}}</div>
+          <div class="agent-item"><span class="agent-title">所属行业：</span>{{detail.industry || '---'}}</div>
         </div>
         <div class="agent-box">
           <div class="agent-item"><span class="agent-title">所属代理商：</span>{{detail.agent.name}}</div>
