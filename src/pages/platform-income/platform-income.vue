@@ -22,7 +22,7 @@
           <div class="down-txt">销货收入(元)</div>
         </div>
       </div>
-      <div class="top-item">
+      <div class="top-item" v-if="project === 'ws'">
         <div class="money-box">
           <div class="top-money">{{detail.distribute_income}}</div>
           <div class="down-txt">分销收入(元)</div>
