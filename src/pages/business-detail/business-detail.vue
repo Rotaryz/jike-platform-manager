@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="agent-detail-box">
+    <div class="agent-detail-box" v-if="false">
       <div :class="project + '-line'" class="agent-text">商品信息</div>
       <div class="agent-box">
         <div class="agent-item"><span class="agent-title">商品名称：</span></div>
@@ -28,7 +28,7 @@
         <div class="agent-item"><span class="agent-title">商品数量(总销售)：</span></div>
       </div>
     </div>
-    <div class="agent-detail-box">
+    <div class="agent-detail-box" v-if="false">
       <div :class="project + '-line'" class="agent-text">资产信息</div>
       <div class="agent-box">
         <div class="agent-item"><span class="agent-title">总收入(元)：</span></div>
@@ -44,7 +44,7 @@
         <div class="agent-item"><span class="agent-title">年费支出(元)：</span></div>
       </div>
     </div>
-    <div class="agent-detail-box">
+    <div class="agent-detail-box" v-if="false">
       <div :class="project + '-line'" class="agent-text">团队信息</div>
       <div class="agent-box">
         <div class="agent-item"><span class="agent-title">自有成员(人)：</span><span class="until hand" :class="project + '-text-under'">查看列表</span></div>
