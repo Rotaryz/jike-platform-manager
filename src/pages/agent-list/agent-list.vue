@@ -33,8 +33,8 @@
           <div class="list-item list-text" v-if="tabIndex === 0">{{item.status === 1 ? '使用中' : item.status === 2 ? '过期' : ''}}</div>
           <div class="list-item list-text" v-if="tabIndex === 1">{{item.status === 0 ? '待审核' :item.status === 1 ? '审核通过' : item.status === 2 ? '审核不通过' : '---'}}</div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 0">
-            <router-link tag="span" :to="'/agent-management/agent-list/new-agent?id='+ item.id" :class="project + '-text-under'">编辑</router-link>
-            |
+            <!--<router-link tag="span" :to="'/agent-management/agent-list/new-agent?id='+ item.id" :class="project + '-text-under'">编辑</router-link>-->
+            <!--|-->
             <router-link tag="span" :to="'/agent-management/agent-list/agent-detail?id='+ item.id + '&type=1'" :class="project + '-text-under'">查看</router-link>
           </div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 1">

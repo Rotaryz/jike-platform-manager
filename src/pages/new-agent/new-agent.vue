@@ -53,7 +53,7 @@
     <div class="new-name-msg new-name-msg-center">
       <div class="new-input-box" :class="{'new-error': !regObj.moneyReg}">
         <span class="new-input-title">* 收款金额</span>
-        <input :disabled="check || id" type="text" class="new-input" placeholder="输入收款金额，单位元" v-model="content.money" @blur="_checkNull('moneyReg', content.money)">
+        <input :disabled="check" type="text" class="new-input" placeholder="输入收款金额，单位元" v-model="content.money" @blur="_checkNull('moneyReg', content.money)">
         <p class="error-tip" v-if="!regObj.moneyReg">请输入收款金额</p>
       </div>
       <div class="new-input-box new-input-box-img">
