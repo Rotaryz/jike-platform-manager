@@ -58,12 +58,12 @@
       </div>
       <div class="new-input-box new-input-box-img">
         <span class="new-input-title">* 收款凭证</span>
-        <img src="./upload@2x.png" class="new-add-img hand" @click="_getImg" v-if="!content.image_url">
-        <div class="new-add-img hand" v-if="content.image_url" @click="_showBigImage">
-          <span class="new-add-img-small" :style="{'background-image': 'url('+content.image_url+ ')'}"></span>
-          <img src="./icon-del@2x.png" class="del hand" @click.stop="_delImage" v-if="!check">
+        <div class="new-add-img hand">
+          <img src="./upload@2x.png" class="new-add-img-bc hand" v-if="!content.image_url">
+          <span class="new-add-img-small hand" :style="{'background-image': 'url('+content.image_url+ ')'}" v-if="content.image_url" @click="_showBigImage"></span>
+          <img src="./icon-del@2x.png" class="del hand" @click.stop="_delImage" v-if="content.image_url">
+          <input type="file" class="file-input hand" accept="image/*" @change="_getImg($event)" v-if="!content.image_url">
         </div>
-        <input type="file" class="file-input" accept="image/*" @change="_getImg($event)">
         <span class="new-tip">点击查看全图</span>
       </div>
     </div>
@@ -258,7 +258,6 @@
       },
       // 上传图片
       async _getImg(e) {
-        document.querySelector('.file-input').click()
         if (e.target.files) {
           let param = this._infoImage(e.target.files[0])
           let res = await Images.upload(param)
@@ -434,20 +433,31 @@
       color: $color-lineCC
     .new-input-box-img
       align-items: flex-start
-      .file-input
-        height: 1px
-        width: 0
-        opacity: 0
-        transform: translateY(-300vw)
       .new-add-img
-        margin-left: 10px
         width: 120px
         height: 96px
+        margin-left: 10px
         position: relative
+        .new-add-img-bc
+          width: 100%
+          height: 100%
+          position: absolute
+          left: 0
+          top: 0
+        .file-input
+          height: 100%
+          width: 100%
+          opacity: 0
+          position: absolute
+          left: 0
+          top: 0
         .new-add-img-small
           display: block
           width: 100%
           height: 100%
+          position: absolute
+          left: 0
+          top: 0
           background-position: center
           background-repeat: no-repeat
           background-size: cover
