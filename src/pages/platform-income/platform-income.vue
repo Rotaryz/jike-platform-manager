@@ -161,7 +161,17 @@
     },
     methods: {
       _toDetail(item) {
-        this.$router.push({path: '/agent-management/agent-list/agent-detail?id=', query: {id: item.order_sn, type: 1}})
+        switch (this.tabIndex * 1) {
+          case 1:
+            this.$router.push({path: '/agent-management/agent-list/agent-detail?id=', query: {id: item.admin_agent_id, type: 1}})
+            break
+          case 2:
+            this.$router.push({path: '/order-management/agent-order/agentOrder-detail?id=', query: {id: item.order_sn}})
+            break
+          case 3:
+            this.$router.push({path: '/order-management/retail-order/retailOrder-detail?id=', query: {id: item.order_sn}})
+            break
+        }
       },
       async checkTab(idx) {
         this.tabIndex = idx * 1
