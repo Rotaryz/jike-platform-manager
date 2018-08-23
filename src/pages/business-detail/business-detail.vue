@@ -15,7 +15,7 @@
           <div class="agent-item"><span class="agent-title">所属代理商账号：</span>{{detail.agent.mobile}}</div>
           <div class="agent-item"><span class="agent-title">推荐人名称：</span>---</div>
           <div class="agent-item"><span class="agent-title">推荐人账号：</span>---</div>
-          <div class="agent-item"><span class="agent-title">使用期限：</span>{{detail.agent.agent_end_time}}</div>
+          <div class="agent-item"><span class="agent-title">使用期限：</span>{{detail.agent_merchant_end_time}}</div>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
 
 <script>
   // import { ERR_OK } from 'api/config'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import BaseModel from 'components/base-model/base-model'
   import { Business } from 'api'
   import { ERR_OK } from 'common/js/config'
@@ -77,6 +77,7 @@
       await this._getDetail(id)
     },
     methods: {
+      ...mapActions(['setTitleArr']),
       _back() {
         this.$router.back()
       },
@@ -86,6 +87,8 @@
           return
         }
         this.detail = res.data
+        let arr = `商家管理,代理商管理,${res.data.name}`
+        this.setTitleArr(arr.split(','))
         console.log(res.data)
       }
     },

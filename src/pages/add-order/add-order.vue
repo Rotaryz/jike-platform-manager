@@ -59,8 +59,9 @@
           <div class="item-right">
             <div class="add-img-box hand">
               <img src="./icon-upload@2x.png" v-if="!addOrder.image_url" class="upload-icon">
-              <img :src="addOrder.image_url" class="upload-icon" v-if="addOrder.image_url">
-              <input type="file" class="image-file hand" @change="_fileImage($event)" accept="image/*">
+              <img :src="addOrder.image_url" class="upload-icon" v-if="addOrder.image_url" @click="showImg">
+              <img src="./icon-del@2x.png" class="del-icon hand" v-if="addOrder.image_url" @click="delImg">
+              <input type="file" class="image-file hand" @change="_fileImage($event)" accept="image/*" v-if="!addOrder.image_url">
             </div>
             <div class="add-img-txt">点击查看全图</div>
           </div>
@@ -119,11 +120,18 @@
         param.append('file', file, file.name)// 通过append向form对象添加数据
         return param
       },
+      showImg() {
+        this.$emit('showImg', this.addOrder.image_url)
+      },
       backBefore() {
         this.$router.back()
       },
       showError(type, text) {
         this.regObj[type] = text.length
+      },
+      delImg() {
+        this.addOrder.image_url = ''
+        this.addOrder.paid_image_id = ''
       },
       async _submit() {
         if (!this.addOrder.name || !this.addOrder.mobile || !this.addOrder.price || !this.addOrder.num) {
@@ -274,6 +282,11 @@
                 position: absolute
                 left: 0
                 top: 0
+              .del-icon
+                top: -10px
+                right: -10px
+                width: 26px
+                position: absolute
             .add-img-txt
               font-family: $fontFamilyLight
               font-size: $font-size-medium14
