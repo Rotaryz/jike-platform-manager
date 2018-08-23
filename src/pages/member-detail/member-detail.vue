@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="agent-detail-box">
+    <div class="agent-detail-box" v-if="false">
       <div :class="project + '-line'" class="agent-text">资产信息</div>
       <div class="agent-box">
         <div class="agent-item"><span class="agent-title">总收入(元)：</span></div>
@@ -28,7 +28,7 @@
         <div class="agent-item"><span class="agent-title">推荐奖励收入(元)：</span><span class="until hand" :class="project + '-text-under'">查询明细</span></div>
       </div>
     </div>
-    <div class="agent-detail-box">
+    <div class="agent-detail-box" v-if="false">
       <div :class="project + '-line'" class="agent-text">团队信息</div>
       <div class="agent-box">
         <div class="agent-item"><span class="agent-title">直接推荐(人)：</span>{{detail.relation_employee_mobile|| '---'}}<span class="until hand" :class="project + '-text-under'">查看列表</span></div>
