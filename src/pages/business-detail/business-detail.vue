@@ -87,7 +87,7 @@
           return
         }
         this.detail = res.data
-        let arr = `商家管理,代理商管理,${res.data.name}`
+        let arr = `商家管理,企业管理,${res.data.name}`
         this.setTitleArr(arr.split(','))
         console.log(res.data)
       }
