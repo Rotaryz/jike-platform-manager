@@ -6,12 +6,12 @@
         <div class="agent-box">
           <div class="agent-item"><span class="agent-title">商家名称：</span>{{detail.name || '---'}}</div>
           <div class="agent-item"><span class="agent-title">商家账号：</span>{{detail.mobile|| '---'}}</div>
-          <div class="agent-item"><span class="agent-title">角色名称：</span>{{detail.role || '---'}}</div>
-          <div class="agent-item"><span class="agent-title">职位：</span>---</div>
+          <div class="agent-item"><span class="agent-title">角色名称：</span>{{detail.role === 'boss' ? '团长' : '成员'}}</div>
+          <div class="agent-item"><span class="agent-title">职位：</span>{{detail.position || '---'}}</div>
           <div class="agent-item"><span class="agent-title">所属企业：</span>{{detail.merchant_name|| '---'}}</div>
           <div class="agent-item"><span class="agent-title">所属企业账号：</span>{{detail.merchant_mobile|| '---'}}</div>
-          <div class="agent-item"><span class="agent-title">所属代理商：</span>---</div>
-          <div class="agent-item"><span class="agent-title">所属代理商账号：</span>---</div>
+          <div class="agent-item"><span class="agent-title">所属代理商：</span>{{detail.agent_name || '---'}}</div>
+          <div class="agent-item"><span class="agent-title">所属代理商账号：</span>{{detail.agent_mobile || '---'}}</div>
           <div class="agent-item"><span class="agent-title">推荐人名称：</span>{{detail.relation_employee_name|| '---'}}</div>
           <div class="agent-item"><span class="agent-title">推荐人账号：</span>{{detail.relation_employee_mobile|| '---'}}</div>
           <div class="agent-item"><span class="agent-title">使用期限：</span>{{detail.expiration_time|| '---'}}</div>

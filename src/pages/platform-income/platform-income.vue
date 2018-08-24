@@ -64,10 +64,10 @@
 
 <script>
   // import { ERR_OK } from 'api/config'
-  import { mapGetters } from 'vuex'
+  import {mapGetters} from 'vuex'
   import PageDetail from 'components/page-detail/page-detail'
-  import { Finance } from 'api'
-  import { ERR_OK } from 'common/js/config'
+  import {Finance} from 'api'
+  import {ERR_OK} from 'common/js/config'
 
   const WSTAB = [
     {txt: '加盟收入', idx: 1, status: 32},
