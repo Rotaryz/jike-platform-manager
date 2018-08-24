@@ -43,7 +43,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { mapGetters, mapActions } from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
   import storage from 'storage-controller'
 
   const HEIGHT = 69
@@ -163,6 +163,11 @@
         storage.set('project', title)
         this.navList[1].showHeight = HEIGHT
         this.info('/agent-management/agent-list')
+        this.navList.map((item) => {
+          item.childrenIndex = -1
+          item.url = item.children[0].url
+          return item
+        })
         this.$router.replace('/agent-management/agent-list')
       },
       hideRole() {
