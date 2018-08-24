@@ -38,7 +38,7 @@ export default {
     min-width: 200px
     max-width: 300px
     margin-left: -100px
-    padding: 10px 0
+    padding: 10px 20px
     opacity: .9
     border-radius: 6px
     transition: all .5s ease-out

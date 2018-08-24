@@ -72,7 +72,7 @@ import finance from '../../api/finance'
         let param = this._infoImage(e.target.files[0])
         let res = await Images.upload(param)
         if (res.error !== ERR_OK) {
-          this.$emit('showToast', res.message)
+          this.showToast(res.message)
           return
         }
         this.image = res.data.url
