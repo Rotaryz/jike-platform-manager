@@ -13,7 +13,7 @@
     </div>
     <div class="form-list">
       <div class="list-header">
-        <div class="list-item" v-for="(item, index) in titleList" :key="index">
+        <div class="list-item" v-for="(item, index) in titleList" :key="index" v-if="tabIndex === 0 || (index !== 6 && tabIndex === 1)">
           {{item}}
         </div>
       </div>
@@ -25,7 +25,7 @@
           <div class="list-item list-text">{{item.merchant_name || '---'}}</div>
           <div class="list-item list-text">{{item.relation_employee_name || '---'}}</div>
           <div class="list-item list-text">{{item.relation_employee_mobile || '---'}}</div>
-          <div class="list-item list-text">{{item.open_type}}</div>
+          <div class="list-item list-text" v-if="tabIndex === 0">{{item.open_type}}</div>
           <div class="list-item list-text">{{item.role}}</div>
           <div class="list-item list-text">{{item.expiration_time}}</div>
           <div class="list-item hand list-item-tap">
