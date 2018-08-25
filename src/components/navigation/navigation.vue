@@ -148,7 +148,7 @@
     created() {
       this.loginRole = this.project === 'card' ? 0 : 1
       this.roleName = this.loginRole === 0 ? '赞播AI名片' : '赞播AI微商'
-      let path = this.$route.matched[1].path
+      let path = this.$route.fullPath
       this.info(path)
     },
     methods: {
