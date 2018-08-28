@@ -70,7 +70,7 @@
         role: [{
           select: false,
           show: false,
-          children: [{content: '角色名称', data: [{title: 'ss'}, {title: '999'}]}]
+          children: [{content: '角色名称'}]
         }],
         account: [{
           select: false,
@@ -107,9 +107,6 @@
       await this._getAngetList()
       await this._roleList()
       this._getUrl()
-      // setTimeout(() => {
-      //   this.$emit('showShade')
-      // }, 100)
     },
     methods: {
       _getUrl() {

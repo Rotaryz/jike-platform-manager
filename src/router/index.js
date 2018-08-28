@@ -29,6 +29,8 @@ const MemberDetail = () => import('pages/member-detail/member-detail') // 成员
 const FinancialManagement = () => import('pages/financial-management/financial-management') // 财务管理
 const RoleList = () => import('pages/role-list/role-list') // 角色设置
 const NewRole = () => import('pages/new-role/new-role') // 角色设置
+const MinaManagement = () => import('pages/mina-management/mina-management') // 发布管理
+const MinaRelease = () => import('pages/mina-release/mina-release') // 小程序发布
 
 Vue.use(Router)
 
@@ -180,6 +182,19 @@ const route = new Router({
         }, {
           path: 'member-list/member-detail',
           component: MemberDetail,
+          meta: {
+            title: '商家管理,成员管理'
+          }
+        }]
+      }, {
+        path: 'mina-management',
+        component: MinaManagement,
+        meta: {
+          title: '发布管理,小程序发布'
+        },
+        children: [{
+          path: 'mina-release',
+          component: MinaRelease,
           meta: {
             title: '商家管理,成员管理'
           }

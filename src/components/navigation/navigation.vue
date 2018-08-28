@@ -113,17 +113,19 @@
         // }
       ],
       showHeight: HEIGHT
-    }, {
-      title: '发布管理',
-      icon: require('./icon-money_manage@2x.png'),
-      url: '/financial-management/platform-income',
-      childrenIndex: -1,
-      children: [{
-        title: '小程序发布',
-        url: '',
-        type: 'normal'
-      }]
-    }]
+    }
+    // , {
+    //   title: '发布管理',
+    //   icon: require('./icon-money_manage@2x.png'),
+    //   url: '/mina-management/mina-release',
+    //   childrenIndex: -1,
+    //   children: [{
+    //     title: '小程序发布',
+    //     url: '/mina-management/mina-release',
+    //     type: 'normal'
+    //   }]
+    // }
+  ]
   //   , {
   //   title: '基础设置',
   //   icon: require('./icon-basic_setting@2x.png'),
