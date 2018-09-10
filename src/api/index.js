@@ -6,6 +6,7 @@ import order from './order'
 import business from './business'
 import member from './member'
 import finance from './finance'
+import mina from './mina'
 
 // 登录
 export const Login = login
@@ -26,3 +27,6 @@ export const Business = business
 export const Member = member
 // 成员管理
 export const Finance = finance
+
+// 发布管理
+export const Mina = mina

@@ -1,19 +1,20 @@
 <template>
   <base-model ref="baseModel">
     <div slot="content" class="content-box">
-      <router-view @showToast="showToast" @showShade="showShade" @hideShade="hideShade" @showImage="showImage"></router-view>
+      <router-view ref="mina" @showToast="showToast" @showShade="showShade" @hideShade="hideShade" @showImage="showImage"></router-view>
     </div>
     <div slot="shade-box" class="shade-box">
       <p class="shade-title">
-        提示
+        {{del ? '提示' : '失败原因'}}
         <transition name="fade-enter">
           <img src="./icon-del2@2x.png" class="del-icon hand" @click="hideShade">
         </transition>
       </p>
-      <div class="del-tip">真要删除该条记录吗？</div>
-      <div class="shade-btn">
+      <div class="del-tip" v-if="del">{{title}}</div>
+      <div class="del-tip" v-if="!del" v-html="text"></div>
+      <div class="shade-btn" v-if="del">
         <div class="btn-item hand btn-border" @click="hideShade">取消</div>
-        <div class="btn-item hand" :class="project + '-btn-blue'">确定</div>
+        <div class="btn-item hand" :class="project + '-btn-blue'" @click="confrim">确定</div>
       </div>
     </div>
   </base-model>
@@ -26,6 +27,13 @@
 
   export default {
     name: 'agent-management',
+    data() {
+      return {
+        del: true,
+        text: '',
+        title: ''
+      }
+    },
     computed: {
       ...mapGetters(['project'])
     },
@@ -33,7 +41,10 @@
       showToast(content, time = 1000) {
         this.$refs.baseModel.showContent(content, time)
       },
-      showShade() {
+      showShade(del, text, title) {
+        this.del = del
+        this.text = text || ''
+        this.title = title || ''
         this.$refs.baseModel.showShade()
       },
       hideShade() {
@@ -41,6 +52,10 @@
       },
       showImage(img) {
         this.$refs.baseModel.showImage(img)
+      },
+      async confrim() {
+        await this.$refs.mina.submit()
+        this.hideShade()
       }
     },
     components: {
@@ -59,7 +74,7 @@
     flex-direction: column
 
   .shade-box
-    height: 261px
+    min-height: 261px
     color: $color-text33
     font-family: $fontFamilyLight
     .shade-title
@@ -79,6 +94,9 @@
         transform-origin: 50% 50%
         transition: all 0.5s
     .del-tip
+      padding: 0 30px
+      line-height: 16px
+      box-sizing: border-box
       margin-top: 46px
       text-indent: 30px
       font-size: $font-size-medium14

@@ -14,14 +14,14 @@
         </div>
       </div>
       <div class="list">
-        <div class="list-box" >
-          <div class="list-item list-text">{{'---'}}</div>
-          <div class="list-item list-text">{{'---'}}</div>
-          <div class="list-item list-text">{{'---'}}</div>
-          <div class="list-item list-text">---</div>
-          <div class="list-item list-text">---</div>
+        <div class="list-box" v-for="(item, index) in agentList" :key="index">
+          <div class="list-item list-text">{{item.commit_last_time ||'---'}}</div>
+          <div class="list-item list-text">{{item.name || '---'}}</div>
+          <div class="list-item list-text">{{item.mobile || '---'}}</div>
+          <div class="list-item list-text">{{item.status_str || '---'}}</div>
+          <div class="list-item list-text">{{item.publish_last_time || '---'}}</div>
           <div class="list-item hand list-item-tap">
-            <div @click="_deal(item)" :class="project + '-text-under'">{{'审核'}}</div>
+            <div @click="_deal(item)" :class="project + '-text-under'">{{item.status === 1 ? '撤销' : item.status === 3 ? '查看原因' : item.status === 0 ? '提交审核' : item.status === 2 ? '提交发布' : ''}}</div>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import {Agent} from 'api'
+  import {Mina} from 'api'
   import {ERR_OK} from 'common/js/config'
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
@@ -51,7 +51,7 @@
         role: [{
           select: false,
           show: false,
-          children: [{content: '审核状态', data: [{title: '全部'}, {title: '审核中'}, {title: '已发布'}, {title: '审核不通过'}]}]
+          children: [{content: '审核状态', data: [{title: '全部', status: ''}, {title: '审核中', status: 1}, {title: '已发布', status: 4}, {title: '审核不通过', status: 3}, {title: '待发布', status: 2}]}]
         }],
         page: 1,
         agentList: [],
@@ -61,7 +61,11 @@
           total_page: 0
         },
         name: '',
-        endName: ''
+        endName: '',
+        endStatus: '',
+        status: '',
+        dealType: 0,
+        dealItem: null
       }
     },
     computed: {
@@ -75,16 +79,62 @@
     },
     methods: {
       _deal(item) {
-        let url = ''
-        if (item.status === 0) {
-          url = '/agent-management/agent-list/new-agent?id=' + item.id + '&check=1'
-        } else {
-          url = '/agent-management/agent-list/agent-detail?id=' + item.id + '&type=2'
+        this.dealType = item.status
+        this.dealItem = item
+        switch (this.dealType) {
+          case 1:
+            this.$emit('showShade', true, '', '确定撤销该记录？')
+            // 撤销
+            break
+          case 2:
+            this.$emit('showShade', true, '', '确定提交发布？')
+            // 提交发布
+            break
+          case 3:
+            this.$emit('showShade', false, item.note)
+            // 查看原因
+            break
+          case 0:
+            this.$emit('showShade', true, '', '确定提交审核？')
+            // 提交审核
+            break
         }
-        this.$router.push(url)
+      },
+      async submit() {
+        switch (this.dealType) {
+          // 发布
+          case 2:
+            let res2 = await Mina.release({merchant_id: this.dealItem.id})
+            if (res2.error !== ERR_OK) {
+              this.$emit('showToast', res2.message)
+              return
+            }
+            this.$emit('showToast', '发布成功')
+            this._getAngetList()
+            break
+          // 撤销
+          case 1:
+            let res = await Mina.withdrawAudit({merchant_id: this.dealItem.id})
+            if (res.error !== ERR_OK) {
+              this.$emit('showToast', res.message)
+              return
+            }
+            this.$emit('showToast', '撤销成功')
+            this._getAngetList()
+            break
+          case 0:
+            // 提交审核
+            let res3 = await Mina.quickPress({merchant_id: this.dealItem.id})
+            if (res3.error !== ERR_OK) {
+              this.$emit('showToast', res3.message)
+              return
+            }
+            this.$emit('showToast', '提交审核成功')
+            this._getAngetList()
+            break
+        }
       },
       async _search() {
-        this.endRoleId = this.roleId
         this.endName = this.name
         this.page = 1
         this.endStatus = this.status
@@ -92,23 +142,8 @@
         await this._getAngetList()
       },
       async _getAngetList() {
-        if (this.tabIndex === 0) {
-          let data = {page: this.page, role: this.endRoleId, status: 0, name: this.endName}
-          let res = await Agent.agentList(data)
-          if (res.error !== ERR_OK) {
-            return
-          }
-          let pages = res.meta
-          this.pageTotal = Object.assign({}, {
-            total: pages.total,
-            per_page: pages.per_page,
-            total_page: pages.last_page
-          })
-          this.agentList = res.data
-          return
-        }
-        let data = {page: this.page, role: this.endRoleId, status: this.status, name: this.endName}
-        let res = await Agent.applyAgent(data)
+        let data = {page: this.page, status: this.endStatus, keyword: this.endName}
+        let res = await Mina.miniProgramIndex(data)
         if (res.error !== ERR_OK) {
           return
         }
@@ -121,16 +156,8 @@
         this.agentList = res.data
       },
       setValue(item) {
-        switch (item.type) {
-          case 'role':
-            this.role[0].children[0].content = item.title
-            this.roleId = item.level
-            break
-          case 'status':
-            this.account[0].children[0].content = item.title
-            this.status = item.status
-            break
-        }
+        this.role[0].children[0].content = item.title
+        this.status = item.status
       },
       async _addPage(page) {
         this.page = page
