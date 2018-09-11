@@ -308,9 +308,7 @@
           background: #F94C5F
           transition: all 0.5s
         .header-change
-          position: absolute
-          top: 106px
-          right: 40px
+          margin-left: 10px
           width: 9px
           transform: rotate(180deg)
           transition: all 0.3s
