@@ -104,6 +104,7 @@
         this.keyword = this.word
         this.status = this.firstStatus
         this.page = 1
+        this.$refs.page.beginPage()
         await this._getBusinessList()
       },
       async _getBusinessList() {
