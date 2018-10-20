@@ -45,9 +45,9 @@
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
   import PageDetail from 'components/page-detail/page-detail'
-  import { mapGetters } from 'vuex'
-  import { Member } from 'api'
-  import { ERR_OK, BASE_URL } from 'common/js/config'
+  import {mapGetters} from 'vuex'
+  import {Member} from 'api'
+  import {ERR_OK, BASE_URL} from 'common/js/config'
   import storage from 'storage-controller'
 
   const TITLELIST = ['成员名称', '成员账号', '所属代理商', '所属企业', '推荐人', '推荐人电话', '开通方式', '职位', '到期时间', '操作']
@@ -62,13 +62,13 @@
         openType: [{
           select: false,
           show: false,
-          children: [{content: '开通方式', data: [{title: '全部', status: 2, type: 'open'}, {title: '自费开通', status: 0, type: 'open'}, {title: '激活码开通', status: 1, type: 'open'}]}]
+          children: [{content: '开通方式', data: [{title: '全部', status: 5, type: 'open'}, {title: '自费开通', status: 0, type: 'open'}, {title: '激活码开通', status: 1, type: 'open'}, {title: '代理商开通', status: 2, type: 'open'}, {title: '后台开通', status: 3, type: 'open'}, {title: '平台开通', status: 4, type: 'open'}]}]
         }],
         page: 1,
         keyword: '',
         word: '',
-        status: 2,
-        firstStatus: 2,
+        status: 5,
+        firstStatus: 5,
         memberList: [],
         pageTotal: {
           total: 1,
