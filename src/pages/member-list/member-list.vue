@@ -112,6 +112,7 @@
         let res = await Member.memberList(data)
         this._getUrl()
         if (res.error !== ERR_OK) {
+          this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -121,6 +122,7 @@
           total_page: pages.last_page
         })
         this.memberList = res.data
+        this.$emit('setNull', !this.memberList.length)
       },
       setValue(item) {
         switch (item.type) {

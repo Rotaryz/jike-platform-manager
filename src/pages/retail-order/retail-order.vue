@@ -67,6 +67,7 @@
         let res = await Order.retailOrderList(data)
         this._getUrl()
         if (res.error !== ERR_OK) {
+          this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -76,6 +77,7 @@
           total_page: pages.last_page
         })
         this.orderList = res.data
+        this.$emit('setNull', !this.orderList.length)
       },
       addPage(page) {
         this.page = page

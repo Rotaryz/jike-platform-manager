@@ -1,7 +1,7 @@
 <template>
-  <base-model ref="baseModel">
+  <base-model ref="baseModel" :showNull="showNull">
     <div slot="content" class="content-box">
-      <router-view @showToast="showToast" @showShade="showShade" @hideShade="hideShade" @showImage="showImage"></router-view>
+      <router-view @showToast="showToast" @showShade="showShade" @hideShade="hideShade" @showImage="showImage" @setNull="setNull"></router-view>
     </div>
     <div slot="shade-box" class="shade-box">
       <p class="shade-title">
@@ -26,6 +26,11 @@
 
   export default {
     name: 'agent-management',
+    data() {
+      return {
+        showNull: false
+      }
+    },
     computed: {
       ...mapGetters(['project'])
     },
@@ -41,6 +46,10 @@
       },
       showImage(img) {
         this.$refs.baseModel.showImage(img)
+      },
+      setNull(status = false) {
+        console.log(status)
+        this.showNull = status
       }
     },
     components: {

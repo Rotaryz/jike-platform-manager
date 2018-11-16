@@ -95,6 +95,7 @@
         let data = {page: this.page, status: this.tabArr[this.tabIndex].status}
         let res = await Finance.bonusApplyList(data)
         if (res.error !== ERR_OK) {
+          this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -109,6 +110,7 @@
           return item
         })
         this.expendList = res.data
+        this.$emit('setNull', !this.expendList.length)
       },
       async checkTab(idx) {
         this.tabIndex = idx * 1

@@ -82,6 +82,7 @@
         let res = await Order.agentOrderList(data)
         this._getUrl()
         if (res.error !== ERR_OK) {
+          this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -91,6 +92,7 @@
           total_page: pages.last_page
         })
         this.agentList = res.data
+        this.$emit('setNull', !this.agentList.length)
       },
       async search(txt) {
         this.page = 1

@@ -1,8 +1,8 @@
 import finance from '../../api/finance'
 <template>
-  <base-model ref="baseModel" :isHide="false">
+  <base-model ref="baseModel" :isHide="false" :showNull="showNull">
     <div slot="content" class="content-box">
-      <router-view ref="finance" @showToast="showToast" @showImg="showImg" @showCover="showCover" @hideCover="hideCover"></router-view>
+      <router-view ref="finance" @showToast="showToast" @showImg="showImg" @showCover="showCover" @hideCover="hideCover" @setNull="setNull"></router-view>
     </div>
     <div slot="shade-box" class="shade-box">
       <div class="center-box">
@@ -46,13 +46,18 @@ import finance from '../../api/finance'
         image: '',
         imageId: 0,
         id: 0,
-        listIndex: null
+        listIndex: null,
+        showNull: false
       }
     },
     computed: {
       ...mapGetters(['project'])
     },
     methods: {
+      // 是否显示空白页
+      setNull(status = false) {
+        this.showNull = status
+      },
       showToast(content, time = 1000) {
         this.$refs.baseModel.showContent(content, time)
       },

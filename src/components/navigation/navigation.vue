@@ -6,17 +6,9 @@
         <p class="header-name hand" @click="_checkRole">{{roleName}}<img src="./icon-triangle_white@2x.png" class="header-change" :class="{'header-change-active': showRole}"></p>
         <transition name="fade">
           <div class="header-list" v-if="showRole">
-            <div class="header-item hand" @click="_checkPeo(0)">
-              <span>赞播AI名片</span>
-              <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === 0">
-            </div>
-            <div class="header-item-bottom hand" @click="_checkPeo(1)">
-              <span>赞播AI微商</span>
-              <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === 1">
-            </div>
-            <div class="header-item-bottom hand" @click="_checkPeo(2)">
-              <span>赞播AI智店</span>
-              <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === 2">
+            <div class="header-item hand" v-for="item, index in shopArr" @click="_checkPeo(index)">
+              <span>{{item.name}}</span>
+              <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === index">
             </div>
           </div>
         </transition>
@@ -24,7 +16,7 @@
       <ul class="nav-big">
         <li class="nav-item" v-for="(item , index) in navList" :key="index" @click="showChild(index)" :style="{'height':item.showHeight+'px'}">
           <router-link :to="{path: item.url}" class="nav-tap">
-            <span class="nav-icon"><img :src="item.icon" class="nav-pic"></span>
+            <span class="nav-icon"><img :src="item.showHeight !== 69 ? item.activeIcon : item.icon" class="nav-pic"></span>
             <div class="nav-title" v-show="!showAnimation">
               <span>{{item.title}}</span>
             </div>
@@ -49,23 +41,15 @@
 <script type="text/ecmascript-6">
   import {mapGetters, mapActions} from 'vuex'
   import storage from 'storage-controller'
+  import {PROJECT_ARR, WEI_SHANG, ZHI_TUI, ZHI_DIAN} from 'common/js/constants'
 
   const HEIGHT = 69
   const NAVLIST = [
     {
-      title: '首页',
-      url: '/agent-management',
-      icon: require('./icon-index@2x.png'),
-      childrenIndex: -1,
-      children: [{
-        title: '首页',
-        url: '/agent-management'
-      }],
-      showHeight: HEIGHT
-    }, {
       title: '商家管理',
       url: '/agent-management/agent-list',
-      icon: require('./icon-business_manage@2x.png'),
+      icon: require('./icon-business_ash@2x.png'),
+      activeIcon: require('./icon-business_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理商管理',
@@ -78,13 +62,14 @@
       }, {
         title: '成员管理',
         url: '/member-management/member-list',
-        type: 'ws'
+        type: WEI_SHANG.project
       }],
       showHeight: HEIGHT
     }, {
       title: '订单管理',
       url: '/order-management/agent-order',
-      icon: require('./icon-order_manage@2x.png'),
+      icon: require('./icon-order_ash@2x.png'),
+      activeIcon: require('./icon-order_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '代理订单',
@@ -93,13 +78,14 @@
       }, {
         title: '零售订单',
         url: '/order-management/retail-order',
-        type: 'ws'
+        type: WEI_SHANG.project
       }],
       showHeight: HEIGHT
     }, {
       title: '财务管理',
-      icon: require('./icon-money_manage@2x.png'),
       url: '/financial-management/platform-income',
+      icon: require('./icon-money_ash@2x.png'),
+      activeIcon: require('./icon-money_manage@2x.png'),
       childrenIndex: -1,
       children: [{
         title: '平台收入',
@@ -108,19 +94,9 @@
       }, {
         title: '发放记录',
         url: '/financial-management/platform-expend',
-        type: 'ws'
+        type: WEI_SHANG.project
       }],
       showHeight: HEIGHT
-    }, {
-      title: '发布管理',
-      icon: require('./icon-money_manage@2x.png'),
-      url: '/mina-management/mina-release',
-      childrenIndex: -1,
-      children: [{
-        title: '小程序发布',
-        url: '/mina-management/mina-release',
-        type: 'normal'
-      }]
     }
   ]
 
@@ -137,7 +113,8 @@
         sortTimer: null,
         showRole: false,
         loginRole: 0,
-        roleName: '赞播AI微商'
+        shopArr: PROJECT_ARR,
+        roleName: WEI_SHANG.name
       }
     },
     computed: {
@@ -153,15 +130,15 @@
       // 切换账户
       _setRole() {
         switch (this.project) {
-          case 'zantui':
+          case ZHI_TUI.project:
             this.loginRole = 0
             this.roleName = '赞播AI名片'
             break
-          case 'weishang':
+          case WEI_SHANG.project:
             this.loginRole = 1
             this.roleName = '赞播AI微商'
             break
-          case 'zhidian':
+          case ZHI_DIAN.project:
             this.loginRole = 2
             this.roleName = '赞播AI智店'
             break
@@ -172,10 +149,25 @@
       _checkPeo(status) {
         this.loginRole = status
         this.showRole = false
-        let title = this.loginRole === 0 ? 'zantui' : 'weishang'
-        this.roleName = this.loginRole === 0 ? '赞播AI名片' : '赞播AI微商'
-        this.setProject(title)
-        storage.set('project', title)
+        let project = ''
+        switch (this.loginRole) {
+          case 0:
+            project = WEI_SHANG.project
+            this.roleName = WEI_SHANG.name
+            break
+          case 1:
+            project = ZHI_TUI.project
+            this.roleName = ZHI_TUI.name
+            break
+          case 2:
+            project = ZHI_DIAN.project
+            this.roleName = ZHI_DIAN.name
+            break
+          default:
+            break
+        }
+        this.setProject(project)
+        storage.set('project', project)
         this.navList[1].showHeight = HEIGHT
         this.info('/agent-management/agent-list')
         this.navList.map((item) => {
@@ -311,6 +303,9 @@
         .weishang-logo
           background: #F94C5F
           transition: all 0.5s
+        .zhidian-logo
+          background: #22B3AB
+          transition: all .5s
         .header-change
           margin-left: 10px
           width: 9px
@@ -322,10 +317,12 @@
         .header-list
           position: absolute
           top: 121px
+          z-index: 100
+          overflow: hidden
+          border-radius: 3px
           color: $color-text33
           font-family: $fontFamilyRegular
           font-size: $font-size-medium14
-          z-index: 100
           &.fade-enter, &.fade-leave-to
             opacity: 0
           &.fade-enter-to, &.fade-leave-to
@@ -339,8 +336,6 @@
             align-items: center
             background: $color-white
             padding: 0 10px
-            border-top-right-radius: 3px
-            border-top-left-radius: 3px
             box-sizing: border-box
           .header-item-bottom
             width: 164px
@@ -351,8 +346,6 @@
             background: $color-white
             padding: 0 10px
             box-sizing: border-box
-            border-bottom-right-radius: 3px
-            border-bottom-left-radius: 3px
             margin-top: 1px
             align-items: center
           .header-item-icon
@@ -371,6 +364,8 @@
             position: relative
             box-sizing: border-box
             border-left: 6px solid $color-menu-background
+            &.router-link-active
+              color: $color-white
             .nav-icon
               height: 100%
               width: 55px
@@ -420,7 +415,7 @@
         width: 79px
         transition: all .2s
 
-  /*微商*/
+  /*智推*/
   .zantui-big
     background: $color-menu-background
     transition: all 0.5s
@@ -436,7 +431,7 @@
           border-left: 6px solid $color-active !important
           transition: all 0.5s
 
-  //智推
+  //微店
   .weishang-big
     background: $color-43455C
     transition: all 0.5s
@@ -451,5 +446,22 @@
           transition: all 0.5s
           background: $color-3F4055
           border-left: 6px solid $color-pink-CA799A !important
+
+  //智店
+  .zhidian-big
+    background: #32323D
+    transition: all 0.5s
+    .big-show .nav-big
+      .nav-item
+        border-bottom: 0.5px solid #383855
+        .nav-tap
+          color: #81819C
+          border-left: 6px solid transparent
+          &:hover
+            background: #3A3B4E
+        .nav-big-child .nav-item .router-link-active
+          transition: all 0.5s
+          background: #3A3B4E !important
+          border-left: 6px solid #22B3AB !important
 
 </style>

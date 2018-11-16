@@ -94,6 +94,7 @@
         let res = await Business.managetMerchant(data)
         this._getUrl()
         if (res.error !== ERR_OK) {
+          this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -102,8 +103,8 @@
           per_page: pages.per_page,
           total_page: pages.last_page
         })
-        console.log(res)
         this.businessList = res.data
+        this.$emit('setNull', !this.businessList.length)
       },
       setValue(item) {
         switch (item.type) {

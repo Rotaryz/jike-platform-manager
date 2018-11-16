@@ -1,7 +1,7 @@
 <template>
-  <base-model ref="baseModel">
+  <base-model ref="baseModel" :showNull="showNull">
     <div slot="content" class="content-box">
-      <router-view @showToast="showToast" @showImg="showImg"></router-view>
+      <router-view @showToast="showToast" @showImg="showImg" @setNull="setNull"></router-view>
     </div>
   </base-model>
 </template>
@@ -14,9 +14,14 @@
     name: 'order-management',
     data() {
       return {
+        showNull: false
       }
     },
     methods: {
+      // 是否显示空白页
+      setNull(status = false) {
+        this.showNull = status
+      },
       showToast(content, time = 1000) {
         this.$refs.baseModel.showContent(content, time)
       },

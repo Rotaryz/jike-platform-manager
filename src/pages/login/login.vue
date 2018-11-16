@@ -25,7 +25,7 @@
           <transition name="fade">
             <ul class="shop-list" v-if="isShowMore" @click.stop>
               <li class="shop-item" v-for="(item, index) in shopArr" :key="index" @click="_checkRole(index)">
-                {{item}}
+                {{item.name}}
                 <img src="./icon-select_login@2x.png" class="shop-icon" v-if="shopIndex === index">
               </li>
             </ul>
@@ -49,6 +49,7 @@
   import Toast from 'components/toast/toast'
   import { mapGetters, mapActions } from 'vuex'
   import storage from 'storage-controller'
+  import {PROJECT_ARR, WEI_SHANG, ZHI_TUI, ZHI_DIAN} from 'common/js/constants'
 
   export default {
     data() {
@@ -59,9 +60,9 @@
         password: '',
         remenber: true,
         isShowMore: false,
-        shopArr: ['赞播AI微店', '赞播AI智推', '赞播AI智店'],
+        shopArr: PROJECT_ARR,
         shopIndex: 0,
-        role: '赞播AI微店'
+        role: WEI_SHANG.name
       }
     },
     created() {
@@ -82,36 +83,36 @@
       ...mapActions(['setProject']),
       _setRole() {
         switch (this.project) {
-          case 'weishang':
+          case WEI_SHANG.project:
             this.shopIndex = 0
             break
-          case 'zantui':
+          case ZHI_TUI.project:
             this.shopIndex = 1
             break
-          case 'zhidian':
+          case ZHI_DIAN.project:
             this.shopIndex = 2
             break
           default:
             break
         }
-        this.role = this.shopArr[this.shopIndex]
+        this.role = this.shopArr[this.shopIndex].name
       },
       _showMore() {
         this.isShowMore = !this.isShowMore
       },
       _checkRole(index) {
         this.shopIndex = index
-        this.role = this.shopArr[index]
+        this.role = this.shopArr[index].name
         let project = ''
         switch (index) {
           case 0:
-            project = 'weishang'
+            project = WEI_SHANG.project
             break
           case 1:
-            project = 'zantui'
+            project = ZHI_TUI.project
             break
           case 2:
-            project = 'zhidian'
+            project = ZHI_DIAN.project
             break
           default:
             break

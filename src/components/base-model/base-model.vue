@@ -37,6 +37,10 @@
     </transition>
     <div class="content-base">
       <slot name="content"></slot>
+      <div class="blank" v-if="showNull">
+        <div class="blank-icon"></div>
+        <div class="blank-title">暂无相关数据</div>
+      </div>
     </div>
     <toast ref="toast"></toast>
   </div>
@@ -54,6 +58,10 @@
       isHide: {
         type: Boolean,
         default: true
+      },
+      showNull: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -423,6 +431,22 @@
     padding: 1.3vw
     flex: 1
     box-sizing: border-box
+    .blank
+      row-center()
+      top: 55%
+      text-align: center
+      &.fade-enter, &.fade-leave-to
+        opacity: 0
+      &.fade-enter-to, &.fade-leave-to
+        transition: opacity .2s ease-in-out
+      .blank-icon
+        icon-image('icon-null')
+        width: 140px
+        height: 89px
+        margin-bottom: 30px
+      .blank-title
+        color: $color-text99
+
 
   .shade-img
     width: 500px

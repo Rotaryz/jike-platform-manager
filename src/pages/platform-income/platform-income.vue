@@ -187,6 +187,7 @@
         let data = {page: this.page, type: this.wsTabArr[this.tabIndex - 1].status}
         let res = await Finance.incomeList(data)
         if (res.error !== ERR_OK) {
+          this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -196,6 +197,7 @@
           total_page: pages.last_page
         })
         this.orderList = res.data
+        this.$emit('setNull', !this.orderList.length)
         // console.log(res.data)
         this.detail = Object.assign({}, {join_income: res.join_income, sale_income: res.sale_income, distribute_income: res.distribute_income, total: res.total})
       }

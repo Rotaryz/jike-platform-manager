@@ -1,6 +1,6 @@
 <template>
   <div class="agent-detail">
-    <div class="agent-detail-box" v-if="detail.agent">
+    <div class="agent-detail-box">
       <div :class="project + '-line'" class="agent-text">基本信息</div>
       <div class="agent-content">
         <div class="agent-box">
@@ -11,8 +11,8 @@
           <div class="agent-item"><span class="agent-title">所属行业：</span>{{detail.industry || '---'}}</div>
         </div>
         <div class="agent-box">
-          <div class="agent-item"><span class="agent-title">所属代理商：</span>{{detail.agent.name}}</div>
-          <div class="agent-item"><span class="agent-title">所属代理商账号：</span>{{detail.agent.mobile}}</div>
+          <div class="agent-item"><span class="agent-title">所属代理商：</span>{{detail.agent && detail.agent.name}}</div>
+          <div class="agent-item"><span class="agent-title">所属代理商账号：</span>{{detail.agent && detail.agent.mobile}}</div>
           <div class="agent-item"><span class="agent-title">推荐人名称：</span>---</div>
           <div class="agent-item"><span class="agent-title">推荐人账号：</span>---</div>
           <div class="agent-item"><span class="agent-title">使用期限：</span>{{detail.agent_merchant_end_time}}</div>

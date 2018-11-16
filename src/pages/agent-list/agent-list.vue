@@ -169,6 +169,7 @@
           let res = await Agent.agentList(data)
           this._getUrl()
           if (res.error !== ERR_OK) {
+            this.$emit('setNull', true)
             return
           }
           let pages = res.meta
@@ -178,12 +179,14 @@
             total_page: pages.last_page
           })
           this.agentList = res.data
+          this.$emit('setNull', !this.agentList.length)
           return
         }
         let data = {page: this.page, role: this.endRoleId, status: this.status, name: this.endName}
         let res = await Agent.applyAgent(data)
         this._getUrl()
         if (res.error !== ERR_OK) {
+          this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -193,6 +196,7 @@
           total_page: pages.last_page
         })
         this.agentList = res.data
+        this.$emit('setNull', !this.agentList.length)
       },
       setValue(item) {
         switch (item.type) {
