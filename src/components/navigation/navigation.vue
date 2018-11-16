@@ -130,13 +130,13 @@
       // 切换账户
       _setRole() {
         switch (this.project) {
-          case ZHI_TUI.project:
-            this.loginRole = 0
-            this.roleName = '赞播AI名片'
-            break
           case WEI_SHANG.project:
-            this.loginRole = 1
+            this.loginRole = 0
             this.roleName = '赞播AI微商'
+            break
+          case ZHI_TUI.project:
+            this.loginRole = 1
+            this.roleName = '赞播AI名片'
             break
           case ZHI_DIAN.project:
             this.loginRole = 2
