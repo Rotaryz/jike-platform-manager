@@ -121,7 +121,6 @@
       ...mapGetters(['project'])
     },
     created() {
-      console.log(this.project)
       this._setRole()
       let path = this.$route.fullPath
       this.info(path)
@@ -170,7 +169,7 @@
         this.setProject(project)
         storage.set('project', project)
         this.navList[1].showHeight = HEIGHT
-        // this.info('/agent-management/agent-list')
+        this.info('/agent-management/agent-list', false)
         this.navList.map((item) => {
           item.childrenIndex = -1
           item.url = item.children[0].url
@@ -184,12 +183,12 @@
       _checkRole() {
         this.showRole = !this.showRole
       },
-      info(path) {
+      info(path, status = true) {
         let type = path
         this.navList.forEach((item, idx) => {
           item.children.forEach((items, index) => {
             if (items.url.includes(type)) {
-              this.showChild(idx)
+              this.showChild(idx, status)
               this.bigChildren(index)
             } else {
               item.showHeight = HEIGHT
@@ -224,7 +223,7 @@
                 num++
               }
             })
-            if (this.navList[index].showHeight === HEIGHT) {
+            if (this.navList[index].showHeight === HEIGHT || !status) {
               let target = (num + 1) * HEIGHT
               this.timer = setInterval(() => {
                 if (this.navList[index].showHeight >= target) {
