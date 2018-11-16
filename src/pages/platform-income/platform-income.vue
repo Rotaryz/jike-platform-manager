@@ -48,7 +48,7 @@
           <div class="last-item">操作</div>
         </div>
         <div class="list-box">
-          <div class="list-content" v-for="(item, index) in orderList" :key="index">
+          <div class="list-content" :class="project + '-list'" v-for="(item, index) in orderList" :key="index">
             <!---->
             <div class="list-item" v-for="(item1, index1) in listHead[tabIndex]" :key="index1" v-if="index1 != (listHead[tabIndex].length - 1)" :class="item1.flex">{{item[contentName[tabIndex][index1]] + '' || '---'}}</div>
             <div class="last-item hand" :class="project + '-text'" @click="_toDetail(item)">查看</div>

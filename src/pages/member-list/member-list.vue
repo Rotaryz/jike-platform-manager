@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="list">
-        <div class="list-box" v-for="(item, index) in memberList" :key="index">
+        <div class="list-box" :class="project + '-list'" v-for="(item, index) in memberList" :key="index">
           <div class="list-item list-text">{{item.name || '---'}}</div>
           <div class="list-item list-text">{{item.mobile || '---'}}</div>
           <div class="list-item list-text">{{item.agent_name || '---'}}</div>

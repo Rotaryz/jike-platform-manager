@@ -32,7 +32,7 @@
           <div class="list-item" v-for="(item, index) in headlist" :key="index" :class="item.flex">{{item.txt}}</div>
         </div>
         <div class="list-box">
-          <div class="list-content" v-for="(item, index) in expendList" :key="index">
+          <div class="list-content" :class="project + '-list'" v-for="(item, index) in expendList" :key="index">
             <div class="list-item" v-for="(item1, index1) in headlist" :key="index1" v-if="index1 != (headlist.length - 1)" :class="item1.flex">{{item[nameObj[index1]] + '' || '---'}}</div>
             <div class="list-item hand" :class="project + '-text'" @click="upAnyImg(index, item)" v-if="tabIndex == 1">发放</div>
             <div class="list-item hand" :class="project + '-text'" @click="showImg(item)" v-if="tabIndex == 0">查看凭证</div>
