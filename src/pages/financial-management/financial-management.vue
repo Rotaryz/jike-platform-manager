@@ -100,6 +100,11 @@ import finance from '../../api/finance'
         this.$refs.finance.cutList()
       }
     },
+    watch: {
+      '$route'() {
+        this.setNull(false)
+      }
+    },
     components: {
       BaseModel
     }

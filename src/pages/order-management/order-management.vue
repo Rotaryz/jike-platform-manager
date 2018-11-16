@@ -29,6 +29,11 @@
         this.$refs.baseModel.showImage(src)
       }
     },
+    watch: {
+      '$route'() {
+        this.setNull(false)
+      }
+    },
     components: {
       BaseModel
     }

@@ -52,6 +52,11 @@
         this.showNull = status
       }
     },
+    watch: {
+      '$route'() {
+        this.setNull(false)
+      }
+    },
     components: {
       BaseModel
     }
