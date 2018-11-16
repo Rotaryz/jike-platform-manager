@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="down-box">
-      <ul class="tab" v-if="project === 'ws'">
+      <ul class="tab" v-if="project === 'weishang'">
         <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex == index ? (project + '-btn-line') : ''" :key="index" @click="checkTab(index)">{{item.title}}</li>
       </ul>
       <div class="list-container">

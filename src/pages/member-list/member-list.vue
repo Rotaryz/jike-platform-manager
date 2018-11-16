@@ -1,7 +1,7 @@
 <template>
   <div class="agent-list">
-    <ul class="tab" v-if="project !== 'card'">
-      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'ws-btn-line': tabIndex === index}" :key="index" @click="_checkTab(index)">{{item.title}}</li>
+    <ul class="tab" v-if="project !== 'zantui'">
+      <li class="tab-item hand" v-for="(item, index) in tabArr" :class="{'weishang-btn-line': tabIndex === index}" :key="index" @click="_checkTab(index)">{{item.title}}</li>
     </ul>
     <div class="check-box">
       <admin-select :select="openType" ref="openType" v-if="tabIndex === 0" @setValue="setValue"></admin-select>

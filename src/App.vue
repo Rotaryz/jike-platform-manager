@@ -13,7 +13,7 @@
   export default {
     name: 'App',
     created() {
-      let project = storage.get('project', 'ws')
+      let project = storage.get('project', 'weishang')
       this.setProject(project)
     },
     methods: {

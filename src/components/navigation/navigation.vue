@@ -121,6 +121,7 @@
       ...mapGetters(['project'])
     },
     created() {
+      console.log(this.project)
       this._setRole()
       let path = this.$route.fullPath
       this.info(path)

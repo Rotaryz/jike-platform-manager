@@ -78,11 +78,7 @@ export default {
     return http({
       method: 'post',
       url,
-      data, // post 请求时带的参数
-      headers: {
-        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        // Authorization: storage.get('aiToken')
-      }
+      data // post 请求时带的参数
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -93,11 +89,7 @@ export default {
     return http({
       method: 'get',
       url,
-      params, // get 请求时带的参数
-      headers: {
-        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        // Authorization: storage.get('aiToken')
-      }
+      params // get 请求时带的参数
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -108,11 +100,7 @@ export default {
     return http({
       method: 'put',
       url,
-      data, // put 请求时带的参数
-      headers: {
-        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        // Authorization: storage.get('aiToken')
-      }
+      data // put 请求时带的参数
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {
@@ -123,11 +111,7 @@ export default {
     return http({
       method: 'delete',
       url,
-      data, // put 请求时带的参数
-      headers: {
-        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        // Authorization: storage.get('aiToken')
-      }
+      data // put 请求时带的参数
     }).then((response) => {
       return checkStatus(response)
     }).then((res) => {

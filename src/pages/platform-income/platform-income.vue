@@ -22,7 +22,7 @@
           <div class="down-txt">销货收入(元)</div>
         </div>
       </div>
-      <div class="top-item" v-if="project === 'ws'">
+      <div class="top-item" v-if="project === 'weishang'">
         <div class="money-box">
           <div class="top-money">{{detail.distribute_income}}</div>
           <div class="down-txt">分销收入(元)</div>
@@ -36,10 +36,10 @@
       <!--</div>-->
     </div>
     <div class="down-box">
-      <ul class="tab" v-if="project === 'ws'">
+      <ul class="tab" v-if="project === 'zantui'">
         <li class="tab-item hand" v-for="(item, index) in wsTabArr" :class="tabIndex == item.idx ? (project + '-btn-line') : ''" :key="index" @click="checkTab(item.idx)">{{item.txt}}</li>
       </ul>
-      <ul class="tab" v-if="project === 'card'">
+      <ul class="tab" v-if="project === 'zantui'">
         <li class="tab-item hand" v-for="(item, index) in cardTabArr" :class="tabIndex == item.idx ? (project + '-btn-line') : ''" :key="index" @click="checkTab(item.idx)">{{item.txt}}</li>
       </ul>
       <div class="list-container">
