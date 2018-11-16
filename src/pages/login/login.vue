@@ -36,7 +36,7 @@
       <!--<i class="check" :class="{'check-yes' : remenber}"></i>-->
       <!--<span class="tip">记住密码</span>-->
       <!--</div>-->
-      <div class="submit-no hand ws-btn-blue" @click="login">
+      <div class="submit-no hand weishang-btn-blue" @click="login">
         登录
       </div>
     </div>
@@ -59,14 +59,13 @@
         password: '',
         remenber: true,
         isShowMore: false,
-        shopArr: ['赞播AI微店', '赞播AI智推'],
+        shopArr: ['赞播AI微店', '赞播AI智推', '赞播AI智店'],
         shopIndex: 0,
         role: '赞播AI微店'
       }
     },
     created() {
-      this.shopIndex = this.project === 'ws' ? 0 : 1
-      this.role = this.shopArr[this.shopIndex]
+      this._setRole()
       window.onkeydown = (e) => {
         if (e.keyCode === 13) {
           this.login()
@@ -81,15 +80,44 @@
     },
     methods: {
       ...mapActions(['setProject']),
+      _setRole() {
+        switch (this.project) {
+          case 'weishang':
+            this.shopIndex = 0
+            break
+          case 'zantui':
+            this.shopIndex = 1
+            break
+          case 'zhidian':
+            this.shopIndex = 2
+            break
+          default:
+            break
+        }
+        this.role = this.shopArr[this.shopIndex]
+      },
       _showMore() {
         this.isShowMore = !this.isShowMore
       },
       _checkRole(index) {
         this.shopIndex = index
         this.role = this.shopArr[index]
-        let title = index === 0 ? 'ws' : 'card'
-        this.setProject(title)
-        storage.set('project', title)
+        let project = ''
+        switch (index) {
+          case 0:
+            project = 'weishang'
+            break
+          case 1:
+            project = 'zantui'
+            break
+          case 2:
+            project = 'zhidian'
+            break
+          default:
+            break
+        }
+        this.setProject(project)
+        storage.set('project', project)
         setTimeout(() => {
           this.isShowMore = false
         }, 100)
@@ -270,10 +298,11 @@
             box-sizing: border-box
             height: 80px
             line-height: 80px
+            border-bottom: 1px solid #EFEFEF
             .shop-icon
               width: 20px
             &:last-child
-              border-top: 1px solid #EFEFEF
+              border-bottom: none
       .remenber
         display: flex
         justify-content: right

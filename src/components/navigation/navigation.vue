@@ -14,6 +14,10 @@
               <span>赞播AI微商</span>
               <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === 1">
             </div>
+            <div class="header-item-bottom hand" @click="_checkPeo(2)">
+              <span>赞播AI智店</span>
+              <img src="./icon-blackright@2x.png" class="header-item-icon" v-if="loginRole === 2">
+            </div>
           </div>
         </transition>
       </div>
@@ -105,13 +109,7 @@
         title: '发放记录',
         url: '/financial-management/platform-expend',
         type: 'ws'
-      }
-        // , {
-        //   title: '提现管理',
-        //   url: '/financial-management/cash-management',
-        //   type: 'ws'
-        // }
-      ],
+      }],
       showHeight: HEIGHT
     }, {
       title: '发布管理',
@@ -125,18 +123,7 @@
       }]
     }
   ]
-  //   , {
-  //   title: '基础设置',
-  //   icon: require('./icon-basic_setting@2x.png'),
-  //   url: '/role-management/role-list',
-  //   childrenIndex: -1,
-  //   children: [{
-  //   title: '角色设置',
-  //   url: '/role-management/role-list',
-  //   type: 'normal'
-  // }],
-  //   showHeight: HEIGHT
-  // }
+
   export default {
     data() {
       return {
@@ -157,18 +144,35 @@
       ...mapGetters(['project'])
     },
     created() {
-      this.loginRole = this.project === 'card' ? 0 : 1
-      this.roleName = this.loginRole === 0 ? '赞播AI名片' : '赞播AI微商'
+      this._setRole()
       let path = this.$route.fullPath
       this.info(path)
     },
     methods: {
       ...mapActions(['setProject']),
       // 切换账户
+      _setRole() {
+        switch (this.project) {
+          case 'zantui':
+            this.loginRole = 0
+            this.roleName = '赞播AI名片'
+            break
+          case 'weishang':
+            this.loginRole = 1
+            this.roleName = '赞播AI微商'
+            break
+          case 'zhidian':
+            this.loginRole = 2
+            this.roleName = '赞播AI智店'
+            break
+          default:
+            break
+        }
+      },
       _checkPeo(status) {
         this.loginRole = status
         this.showRole = false
-        let title = this.loginRole === 0 ? 'card' : 'ws'
+        let title = this.loginRole === 0 ? 'zantui' : 'weishang'
         this.roleName = this.loginRole === 0 ? '赞播AI名片' : '赞播AI微商'
         this.setProject(title)
         storage.set('project', title)
@@ -301,10 +305,10 @@
           width: 50px
           margin-bottom: 14px
           border-radius: 50%
-        .card-logo
+        .zantui-logo
           background: $color-active
           transition: all 0.5s
-        .ws-logo
+        .weishang-logo
           background: #F94C5F
           transition: all 0.5s
         .header-change
@@ -417,7 +421,7 @@
         transition: all .2s
 
   /*微商*/
-  .card-big
+  .zantui-big
     background: $color-menu-background
     transition: all 0.5s
     .big-show .nav-big
@@ -433,7 +437,7 @@
           transition: all 0.5s
 
   //智推
-  .ws-big
+  .weishang-big
     background: $color-43455C
     transition: all 0.5s
     .big-show .nav-big

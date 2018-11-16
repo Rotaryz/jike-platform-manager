@@ -1,5 +1,5 @@
 const state = {
-  project: 'normal',
+  project: 'zantui',
   titleArr: ''
 }
 

@@ -15,6 +15,8 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(config => {
+  config.headers['Authorization'] = storage.get('aiToken')
+  config.headers['Current-Application'] = storage.get('project')
   // 请求数据前的拦截
   return config
 }, error => {
@@ -78,8 +80,8 @@ export default {
       url,
       data, // post 请求时带的参数
       headers: {
-        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        Authorization: storage.get('aiToken')
+        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        // Authorization: storage.get('aiToken')
       }
     }).then((response) => {
       return checkStatus(response)
@@ -93,8 +95,8 @@ export default {
       url,
       params, // get 请求时带的参数
       headers: {
-        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        Authorization: storage.get('aiToken')
+        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        // Authorization: storage.get('aiToken')
       }
     }).then((response) => {
       return checkStatus(response)
@@ -108,8 +110,8 @@ export default {
       url,
       data, // put 请求时带的参数
       headers: {
-        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        Authorization: storage.get('aiToken')
+        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        // Authorization: storage.get('aiToken')
       }
     }).then((response) => {
       return checkStatus(response)
@@ -123,8 +125,8 @@ export default {
       url,
       data, // put 请求时带的参数
       headers: {
-        'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
-        Authorization: storage.get('aiToken')
+        // 'Current-Application': storage.get('project') === 'card' ? 'zantui' : 'weishang',
+        // Authorization: storage.get('aiToken')
       }
     }).then((response) => {
       return checkStatus(response)
