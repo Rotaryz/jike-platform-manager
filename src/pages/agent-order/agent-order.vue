@@ -65,7 +65,7 @@
     },
     methods: {
       _getUrl() {
-        let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+        let title = storage.get('project')
         this.downUrl = BASE_URL.api + `/api/order/export-record?access_token=${storage.get('aiToken')}&current_application=${title}&order_sn=${this.orderSn}`
       },
       addPage(page) {

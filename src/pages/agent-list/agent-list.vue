@@ -110,7 +110,7 @@
     },
     methods: {
       _getUrl() {
-        let title = storage.get('project') === 'card' ? 'zantui' : 'weishang'
+        let title = storage.get('project')
         switch (this.tabIndex * 1) {
           case 0:
             this.downUrl = BASE_URL.api + `/api/manage/agent-export?access_token=${storage.get('aiToken')}&current_application=${title}&role=${this.endRoleId}&name=${this.endName}`
@@ -285,10 +285,12 @@
       margin-left: 9px
 
   .form-list
+    flex: 1
+    display: flex
+    flex-direction: column
     font-size: $font-size-medium14
     font-family: $fontFamilyRegular
     padding: 0 1.5vw 10px
-    flex: 1
 
   .list-header, .list-box
     width: 100%
@@ -299,13 +301,13 @@
 
   .list-header
     width: 100%
-    height: 9.1%
+    height: 50px
     white-space: nowrap
     border-bottom: 1px solid $color-line
     background: $color-big-background
 
   .list
-    height: 81.8%
+    flex: 1
     display: flex
     flex-direction: column
     .list-box
@@ -352,5 +354,5 @@
     background: $color-background
 
   .page
-    height: 9.1%
+    height: 59px
 </style>
