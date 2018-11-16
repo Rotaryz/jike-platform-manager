@@ -170,7 +170,7 @@
         this.setProject(project)
         storage.set('project', project)
         this.navList[1].showHeight = HEIGHT
-        this.info('/agent-management/agent-list')
+        // this.info('/agent-management/agent-list')
         this.navList.map((item) => {
           item.childrenIndex = -1
           item.url = item.children[0].url
