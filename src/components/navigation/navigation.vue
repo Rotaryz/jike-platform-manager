@@ -390,6 +390,7 @@
               transform: rotate(0deg) translateY(-50%)
               transition: transform 0.2s
             .nav-active
+              icon-image('icon-arrow_right_active')
               transform-origin: 50% 0%
               transform: rotate(90deg) translateY(-50%)
               transition: transform 0.2s
