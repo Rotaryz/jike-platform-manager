@@ -1,5 +1,5 @@
 <template>
-  <div class="add-order">
+  <div class="add-account">
     <div class="top-title">
       <div :class="project + '-line'">新增订单</div>
     </div>
@@ -8,14 +8,16 @@
         <div class="msg-item">
           <div class="item-top">
             <label class="item-title hand" for="input1">* 收货方</label>
-            <input type="text" v-model="addOrder.name" @blur="showError('name', addOrder.name)" @input="_closeError('name', addOrder.name)" id="input1" class="item-input" :class="{'error': !regObj.name}" placeholder="请输入商家姓名或名称">
+            <div class="item-input content">{{addOrder.name}}</div>
+            <!--<input type="text" v-model="addOrder.name" @blur="showError('name', addOrder.name)" @input="_closeError('name', addOrder.name)" id="input1" class="item-input" :class="{'error': !regObj.name}" placeholder="请输入商家姓名或名称">-->
           </div>
           <div class="item-down" v-if="!regObj.name">收货方名称有误，请重新输入！</div>
         </div>
         <div class="msg-item">
           <div class="item-top">
             <label class="item-title hand" for="input2">* 收货方账号</label>
-            <input type="text" v-model="addOrder.mobile" @blur="showError('mobile', addOrder.mobile)" @input="_closeError('mobile', addOrder.mobile)" id="input2" class="item-input" :class="{'error': !regObj.mobile}" placeholder="请输入商家账号">
+            <div class="item-input content">{{addOrder.mobile}}</div>
+            <!--<input type="text" v-model="addOrder.mobile" @blur="showError('mobile', addOrder.mobile)" @input="_closeError('mobile', addOrder.mobile)" id="input2" class="item-input" :class="{'error': !regObj.mobile}" placeholder="请输入商家账号">-->
           </div>
           <div class="item-down" v-if="!regObj.mobile">收货方不存在，请重新输入！</div>
         </div>
@@ -76,14 +78,15 @@
 </template>
 
 <script>
-  // import { ERR_OK } from 'api/config'
   import { mapGetters } from 'vuex'
   import { Order, Images } from 'api'
-  import { ERR_OK } from '../../common/js/config'
+  import { ERR_OK } from 'common/js/config'
   import {WEI_SHANG, ZHI_TUI, ZHI_DIAN} from 'common/js/constants'
 
+  const COMPONENT_NAME = 'add-account'
+
   export default {
-    name: 'add-order',
+    name: COMPONENT_NAME,
     data() {
       return {
         addOrder: {
@@ -102,6 +105,11 @@
           num: true
         }
       }
+    },
+    created() {
+      const {name, mobile} = this.$route.query
+      this.addOrder.name = name
+      this.addOrder.mobile = mobile
     },
     methods: {
       async _fileImage(e) {
@@ -122,7 +130,8 @@
         return param
       },
       showImg() {
-        this.$emit('showImg', this.addOrder.image_url)
+        console.log(this.addOrder.image_url)
+        this.$emit('showImage', this.addOrder.image_url)
       },
       backBefore() {
         this.$router.back()
@@ -145,7 +154,8 @@
           this.$emit('showToast', '请上传收款凭证')
           return
         }
-        this.addOrder.title = this.getProjectName()
+        console.log(this)
+        this.addOrder.title = this.getProjectName
         let res = await Order.newAgentOrder(this.addOrder)
         this.$emit('showToast', res.message)
         if (res.error === ERR_OK) {
@@ -176,11 +186,12 @@
     }
   }
 </script>
+
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import '~common/stylus/mixin'
 
-  .add-order
+  .add-account
     width: 100%
     height: 100%
     box-shadow: 0 1px 6px 0 rgba(0, 8, 39, 0.10)
@@ -219,6 +230,8 @@
               text-indent: 8px
               font-family: $fontFamilyLight
               font-size: $font-size-medium14
+              &.content
+                line-height: 28px
             .item-input.error
               border: 1px solid $color-EF705D
             .item-input::-webkit-input-placeholder { /* WebKit browsers */
@@ -280,14 +293,11 @@
             display: flex
             align-items: center
             .add-img-box
-              width: 120px
-              height: 96px
               margin-right: 10px
               font-size: 0
               position: relative
               .upload-icon
-                width: 100%
-                height: 100%
+                width: 120px
               .image-file
                 width: 100%
                 height: 100%

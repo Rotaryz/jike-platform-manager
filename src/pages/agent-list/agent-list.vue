@@ -1,6 +1,6 @@
 <template>
   <div class="agent-list">
-    <ul class="tab">
+    <ul class="tab" v-if="isWD">
       <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex === index ? project + '-btn-line' : ''" :key="index" @click="_checkTab(index)">{{item}}</li>
     </ul>
     <div class="check-box">
@@ -26,16 +26,13 @@
           <div class="list-item list-text">{{item.name || '---'}}</div>
           <div class="list-item list-text">{{item.mobile || '---'}}</div>
           <div class="list-item list-text">{{item.role || '---'}}</div>
-          <div class="list-item list-text">---</div>
-          <div class="list-item list-text">---</div>
-          <div class="list-item list-text">{{item.recomm_invite_name || '---'}}</div>
-          <div class="list-item list-text">{{item.invite_mobile || '---'}}</div>
+          <div class="list-item list-text">{{usable_account + '/' + total_account}}</div>
           <div class="list-item list-text" v-if="tabIndex === 0">{{item.status === 1 ? '使用中' : item.status === 2 ? '过期' : ''}}</div>
           <div class="list-item list-text" v-if="tabIndex === 1">{{item.status === 0 ? '待审核' :item.status === 1 ? '审核通过' : item.status === 2 ? '审核不通过' : '---'}}</div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 0">
-            <!--<router-link tag="span" :to="'/agent-management/agent-list/new-agent?id='+ item.id" :class="project + '-text-under'">编辑</router-link>-->
-            <!--|-->
             <router-link tag="span" :to="'/agent-management/agent-list/agent-detail?id='+ item.id + '&type=1'" :class="project + '-text-under'">查看</router-link>
+            |
+            <router-link tag="span" :to="'/agent-management/agent-list/add-account?name='+ item.name + '&mobile=' + item.mobile" :class="project + '-text-under'">添加账号</router-link>
           </div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 1">
             <div @click="_deal(item)" :class="project + '-text-under'">{{item.status === 0 ? '审核' : '查看'}}</div>
@@ -57,8 +54,9 @@
   import PageDetail from 'components/page-detail/page-detail'
   import { mapGetters } from 'vuex'
   import storage from 'storage-controller'
+  import {WEI_SHANG} from 'common/js/constants'
 
-  const TITLELIST = ['商家名称', '商家账号', '角色名称', '上级名称', '上级电话', '推荐人', '推荐人电话', '账户状态', '操作']
+  const TITLELIST = ['商家名称', '商家账号', '角色名称', '账号数量', '账户状态', '操作']
 
   export default {
     name: 'list',
@@ -94,7 +92,10 @@
       }
     },
     computed: {
-      ...mapGetters(['project'])
+      ...mapGetters(['project']),
+      isWD() {
+        return this.project === WEI_SHANG.project
+      }
     },
     watch: {
       project(newValue) {

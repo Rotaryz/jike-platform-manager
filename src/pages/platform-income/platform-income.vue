@@ -36,10 +36,10 @@
       <!--</div>-->
     </div>
     <div class="down-box">
-      <ul class="tab" v-if="project === 'zantui'">
+      <ul class="tab" v-if="project === 'weishang'">
         <li class="tab-item hand" v-for="(item, index) in wsTabArr" :class="tabIndex == item.idx ? (project + '-btn-line') : ''" :key="index" @click="checkTab(item.idx)">{{item.txt}}</li>
       </ul>
-      <ul class="tab" v-if="project === 'zantui'">
+      <ul class="tab" v-else>
         <li class="tab-item hand" v-for="(item, index) in cardTabArr" :class="tabIndex == item.idx ? (project + '-btn-line') : ''" :key="index" @click="checkTab(item.idx)">{{item.txt}}</li>
       </ul>
       <div class="list-container">

@@ -14,7 +14,7 @@
         </transition>
       </div>
       <ul class="nav-big">
-        <li class="nav-item" v-for="(item , index) in navList" :key="index" @click="showChild(index)" :style="{'height':item.showHeight+'px'}">
+        <li class="nav-item" v-for="(item , index) in navList" :key="index" @click="showChild(index)" :style="{'height':item.showHeight+'px'}" v-if="item.project === project || item.project === 'normal'">
           <router-link :to="{path: item.url}" class="nav-tap">
             <span class="nav-icon"><img :src="item.showHeight !== 69 ? item.activeIcon : item.icon" class="nav-pic"></span>
             <div class="nav-title" v-show="!showAnimation">
@@ -51,18 +51,11 @@
       icon: require('./icon-business_ash@2x.png'),
       activeIcon: require('./icon-business_manage@2x.png'),
       childrenIndex: -1,
+      project: 'normal',
       children: [{
         title: '代理商管理',
         url: '/agent-management/agent-list',
         type: 'normal'
-      }, {
-        title: '企业管理',
-        url: '/business-management/business-list',
-        type: 'normal'
-      }, {
-        title: '成员管理',
-        url: '/member-management/member-list',
-        type: WEI_SHANG.project
       }],
       showHeight: HEIGHT
     }, {
@@ -71,14 +64,11 @@
       icon: require('./icon-order_ash@2x.png'),
       activeIcon: require('./icon-order_manage@2x.png'),
       childrenIndex: -1,
+      project: 'normal',
       children: [{
         title: '代理订单',
         url: '/order-management/agent-order',
         type: 'normal'
-      }, {
-        title: '零售订单',
-        url: '/order-management/retail-order',
-        type: WEI_SHANG.project
       }],
       showHeight: HEIGHT
     }, {
@@ -87,6 +77,7 @@
       icon: require('./icon-money_ash@2x.png'),
       activeIcon: require('./icon-money_manage@2x.png'),
       childrenIndex: -1,
+      project: 'normal',
       children: [{
         title: '平台收入',
         url: '/financial-management/platform-income',
@@ -97,6 +88,19 @@
         type: WEI_SHANG.project
       }],
       showHeight: HEIGHT
+    },
+    {
+      title: '发布管理',
+      url: '/mina-management/mina-release',
+      icon: require('./icon-release_ash@2x.png'),
+      activeIcon: require('./icon-release_active@2x.png'),
+      childrenIndex: -1,
+      project: ZHI_TUI.project,
+      children: [{
+        title: '小程序发布',
+        url: '/mina-management/mina-release',
+        type: ZHI_TUI.project
+      }]
     }
   ]
 
@@ -132,15 +136,15 @@
         switch (this.project) {
           case WEI_SHANG.project:
             this.loginRole = 0
-            this.roleName = '赞播AI微商'
+            this.roleName = WEI_SHANG.name
             break
           case ZHI_TUI.project:
             this.loginRole = 1
-            this.roleName = '赞播AI名片'
+            this.roleName = ZHI_TUI.name
             break
           case ZHI_DIAN.project:
             this.loginRole = 2
-            this.roleName = '赞播AI智店'
+            this.roleName = ZHI_DIAN.name
             break
           default:
             break

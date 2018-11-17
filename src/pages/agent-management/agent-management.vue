@@ -45,10 +45,10 @@
         this.$refs.baseModel.hideShade()
       },
       showImage(img) {
+        console.log(img)
         this.$refs.baseModel.showImage(img)
       },
       setNull(status = false) {
-        console.log(status)
         this.showNull = status
       }
     },

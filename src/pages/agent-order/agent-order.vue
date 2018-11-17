@@ -1,13 +1,13 @@
 <template>
   <div class="content-box">
-    <ul class="tab">
+    <ul class="tab" v-if="false">
       <li class="tab-item hand" v-for="(item, index) in tabArr" :class="tabIndex === index ? (project + '-btn-line') : ''" :key="index" @click="checkTab(index)">{{item}}</li>
     </ul>
     <div class="container-box">
       <div class="top-box">
         <search @search="search"></search>
         <div class="top-right">
-          <div class="add-btn hand" :class="project + '-btn-blue'" @click="addOrderMsg">+ 新增订单</div>
+          <!--<div class="add-btn hand" :class="project + '-btn-blue'" @click="addOrderMsg">+ 新增订单</div>-->
           <a :href="downUrl" class="excel-btn hand" :class="project + '-btn-white'">导出Excel</a>
         </div>
       </div>
@@ -16,7 +16,13 @@
       </div>
       <div class="list-box">
         <div class="list-content" :class="project + '-list'" v-for="(item, index) in agentList" :key="index">
-          <div class="list-item" v-for="(item1, index1) in headList" :key="index1" v-if="index1 != (headList.length - 1)">{{item[nameObj[index1]] + '' || '---'}}</div>
+          <div class="list-item">{{item.order_sn || '---'}}</div>
+          <div class="list-item">{{item.name || '---'}}</div>
+          <div class="list-item">{{item.mobile || '---'}}</div>
+          <div class="list-item">{{item.num || '---'}}</div>
+          <div class="list-item">{{item.price || '---'}}</div>
+          <div class="list-item">{{item.total_price || '---'}}</div>
+          <div class="list-item">{{item.pay_at || '---'}}</div>
           <div class="list-item hand" :class="project + '-text'" @click="toDetail(item)">查看</div>
         </div>
       </div>
@@ -35,9 +41,10 @@
   import { Order } from 'api'
   import { ERR_OK, BASE_URL } from 'common/js/config'
   import storage from 'storage-controller'
+  import {WEI_SHANG} from 'common/js/constants'
 
-  const HEADLIST = ['支付时间', '订单编号', '发货方', '商品名称', '商品单价', '商品数量', '总金额', '收货方', '订单状态', '操作']
-  const OBJ = {'0': 'pay_at', '1': 'order_sn', '2': 'delivery', '3': 'title', '4': 'price', '5': 'num', '6': 'total_price', '7': 'name', '8': 'status'}
+  const HEADLIST = ['订单编号', '商家名称', '商家账号', '账号数量', '账号单价', '总金额', '支付时间', '操作']
+  const OBJ = {'0': 'order_sn', '1': 'name', '2': 'mobile', '3': 'num', '4': 'price', '5': 'total_price', '6': 'pay_at'}
 
   export default {
     name: 'agent-order',
@@ -112,7 +119,10 @@
       PageDetail
     },
     computed: {
-      ...mapGetters(['project'])
+      ...mapGetters(['project']),
+      isWD() {
+        return this.project === WEI_SHANG.project
+      }
     }
   }
 </script>

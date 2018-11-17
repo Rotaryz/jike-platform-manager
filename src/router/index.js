@@ -31,6 +31,7 @@ const RoleList = () => import('pages/role-list/role-list') // 角色设置
 const NewRole = () => import('pages/new-role/new-role') // 角色设置
 const MinaManagement = () => import('pages/mina-management/mina-management') // 发布管理
 const MinaRelease = () => import('pages/mina-release/mina-release') // 小程序发布
+const AddAccount = () => import('pages/add-account/add-account') // 代理商加账号
 
 Vue.use(Router)
 
@@ -59,6 +60,12 @@ const route = new Router({
           component: AgentDetail,
           meta: {
             title: '商家管理,代理商管理'
+          }
+        }, {
+          path: 'agent-list/add-account',
+          component: AddAccount,
+          meta: {
+            title: '商家管理,代理商管理,添加账号'
           }
         }]
       }, {
