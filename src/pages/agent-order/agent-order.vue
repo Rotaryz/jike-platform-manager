@@ -202,11 +202,9 @@
       overflow: hidden
       white-space: nowrap
       margin-right: 10px
-      &:nth-child(1)
+      &:nth-child(2), &:nth-child(7)
         flex: 2
         margin-left: 40px
-      &:nth-child(2), &:nth-child(4)
-        flex: 1.5
     .list-box
       width: 100%
       flex: 1

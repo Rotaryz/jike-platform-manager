@@ -22,6 +22,12 @@
         <span class="new-input-title">* 所在地区</span>
         <admin-select :select="city" :isUse="!check" ref="city" @setValue="setValue"></admin-select>
       </div>
+      <div class="new-input-box">
+        <span class="new-input-title">  账号数量</span>
+        <input :disabled="check" type="number" class="new-input" placeholder="请输入赠送账号数量" v-model="content.account_count">
+        <!--<span class="new-tip">负责人手机号，用于登录商家后台</span>-->
+        <!--<p class="error-tip" v-if="!regObj.phoneReg">手机号码格式有误</p>-->
+      </div>
     </div>
     <div class="new-name-msg new-name-msg-center">
       <div class="new-input-box">
@@ -113,6 +119,7 @@
           province: '',
           city: '',
           area: '',
+          account_count: '',
           invite_mobile: '',
           recomm_invite_name: '',
           money: '',

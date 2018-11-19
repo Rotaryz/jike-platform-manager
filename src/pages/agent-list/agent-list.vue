@@ -17,7 +17,10 @@
     </div>
     <div class="form-list">
       <div class="list-header">
-        <div class="list-item" v-for="(item, index) in titleList" :key="index">
+        <div v-if="tabIndex === 0" class="list-item" v-for="(item, index) in agentListHead" :key="index">
+          {{item}}
+        </div>
+        <div v-if="tabIndex === 1" class="list-item" v-for="(item, index) in recordListHead" :key="index">
           {{item}}
         </div>
       </div>
@@ -26,7 +29,7 @@
           <div class="list-item list-text">{{item.name || '---'}}</div>
           <div class="list-item list-text">{{item.mobile || '---'}}</div>
           <div class="list-item list-text">{{item.role || '---'}}</div>
-          <div class="list-item list-text">{{usable_account + '/' + total_account}}</div>
+          <div class="list-item list-text" v-if="tabIndex === 0">{{item.usable_account + '/' + item.total_account}}</div>
           <div class="list-item list-text" v-if="tabIndex === 0">{{item.status === 1 ? '使用中' : item.status === 2 ? '过期' : ''}}</div>
           <div class="list-item list-text" v-if="tabIndex === 1">{{item.status === 0 ? '待审核' :item.status === 1 ? '审核通过' : item.status === 2 ? '审核不通过' : '---'}}</div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 0">
@@ -56,13 +59,15 @@
   import storage from 'storage-controller'
   import {WEI_SHANG} from 'common/js/constants'
 
-  const TITLELIST = ['商家名称', '商家账号', '角色名称', '账号数量', '账户状态', '操作']
+  const AGENT_LIST_HEAD = ['商家名称', '商家账号', '角色名称', '账号数量', '账户状态', '操作']
+  const RECORD_LIST_HEAD = ['商家名称', '商家账号', '角色名称', '账户状态', '操作']
 
   export default {
     name: 'list',
     data() {
       return {
-        titleList: TITLELIST,
+        agentListHead: AGENT_LIST_HEAD,
+        recordListHead: RECORD_LIST_HEAD,
         tabArr: ['代理商列表', '申请记录'],
         tabIndex: 0,
         role: [{

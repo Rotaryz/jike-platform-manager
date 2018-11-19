@@ -1,7 +1,7 @@
 <template>
   <div class="add-account">
     <div class="top-title">
-      <div :class="project + '-line'">新增订单</div>
+      <div :class="project + '-line'">添加账号</div>
     </div>
     <div class="order-content">
       <div class="order-msg">

@@ -81,25 +81,26 @@
     // {txt: '年费收入', idx: 4}
   ]
   const FIRSTARR = [
-    {txt: '加入时间', flex: 'flex2'},
+    {txt: '订单编号', flex: 'flex1'},
     {txt: '商家名称', flex: 'flex2'},
     {txt: '商家账号', flex: 'flex1'},
     {txt: '角色名称', flex: 'flex1'},
-    {txt: '代理金额', flex: 'flex1'},
+    {txt: '金额', flex: 'flex1'},
+    {txt: '开通时间', flex: 'flex2'},
     {txt: '操作', flex: 'flex1'}]
   const SECONDARR = [
-    {txt: '支付时间', flex: 'flex2'},
     {txt: '订单编号', flex: 'flex1'},
-    {txt: '收货方', flex: 'flex1'},
-    {txt: '商品名称', flex: 'flex1'},
-    {txt: '商品单价', flex: 'flex1'},
-    {txt: '商品数量', flex: 'flex1'},
+    {txt: '商家名称', flex: 'flex2'},
+    {txt: '商家账号', flex: 'flex1'},
+    {txt: '账号数量', flex: 'flex1'},
+    {txt: '账号单价', flex: 'flex1'},
     {txt: '总金额', flex: 'flex1'},
+    {txt: '支付时间', flex: 'flex2'},
     {txt: '操作', flex: 'flex1'}]
   const THREEARR = [
     {txt: '支付时间', flex: 'flex2'},
-    {txt: '订单编号', flex: 'flex1'},
-    {txt: '收货方', flex: 'flex1'},
+    {txt: '订单编号', flex: 'flex2'},
+    {txt: '收货方', flex: 'flex2'},
     {txt: '商品名称', flex: 'flex1'},
     {txt: '商品单价', flex: 'flex1'},
     {txt: '商品数量', flex: 'flex1'},
@@ -124,9 +125,11 @@
     {txt: '操作', flex: 'flex1'}
   ]
 
-  const FIRST_NAME = {'0': 'created_at', '1': 'name', '2': 'mobile', '3': 'role_name', '4': 'money'}
-  const SECOND_NAME = {'0': 'created_at', '1': 'order_sn', '2': 'name', '3': 'good_name', '4': 'price', '5': 'num', '6': 'money'}
+  const FIRST_NAME = {'0': 'order_sn', '1': 'name', '2': 'mobile', '3': 'role_name', '4': 'money', '5': 'created_at'}
+  const SECOND_NAME = {'0': 'order_sn', '1': 'name', '2': 'mobile', '3': 'num', '4': 'price', '5': 'money', '6': 'created_at'}
   const THREE_NAME = {'0': 'created_at', '1': 'order_sn', '2': 'name', '3': 'good_name', '4': 'price', '5': 'num', '6': 'money', '7': 'total'}
+  // const THREE_NAME = {'0': 'order_sn', '1': 'name', '2': 'mobile', '3': 'price', '4': 'num', '5': 'money', '6': 'total', '7': 'created_at'}
+
   export default {
     name: 'platform-income',
     data() {
