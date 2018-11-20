@@ -19,7 +19,7 @@
           <div class="list-item">{{item.order_sn || '---'}}</div>
           <div class="list-item">{{item.name || '---'}}</div>
           <div class="list-item">{{item.mobile || '---'}}</div>
-          <div class="list-item">{{item.num || '---'}}</div>
+          <div class="list-item">{{item.num}}</div>
           <div class="list-item">{{item.price || '---'}}</div>
           <div class="list-item">{{item.total_price || '---'}}</div>
           <div class="list-item">{{item.pay_at || '---'}}</div>
