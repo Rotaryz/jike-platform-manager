@@ -22,11 +22,10 @@
         <span class="new-input-title">* 所在地区</span>
         <admin-select :select="city" :isUse="!check" ref="city" @setValue="setValue"></admin-select>
       </div>
-      <div class="new-input-box">
+      <div class="new-input-box":class="{'new-error': !regObj.countReg}">
         <span class="new-input-title">  账号数量</span>
-        <input :disabled="check" type="number" class="new-input" placeholder="请输入赠送账号数量" v-model="content.account_count">
-        <!--<span class="new-tip">负责人手机号，用于登录商家后台</span>-->
-        <!--<p class="error-tip" v-if="!regObj.phoneReg">手机号码格式有误</p>-->
+        <input :disabled="check" type="number" class="new-input" placeholder="请输入赠送账号数量" v-model="content.account_count" @input="checkCount" @blur="checkCount()">
+        <p class="error-tip" v-if="!regObj.countReg">账号数量格式有误</p>
       </div>
     </div>
     <div class="new-name-msg new-name-msg-center">
@@ -137,7 +136,8 @@
           nameReg: true,
           phoneReg: true,
           phoneBigReg: true,
-          moneyReg: true
+          moneyReg: true,
+          countReg: true
         },
         moreTime: '',
         id: null,
@@ -226,6 +226,14 @@
           //   this.regObj.phoneBigReg = text.length
           //   break
         }
+      },
+      checkCount() {
+        let accountCount = this.content.account_count
+        if (accountCount && accountCount.indexOf('.') > -1) {
+          this.regObj.countReg = false
+          return
+        }
+        this.regObj.countReg = true
       },
       _delImage() {
         this.content.image_url = ''
@@ -360,6 +368,8 @@
           this.regObj.nameReg = this.content.name
           this.regObj.phoneReg = this.content.mobile
           this.regObj.moneyReg = this.content.money
+          return
+        } else if (!this.regObj.countReg) {
           return
         } else if (this.content.role_id === '') {
           this.$emit('showToast', '请选择角色')
