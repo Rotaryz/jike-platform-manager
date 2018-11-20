@@ -48,7 +48,7 @@
 
 <script>
   // import { ERR_OK } from 'api/config'
-  import { mapGetters } from 'vuex'
+  import {mapGetters} from 'vuex'
   import Toast from 'components/toast/toast'
   import storage from 'storage-controller'
 
@@ -132,9 +132,20 @@
   .base-model
     position: relative
     height: 100vh
+    overflow-y: auto
     display: flex
     flex-direction: column
-
+    &::-webkit-scrollbar
+      width: 8px
+      height: 10px
+    &::-webkit-scrollbar-thumb
+      background-color: rgba(0, 0, 0, .15)
+      border-radius: 10px
+    &::-webkit-scrollbar-thumb:hover
+      background-color: rgba(0, 0, 0, .3)
+    &::-webkit-scrollbar-track
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, .15)
+      border-radius: 10px
   .herder-peo
     position: relative
     z-index: 800
@@ -427,8 +438,7 @@
       width: 534px
 
   .content-base
-    overflow-y: auto
-    padding: 1.3vw
+    padding: 20px
     flex: 1
     box-sizing: border-box
     .blank
@@ -446,7 +456,6 @@
         margin-bottom: 30px
       .blank-title
         color: $color-text99
-
 
   .shade-img
     width: 500px

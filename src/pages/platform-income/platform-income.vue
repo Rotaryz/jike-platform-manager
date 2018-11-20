@@ -53,6 +53,10 @@
             <div class="list-item" v-for="(item1, index1) in listHead[tabIndex]" :key="index1" v-if="index1 != (listHead[tabIndex].length - 1)" :class="item1.flex">{{item[contentName[tabIndex][index1]] + '' || '---'}}</div>
             <div class="last-item hand" :class="project + '-text'" @click="_toDetail(item)">查看</div>
           </div>
+          <div class="blank" v-if="showNull">
+            <div class="blank-icon"></div>
+            <div class="blank-title">暂无相关数据</div>
+          </div>
         </div>
         <div class="page-box">
           <page-detail @addPage="addPage" ref="page" :pageDtail="pageTotal"></page-detail>
@@ -156,7 +160,8 @@
           per_page: 10,
           total_page: 0
         },
-        detail: {join_income: '0.00', sale_income: '0.00', distribute_income: '0.00', total: '0.00'}
+        detail: {join_income: '0.00', sale_income: '0.00', distribute_income: '0.00', total: '0.00'},
+        showNull: false
       }
     },
     async created() {
@@ -190,7 +195,8 @@
         let data = {page: this.page, type: this.wsTabArr[this.tabIndex - 1].status}
         let res = await Finance.incomeList(data)
         if (res.error !== ERR_OK) {
-          this.$emit('setNull', true)
+          this.showNull = true
+          // this.$emit('setNull', true)
           return
         }
         let pages = res.meta
@@ -200,7 +206,8 @@
           total_page: pages.last_page
         })
         this.orderList = res.data
-        this.$emit('setNull', !this.orderList.length)
+        this.showNull = !this.orderList.length
+        // this.$emit('setNull', !this.orderList.length)
         // console.log(res.data)
         this.detail = Object.assign({}, {join_income: res.join_income, sale_income: res.sale_income, distribute_income: res.distribute_income, total: res.total})
       }
@@ -338,16 +345,33 @@
           flex: 1
           overflow: hidden
           display: flex
+          position: relative
           flex-direction: column
           .list-content
-            height: 16.66%
+            height: 60px
             padding-left: 40px
             border-bottom: 1px solid $color-line
             display: flex
             align-items: center
       .page-box
+        display: flex
+        align-items: center
         width: 100%
-        height: 59px
-        margin-bottom: 10px
+        height: 60px
+
+  .blank
+    all-center()
+    text-align: center
+    &.fade-enter, &.fade-leave-to
+      opacity: 0
+    &.fade-enter-to, &.fade-leave-to
+      transition: opacity .2s ease-in-out
+    .blank-icon
+      icon-image('icon-null')
+      width: 140px
+      height: 89px
+      margin-bottom: 30px
+    .blank-title
+      color: $color-text99
 
 </style>

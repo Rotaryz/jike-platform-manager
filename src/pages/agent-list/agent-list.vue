@@ -50,12 +50,12 @@
 </template>
 
 <script>
-  import { Agent } from 'api'
-  import { ERR_OK, BASE_URL } from 'common/js/config'
+  import {Agent} from 'api'
+  import {ERR_OK, BASE_URL} from 'common/js/config'
   import BaseModel from 'components/base-model/base-model'
   import AdminSelect from 'components/admin-select/admin-select'
   import PageDetail from 'components/page-detail/page-detail'
-  import { mapGetters } from 'vuex'
+  import {mapGetters} from 'vuex'
   import storage from 'storage-controller'
   import {WEI_SHANG} from 'common/js/constants'
 
@@ -296,7 +296,7 @@
     flex-direction: column
     font-size: $font-size-medium14
     font-family: $fontFamilyRegular
-    padding: 0 1.5vw 10px
+    padding: 0 1.5vw
 
   .list-header, .list-box
     width: 100%
@@ -317,7 +317,7 @@
     display: flex
     flex-direction: column
     .list-box
-      height: 10%
+      height: 60px
       border-bottom: 1px solid $color-line
       .list-item
         line-height: 16px
@@ -360,5 +360,8 @@
     background: $color-background
 
   .page
-    height: 59px
+    display: flex
+    align-items: center
+    width: 100%
+    height: 60px
 </style>

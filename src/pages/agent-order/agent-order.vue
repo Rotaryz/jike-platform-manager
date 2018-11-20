@@ -212,7 +212,7 @@
       display: flex
       flex-direction: column
       .list-content
-        height: 10%
+        height: 60px
         width: 100%
         border-bottom: 1px solid $color-line
         display: flex

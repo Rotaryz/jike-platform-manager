@@ -196,7 +196,7 @@
   .check-box
     align-items: center
     display: flex
-    padding: 1.5vw 0 1.5vw 10px
+    padding: 30px 0 30px 10px
     position: relative
     .search
       display: flex
@@ -234,9 +234,10 @@
       margin-left: 9px
 
   .form-list
+    position: relative
     font-size: $font-size-medium14
     font-family: $fontFamilyRegular
-    padding: 0 1.5vw 10px
+    padding: 0 1.5vw 0
     flex: 1
 
   .list-header, .list-box
@@ -248,17 +249,17 @@
 
   .list-header
     width: 100%
-    height: 9.1%
+    height: 50px
     white-space: nowrap
     border-bottom: 1px solid $color-line
     background: $color-big-background
 
   .list
-    height: 81.8%
+    flex: 1
     display: flex
     flex-direction: column
     .list-box
-      height: 10%
+      height: 60px
       border-bottom: 1px solid $color-line
       .list-item
         line-height: 16px
@@ -301,5 +302,7 @@
     background: $color-background
 
   .page
-    height: 9.1%
+    height: 60px
+    display: flex
+    align-items: center
 </style>

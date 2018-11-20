@@ -37,6 +37,10 @@
             <div class="list-item hand" :class="project + '-text'" @click="upAnyImg(index, item)" v-if="tabIndex == 1">发放</div>
             <div class="list-item hand" :class="project + '-text'" @click="showImg(item)" v-if="tabIndex == 0">查看凭证</div>
           </div>
+          <div class="blank" v-if="showNull">
+            <div class="blank-icon"></div>
+            <div class="blank-title">暂无相关数据</div>
+          </div>
         </div>
         <div class="page-box">
           <page-detail @addPage="addPage" :pageDtail="pageTotal" ref="page"></page-detail>
@@ -84,7 +88,8 @@
         },
         total: '',
         nameObj: NAME_OBJ,
-        id: 0
+        id: 0,
+        showNull: false
       }
     },
     async created() {
@@ -95,7 +100,7 @@
         let data = {page: this.page, status: this.tabArr[this.tabIndex].status}
         let res = await Finance.bonusApplyList(data)
         if (res.error !== ERR_OK) {
-          this.$emit('setNull', true)
+          this.showNull = true
           return
         }
         let pages = res.meta
@@ -110,7 +115,7 @@
           return item
         })
         this.expendList = res.data
-        this.$emit('setNull', !this.expendList.length)
+        this.showNull = !this.expendList.length
       },
       async checkTab(idx) {
         this.tabIndex = idx * 1
@@ -262,21 +267,23 @@
           white-space: nowrap
           margin-right: 10px
         .list-box
+          position :relative
           width: 100%
           flex: 1
           overflow: hidden
           display: flex
           flex-direction: column
           .list-content
-            height: 16.66%
+            height: 60px
             padding-left: 40px
             border-bottom: 1px solid $color-line
             display: flex
             align-items: center
       .page-box
+        display: flex
+        align-items: center
         width: 100%
-        height: 59px
-        margin-bottom: 10px
+        height: 60px
 
     .center-box
       width: 534px
@@ -362,4 +369,18 @@
             border: 1px solid $color-ccc
             color: $color-text33
             margin-right: 20px
+  .blank
+    all-center()
+    text-align: center
+    &.fade-enter, &.fade-leave-to
+      opacity: 0
+    &.fade-enter-to, &.fade-leave-to
+      transition: opacity .2s ease-in-out
+    .blank-icon
+      icon-image('icon-null')
+      width: 140px
+      height: 89px
+      margin-bottom: 30px
+    .blank-title
+      color: $color-text99
 </style>
