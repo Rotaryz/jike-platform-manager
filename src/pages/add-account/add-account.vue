@@ -89,6 +89,7 @@
     name: COMPONENT_NAME,
     data() {
       return {
+        committing: false,
         addOrder: {
           name: '',
           mobile: '',
@@ -144,6 +145,10 @@
         this.addOrder.paid_image_id = ''
       },
       async _submit() {
+        if (this.committing) {
+          return
+        }
+        this.committing = true
         if (!this.addOrder.name || !this.addOrder.mobile || !this.addOrder.price || !this.addOrder.num) {
           this.regObj.name = this.addOrder.name.length
           this.regObj.mobile = this.addOrder.mobile.length
@@ -160,6 +165,7 @@
         this.$emit('showToast', res.message)
         if (res.error === ERR_OK) {
           setTimeout(() => {
+            this.committing = false
             this.backBefore()
           }, 1000)
         }
