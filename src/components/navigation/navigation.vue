@@ -261,7 +261,7 @@
     watch: {
       '$route'(to, from) {
         if (to.path === '/agent-management/agent-list/agent-detail' && from.path === '/financial-management/platform-income') {
-          this.showChild(1)
+          this.showChild(2)
         } else if (from.path === '/agent-management/agent-list/agent-detail' && to.path === '/financial-management/platform-income') {
           this.showChild(3)
         }

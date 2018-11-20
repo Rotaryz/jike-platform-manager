@@ -29,7 +29,7 @@
           <div class="list-item list-text">{{item.name || '---'}}</div>
           <div class="list-item list-text">{{item.mobile || '---'}}</div>
           <div class="list-item list-text">{{item.role || '---'}}</div>
-          <div class="list-item list-text" v-if="tabIndex === 0">{{item.usable_account + '/' + item.total_account}}</div>
+          <div class="list-item list-text" v-if="tabIndex === 0">{{item.total_account - item.usable_account + '/' + item.total_account}}</div>
           <div class="list-item list-text" v-if="tabIndex === 0">{{item.status === 1 ? '使用中' : item.status === 2 ? '过期' : ''}}</div>
           <div class="list-item list-text" v-if="tabIndex === 1">{{item.status === 0 ? '待审核' :item.status === 1 ? '审核通过' : item.status === 2 ? '审核不通过' : '---'}}</div>
           <div class="list-item hand list-item-tap" v-if="tabIndex === 0">
