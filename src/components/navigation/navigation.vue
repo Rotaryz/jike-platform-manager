@@ -202,25 +202,14 @@
       },
       showChild(index, status = true) {
         this.smallIndex = index
-        clearInterval(this.timer)
         let childCode = this.navList[index].childrenIndex === -1 ? 0 : this.navList[index].childrenIndex
         this.recodIndex = index
         this.navList[this.recodIndex].childrenIndex = childCode
         this.bigChild = -1
-        clearInterval(this.timer)
         for (let i = 0; i < this.navList.length; i++) {
           if (i !== index && this.navList[i].showHeight > HEIGHT) {
-            clearInterval(this.sortTimer)
-            this.sortTimer = setInterval(() => {
-              if (this.navList[i].showHeight <= HEIGHT) {
-                this.navList[i].showHeight = HEIGHT
-                clearInterval(this.sortTimer)
-                return
-              }
-              this.navList[i].showHeight -= 20
-            }, 30)
+            this.navList[i].showHeight = HEIGHT
           } else {
-            clearInterval(this.timer)
             let num = 0
             this.navList[index].children.forEach((item) => {
               if (item.type === this.project || item.type === 'normal') {
@@ -228,24 +217,13 @@
               }
             })
             if (this.navList[index].showHeight === HEIGHT || !status) {
-              let target = (num + 1) * HEIGHT
-              this.timer = setInterval(() => {
-                if (this.navList[index].showHeight >= target) {
-                  this.navList[index].showHeight = target
-                  clearInterval(this.timer)
-                  return
-                }
-                this.navList[index].showHeight += 20
+              setTimeout(() => {
+                this.navList[index].showHeight = (num + 1) * HEIGHT
               }, 30)
             } else {
               if (status) {
-                this.timer = setInterval(() => {
-                  if (this.navList[index].showHeight <= HEIGHT) {
-                    this.navList[index].showHeight = HEIGHT
-                    clearInterval(this.timer)
-                    return
-                  }
-                  this.navList[index].showHeight -= 20
+                setTimeout(() => {
+                  this.navList[index].showHeight = HEIGHT
                 }, 30)
               }
             }
@@ -358,6 +336,7 @@
         .nav-item
           overflow: hidden
           border-bottom: 1px solid #3B3B43
+          transition: all 0.3s
           .nav-tap
             transition: all 0.2s
             align-items: center
