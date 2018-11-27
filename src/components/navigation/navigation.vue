@@ -100,7 +100,8 @@
         title: '小程序发布',
         url: '/mina-management/mina-release',
         type: ZHI_TUI.project
-      }]
+      }],
+      showHeight: HEIGHT
     }
   ]
 
@@ -219,6 +220,7 @@
             if (this.navList[index].showHeight === HEIGHT || !status) {
               setTimeout(() => {
                 this.navList[index].showHeight = (num + 1) * HEIGHT
+                console.log(this.navList[index])
               }, 30)
             } else {
               if (status) {
